@@ -1,0 +1,539 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		04C7BE921E73F5FB00E5A2F6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C7BE911E73F5FB00E5A2F6 /* main.m */; };
+		04C7BE951E73F5FB00E5A2F6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C7BE941E73F5FB00E5A2F6 /* AppDelegate.m */; };
+		04C7BE981E73F5FB00E5A2F6 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C7BE971E73F5FB00E5A2F6 /* ViewController.m */; };
+		04C7BE9B1E73F5FB00E5A2F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04C7BE991E73F5FB00E5A2F6 /* Main.storyboard */; };
+		04C7BE9D1E73F5FB00E5A2F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04C7BE9C1E73F5FB00E5A2F6 /* Assets.xcassets */; };
+		04C7BEA01E73F5FB00E5A2F6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04C7BE9E1E73F5FB00E5A2F6 /* LaunchScreen.storyboard */; };
+		04C7BEAB1E73F5FB00E5A2F6 /* CodeMakerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C7BEAA1E73F5FB00E5A2F6 /* CodeMakerTests.m */; };
+		04C7BEB61E73F5FB00E5A2F6 /* CodeMakerUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C7BEB51E73F5FB00E5A2F6 /* CodeMakerUITests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		04C7BEA71E73F5FB00E5A2F6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04C7BE851E73F5FB00E5A2F6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 04C7BE8C1E73F5FB00E5A2F6;
+			remoteInfo = CodeMaker;
+		};
+		04C7BEB21E73F5FB00E5A2F6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04C7BE851E73F5FB00E5A2F6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 04C7BE8C1E73F5FB00E5A2F6;
+			remoteInfo = CodeMaker;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		04C7BE8D1E73F5FB00E5A2F6 /* CodeMaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodeMaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		04C7BE911E73F5FB00E5A2F6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		04C7BE931E73F5FB00E5A2F6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		04C7BE941E73F5FB00E5A2F6 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		04C7BE961E73F5FB00E5A2F6 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		04C7BE971E73F5FB00E5A2F6 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		04C7BE9A1E73F5FB00E5A2F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		04C7BE9C1E73F5FB00E5A2F6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		04C7BE9F1E73F5FB00E5A2F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		04C7BEA11E73F5FB00E5A2F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		04C7BEA61E73F5FB00E5A2F6 /* CodeMakerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CodeMakerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		04C7BEAA1E73F5FB00E5A2F6 /* CodeMakerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CodeMakerTests.m; sourceTree = "<group>"; };
+		04C7BEAC1E73F5FB00E5A2F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		04C7BEB11E73F5FB00E5A2F6 /* CodeMakerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CodeMakerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		04C7BEB51E73F5FB00E5A2F6 /* CodeMakerUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CodeMakerUITests.m; sourceTree = "<group>"; };
+		04C7BEB71E73F5FB00E5A2F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		04C7BE8A1E73F5FB00E5A2F6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		04C7BEA31E73F5FB00E5A2F6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		04C7BEAE1E73F5FB00E5A2F6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		04C7BE841E73F5FB00E5A2F6 = {
+			isa = PBXGroup;
+			children = (
+				04C7BE8F1E73F5FB00E5A2F6 /* CodeMaker */,
+				04C7BEA91E73F5FB00E5A2F6 /* CodeMakerTests */,
+				04C7BEB41E73F5FB00E5A2F6 /* CodeMakerUITests */,
+				04C7BE8E1E73F5FB00E5A2F6 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		04C7BE8E1E73F5FB00E5A2F6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				04C7BE8D1E73F5FB00E5A2F6 /* CodeMaker.app */,
+				04C7BEA61E73F5FB00E5A2F6 /* CodeMakerTests.xctest */,
+				04C7BEB11E73F5FB00E5A2F6 /* CodeMakerUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		04C7BE8F1E73F5FB00E5A2F6 /* CodeMaker */ = {
+			isa = PBXGroup;
+			children = (
+				04C7BE931E73F5FB00E5A2F6 /* AppDelegate.h */,
+				04C7BE941E73F5FB00E5A2F6 /* AppDelegate.m */,
+				04C7BE961E73F5FB00E5A2F6 /* ViewController.h */,
+				04C7BE971E73F5FB00E5A2F6 /* ViewController.m */,
+				04C7BE991E73F5FB00E5A2F6 /* Main.storyboard */,
+				04C7BE9C1E73F5FB00E5A2F6 /* Assets.xcassets */,
+				04C7BE9E1E73F5FB00E5A2F6 /* LaunchScreen.storyboard */,
+				04C7BEA11E73F5FB00E5A2F6 /* Info.plist */,
+				04C7BE901E73F5FB00E5A2F6 /* Supporting Files */,
+			);
+			path = CodeMaker;
+			sourceTree = "<group>";
+		};
+		04C7BE901E73F5FB00E5A2F6 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				04C7BE911E73F5FB00E5A2F6 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		04C7BEA91E73F5FB00E5A2F6 /* CodeMakerTests */ = {
+			isa = PBXGroup;
+			children = (
+				04C7BEAA1E73F5FB00E5A2F6 /* CodeMakerTests.m */,
+				04C7BEAC1E73F5FB00E5A2F6 /* Info.plist */,
+			);
+			path = CodeMakerTests;
+			sourceTree = "<group>";
+		};
+		04C7BEB41E73F5FB00E5A2F6 /* CodeMakerUITests */ = {
+			isa = PBXGroup;
+			children = (
+				04C7BEB51E73F5FB00E5A2F6 /* CodeMakerUITests.m */,
+				04C7BEB71E73F5FB00E5A2F6 /* Info.plist */,
+			);
+			path = CodeMakerUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		04C7BE8C1E73F5FB00E5A2F6 /* CodeMaker */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 04C7BEBA1E73F5FB00E5A2F6 /* Build configuration list for PBXNativeTarget "CodeMaker" */;
+			buildPhases = (
+				04C7BE891E73F5FB00E5A2F6 /* Sources */,
+				04C7BE8A1E73F5FB00E5A2F6 /* Frameworks */,
+				04C7BE8B1E73F5FB00E5A2F6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CodeMaker;
+			productName = CodeMaker;
+			productReference = 04C7BE8D1E73F5FB00E5A2F6 /* CodeMaker.app */;
+			productType = "com.apple.product-type.application";
+		};
+		04C7BEA51E73F5FB00E5A2F6 /* CodeMakerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 04C7BEBD1E73F5FB00E5A2F6 /* Build configuration list for PBXNativeTarget "CodeMakerTests" */;
+			buildPhases = (
+				04C7BEA21E73F5FB00E5A2F6 /* Sources */,
+				04C7BEA31E73F5FB00E5A2F6 /* Frameworks */,
+				04C7BEA41E73F5FB00E5A2F6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				04C7BEA81E73F5FB00E5A2F6 /* PBXTargetDependency */,
+			);
+			name = CodeMakerTests;
+			productName = CodeMakerTests;
+			productReference = 04C7BEA61E73F5FB00E5A2F6 /* CodeMakerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		04C7BEB01E73F5FB00E5A2F6 /* CodeMakerUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 04C7BEC01E73F5FB00E5A2F6 /* Build configuration list for PBXNativeTarget "CodeMakerUITests" */;
+			buildPhases = (
+				04C7BEAD1E73F5FB00E5A2F6 /* Sources */,
+				04C7BEAE1E73F5FB00E5A2F6 /* Frameworks */,
+				04C7BEAF1E73F5FB00E5A2F6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				04C7BEB31E73F5FB00E5A2F6 /* PBXTargetDependency */,
+			);
+			name = CodeMakerUITests;
+			productName = CodeMakerUITests;
+			productReference = 04C7BEB11E73F5FB00E5A2F6 /* CodeMakerUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		04C7BE851E73F5FB00E5A2F6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = mac;
+				TargetAttributes = {
+					04C7BE8C1E73F5FB00E5A2F6 = {
+						CreatedOnToolsVersion = 8.2;
+						DevelopmentTeam = 38HK6TX8QL;
+						ProvisioningStyle = Automatic;
+					};
+					04C7BEA51E73F5FB00E5A2F6 = {
+						CreatedOnToolsVersion = 8.2;
+						DevelopmentTeam = 38HK6TX8QL;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 04C7BE8C1E73F5FB00E5A2F6;
+					};
+					04C7BEB01E73F5FB00E5A2F6 = {
+						CreatedOnToolsVersion = 8.2;
+						DevelopmentTeam = 38HK6TX8QL;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 04C7BE8C1E73F5FB00E5A2F6;
+					};
+				};
+			};
+			buildConfigurationList = 04C7BE881E73F5FB00E5A2F6 /* Build configuration list for PBXProject "CodeMaker" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 04C7BE841E73F5FB00E5A2F6;
+			productRefGroup = 04C7BE8E1E73F5FB00E5A2F6 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				04C7BE8C1E73F5FB00E5A2F6 /* CodeMaker */,
+				04C7BEA51E73F5FB00E5A2F6 /* CodeMakerTests */,
+				04C7BEB01E73F5FB00E5A2F6 /* CodeMakerUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		04C7BE8B1E73F5FB00E5A2F6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				04C7BEA01E73F5FB00E5A2F6 /* LaunchScreen.storyboard in Resources */,
+				04C7BE9D1E73F5FB00E5A2F6 /* Assets.xcassets in Resources */,
+				04C7BE9B1E73F5FB00E5A2F6 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		04C7BEA41E73F5FB00E5A2F6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		04C7BEAF1E73F5FB00E5A2F6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		04C7BE891E73F5FB00E5A2F6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				04C7BE981E73F5FB00E5A2F6 /* ViewController.m in Sources */,
+				04C7BE951E73F5FB00E5A2F6 /* AppDelegate.m in Sources */,
+				04C7BE921E73F5FB00E5A2F6 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		04C7BEA21E73F5FB00E5A2F6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				04C7BEAB1E73F5FB00E5A2F6 /* CodeMakerTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		04C7BEAD1E73F5FB00E5A2F6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				04C7BEB61E73F5FB00E5A2F6 /* CodeMakerUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		04C7BEA81E73F5FB00E5A2F6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 04C7BE8C1E73F5FB00E5A2F6 /* CodeMaker */;
+			targetProxy = 04C7BEA71E73F5FB00E5A2F6 /* PBXContainerItemProxy */;
+		};
+		04C7BEB31E73F5FB00E5A2F6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 04C7BE8C1E73F5FB00E5A2F6 /* CodeMaker */;
+			targetProxy = 04C7BEB21E73F5FB00E5A2F6 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		04C7BE991E73F5FB00E5A2F6 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				04C7BE9A1E73F5FB00E5A2F6 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		04C7BE9E1E73F5FB00E5A2F6 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				04C7BE9F1E73F5FB00E5A2F6 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		04C7BEB81E73F5FB00E5A2F6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		04C7BEB91E73F5FB00E5A2F6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		04C7BEBB1E73F5FB00E5A2F6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 38HK6TX8QL;
+				INFOPLIST_FILE = CodeMaker/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zh.CodeMaker;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		04C7BEBC1E73F5FB00E5A2F6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 38HK6TX8QL;
+				INFOPLIST_FILE = CodeMaker/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zh.CodeMaker;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		04C7BEBE1E73F5FB00E5A2F6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 38HK6TX8QL;
+				INFOPLIST_FILE = CodeMakerTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zh.CodeMakerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CodeMaker.app/CodeMaker";
+			};
+			name = Debug;
+		};
+		04C7BEBF1E73F5FB00E5A2F6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 38HK6TX8QL;
+				INFOPLIST_FILE = CodeMakerTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zh.CodeMakerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CodeMaker.app/CodeMaker";
+			};
+			name = Release;
+		};
+		04C7BEC11E73F5FB00E5A2F6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = 38HK6TX8QL;
+				INFOPLIST_FILE = CodeMakerUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zh.CodeMakerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = CodeMaker;
+			};
+			name = Debug;
+		};
+		04C7BEC21E73F5FB00E5A2F6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = 38HK6TX8QL;
+				INFOPLIST_FILE = CodeMakerUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zh.CodeMakerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = CodeMaker;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		04C7BE881E73F5FB00E5A2F6 /* Build configuration list for PBXProject "CodeMaker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				04C7BEB81E73F5FB00E5A2F6 /* Debug */,
+				04C7BEB91E73F5FB00E5A2F6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		04C7BEBA1E73F5FB00E5A2F6 /* Build configuration list for PBXNativeTarget "CodeMaker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				04C7BEBB1E73F5FB00E5A2F6 /* Debug */,
+				04C7BEBC1E73F5FB00E5A2F6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		04C7BEBD1E73F5FB00E5A2F6 /* Build configuration list for PBXNativeTarget "CodeMakerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				04C7BEBE1E73F5FB00E5A2F6 /* Debug */,
+				04C7BEBF1E73F5FB00E5A2F6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		04C7BEC01E73F5FB00E5A2F6 /* Build configuration list for PBXNativeTarget "CodeMakerUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				04C7BEC11E73F5FB00E5A2F6 /* Debug */,
+				04C7BEC21E73F5FB00E5A2F6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 04C7BE851E73F5FB00E5A2F6 /* Project object */;
+}
