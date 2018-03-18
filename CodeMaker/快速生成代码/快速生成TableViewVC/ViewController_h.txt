@@ -1,0 +1,5 @@
+#import "BaseTableViewController.h"
+
+@interface {{ ViewController的名字 }}ViewController : BaseTableViewController
+
+@end

@@ -1,0 +1,5 @@
+#import "{{ CellModel }}.h"
+
+@implementation {{ CellModel }}
+
+@end

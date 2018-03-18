@@ -1,0 +1,240 @@
+                        <subviews>
+{% for tempView in root.views %}
+{% if tempView.viewType equalsString "label" %}
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="{% if tempView.commands.text != nil %}{{ tempView.commands.text }}{% else %}Label{% /if %}" {% if tempView.commands.align != nil %}textAlignment="{% if tempView.commands.align equalsString "default" %}natural{% /if %}{% if tempView.commands.align equalsString "left" %} natural{% /if %}{% if tempView.commands.align equalsString "right" %}right{% /if %}{% if tempView.commands.align equalsString "center" %}center{% /if %}"{% else %}textAlignment="natural"{% /if %} lineBreakMode="tailTruncation" {% if tempView.commands.line != nil %}numberOfLines="{{ tempView.commands.line }}"{% /if %} baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="{{ tempView.idStr }}">
+                                <rect key="frame" x="{{ tempView.x }}" y="{{ tempView.y }}" width="{{ tempView.width }}" height="{{ tempView.height }}"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+				{% if tempView.commands.bgColorRed != nil %}<color key="backgroundColor" red="{% if tempView.commands.bgColorRed != nil %}{{ tempView.commands.bgColorRed | colorfloat }}{% else %}1{% /if %}" green="{% if tempView.commands.bgColorGreen != nil %}{{ tempView.commands.bgColorGreen | colorfloat }}{% else %}1{% /if %}" blue="{% if tempView.commands.bgColorBlue != nil %}{{ tempView.commands.bgColorBlue | colorfloat }}{% else %}1{% /if %}" alpha="{% if tempView.commands.bgColorAlpha != nil %}{{ tempView.commands.bgColorAlpha | colorfloat }}{% else %}1{% /if %}" colorSpace="calibratedRGB"/>{% /if %}
+                                <fontDescription key="fontDescription" type="system" pointSize="{% if tempView.commands.font != nil %}{{ tempView.commands.font }}{% else %}14{% /if %}"/>
+                                {% if tempView.commands.textColorRed != nil %}<color key="textColor" red="{% if tempView.commands.textColorRed != nil %}{{ tempView.commands.textColorRed | colorfloat }}{% else %}1{% /if %}" green="{% if tempView.commands.textColorGreen != nil %}{{ tempView.commands.textColorGreen | colorfloat }}{% else %}1{% /if %}" blue="{% if tempView.commands.textColorBlue != nil %}{{ tempView.commands.textColorBlue | colorfloat }}{% else %}1{% /if %}" alpha="{% if tempView.commands.textColorAlpha != nil %}{{ tempView.commands.textColorAlpha | colorfloat }}{% else %}1{% /if %}" colorSpace="calibratedRGB"/>{% else %}<nil key="textColor"/>{% /if %}
+                                <nil key="highlightedColor"/>
+				{% if tempView.constraints != nil %}<constraints>
+					{{ tempView.constraints | component }}
+				</constraints>{% /if %}
+                            </label>
+{% /if %}
+{% if tempView.viewType equalsString "switch" %}
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="{{ tempView.idStr }}">
+                                <rect key="frame" x="{{ tempView.x }}" y="{{ tempView.y }}" width="51" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+				{% if tempView.commands.bgColorRed != nil %}<color key="backgroundColor" red="{% if tempView.commands.bgColorRed != nil %}{{ tempView.commands.bgColorRed | colorfloat }}{% else %}1{% /if %}" green="{% if tempView.commands.bgColorGreen != nil %}{{ tempView.commands.bgColorGreen | colorfloat }}{% else %}1{% /if %}" blue="{% if tempView.commands.bgColorBlue != nil %}{{ tempView.commands.bgColorBlue | colorfloat }}{% else %}1{% /if %}" alpha="{% if tempView.commands.bgColorAlpha != nil %}{{ tempView.commands.bgColorAlpha | colorfloat }}{% else %}1{% /if %}" colorSpace="calibratedRGB"/>{% /if %}
+				{% if tempView.constraints != nil %}<constraints>
+					{{ tempView.constraints | component }}
+				</constraints>{% /if %}
+                            </switch>
+{% /if %}
+{% if tempView.viewType equalsString "scrollView" %}
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="{{ tempView.idStr }}">
+                                <rect key="frame" x="{{ tempView.x }}" y="{{ tempView.y }}" width="{{ tempView.width }}" height="{{ tempView.height }}"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+				{% if tempView.commands.bgColorRed != nil %}<color key="backgroundColor" red="{% if tempView.commands.bgColorRed != nil %}{{ tempView.commands.bgColorRed | colorfloat }}{% else %}1{% /if %}" green="{% if tempView.commands.bgColorGreen != nil %}{{ tempView.commands.bgColorGreen | colorfloat }}{% else %}1{% /if %}" blue="{% if tempView.commands.bgColorBlue != nil %}{{ tempView.commands.bgColorBlue | colorfloat }}{% else %}1{% /if %}" alpha="{% if tempView.commands.bgColorAlpha != nil %}{{ tempView.commands.bgColorAlpha | colorfloat }}{% else %}1{% /if %}" colorSpace="calibratedRGB"/>{% /if %}
+                                {% if tempView.views != nil %}{{ tempView | recurrence: "Main" }}{% /if %}
+				{% if tempView.constraints != nil %}<constraints>
+					{{ tempView.constraints | component }}
+				</constraints>{% /if %}
+                            </scrollView>
+{% /if %}
+{% if tempView.viewType equalsString "textField" %}
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="{{ tempView.idStr }}">
+                                <rect key="frame" x="{{ tempView.x }}" y="{{ tempView.y }}" width="{{ tempView.width }}" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+				{% if tempView.commands.bgColorRed != nil %}<color key="backgroundColor" red="{% if tempView.commands.bgColorRed != nil %}{{ tempView.commands.bgColorRed | colorfloat }}{% else %}1{% /if %}" green="{% if tempView.commands.bgColorGreen != nil %}{{ tempView.commands.bgColorGreen | colorfloat }}{% else %}1{% /if %}" blue="{% if tempView.commands.bgColorBlue != nil %}{{ tempView.commands.bgColorBlue | colorfloat }}{% else %}1{% /if %}" alpha="{% if tempView.commands.bgColorAlpha != nil %}{{ tempView.commands.bgColorAlpha | colorfloat }}{% else %}1{% /if %}" colorSpace="calibratedRGB"/>{% /if %}
+                                {% if tempView.commands.textColorRed != nil %}<color key="textColor" red="{% if tempView.commands.textColorRed != nil %}{{ tempView.commands.textColorRed | colorfloat }}{% else %}1{% /if %}" green="{% if tempView.commands.textColorGreen != nil %}{{ tempView.commands.textColorGreen | colorfloat }}{% else %}1{% /if %}" blue="{% if tempView.commands.textColorBlue != nil %}{{ tempView.commands.textColorBlue | colorfloat }}{% else %}1{% /if %}" alpha="{% if tempView.commands.textColorAlpha != nil %}{{ tempView.commands.textColorAlpha | colorfloat }}{% else %}1{% /if %}" colorSpace="calibratedRGB"/>{% else %}<nil key="textColor"/>{% /if %}
+                                <fontDescription key="fontDescription" type="system" pointSize="{% if tempView.commands.font != nil %}{{ tempView.commands.font }}{% else %}14{% /if %}"/>
+                                <textInputTraits key="textInputTraits"/>
+				{% if tempView.constraints != nil %}<constraints>
+					{{ tempView.constraints | component }}
+				</constraints>{% /if %}
+                            </textField>
+{% /if %}
+{% if tempView.viewType equalsString "textView" %}
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="{{ tempView.idStr }}">
+                                <rect key="frame" x="{{ tempView.x }}" y="{{ tempView.y }}" width="{{ tempView.width }}" height="{{ tempView.height }}"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+				{% if tempView.commands.bgColorRed != nil %}<color key="backgroundColor" red="{% if tempView.commands.bgColorRed != nil %}{{ tempView.commands.bgColorRed | colorfloat }}{% else %}1{% /if %}" green="{% if tempView.commands.bgColorGreen != nil %}{{ tempView.commands.bgColorGreen | colorfloat }}{% else %}1{% /if %}" blue="{% if tempView.commands.bgColorBlue != nil %}{{ tempView.commands.bgColorBlue | colorfloat }}{% else %}1{% /if %}" alpha="{% if tempView.commands.bgColorAlpha != nil %}{{ tempView.commands.bgColorAlpha | colorfloat }}{% else %}1{% /if %}" colorSpace="calibratedRGB"/>{% else %}<color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>{% /if %}
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+				{% if tempView.commands.textColorRed != nil %}<color key="textColor" red="{% if tempView.commands.textColorRed != nil %}{{ tempView.commands.textColorRed | colorfloat }}{% else %}1{% /if %}" green="{% if tempView.commands.textColorGreen != nil %}{{ tempView.commands.textColorGreen | colorfloat }}{% else %}1{% /if %}" blue="{% if tempView.commands.textColorBlue != nil %}{{ tempView.commands.textColorBlue | colorfloat }}{% else %}1{% /if %}" alpha="{% if tempView.commands.textColorAlpha != nil %}{{ tempView.commands.textColorAlpha | colorfloat }}{% else %}1{% /if %}" colorSpace="calibratedRGB"/>{% /if %}
+                                <fontDescription key="fontDescription" type="system" pointSize="{% if tempView.commands.font != nil %}{{ tempView.commands.font }}{% else %}14{% /if %}"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+				{% if tempView.constraints != nil %}<constraints>
+					{{ tempView.constraints | component }}
+				</constraints>{% /if %}
+                            </textView>
+{% /if %}
+{% if tempView.viewType equalsString "imageView" %}
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="{{ tempView.idStr }}">
+                                <rect key="frame" x="{{ tempView.x }}" y="{{ tempView.y }}" width="{{ tempView.width }}" height="{{ tempView.height }}"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+				{% if tempView.commands.bgColorRed != nil %}<color key="backgroundColor" red="{% if tempView.commands.bgColorRed != nil %}{{ tempView.commands.bgColorRed | colorfloat }}{% else %}1{% /if %}" green="{% if tempView.commands.bgColorGreen != nil %}{{ tempView.commands.bgColorGreen | colorfloat }}{% else %}1{% /if %}" blue="{% if tempView.commands.bgColorBlue != nil %}{{ tempView.commands.bgColorBlue | colorfloat }}{% else %}1{% /if %}" alpha="{% if tempView.commands.bgColorAlpha != nil %}{{ tempView.commands.bgColorAlpha | colorfloat }}{% else %}1{% /if %}" colorSpace="calibratedRGB"/>{% /if %}
+				{% if tempView.constraints != nil %}<constraints>
+					{{ tempView.constraints | component }}
+				</constraints>{% /if %}
+                            </imageView>
+{% /if %}
+{% if tempView.viewType equalsString "activityIndicatorView" %}
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="{{ tempView.idStr }}">
+                                <rect key="frame" x="{{ tempView.x }}" y="{{ tempView.y }}" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+				{% if tempView.commands.bgColorRed != nil %}<color key="backgroundColor" red="{% if tempView.commands.bgColorRed != nil %}{{ tempView.commands.bgColorRed | colorfloat }}{% else %}1{% /if %}" green="{% if tempView.commands.bgColorGreen != nil %}{{ tempView.commands.bgColorGreen | colorfloat }}{% else %}1{% /if %}" blue="{% if tempView.commands.bgColorBlue != nil %}{{ tempView.commands.bgColorBlue | colorfloat }}{% else %}1{% /if %}" alpha="{% if tempView.commands.bgColorAlpha != nil %}{{ tempView.commands.bgColorAlpha | colorfloat }}{% else %}1{% /if %}" colorSpace="calibratedRGB"/>{% /if %}
+				{% if tempView.constraints != nil %}<constraints>
+					{{ tempView.constraints | component }}
+				</constraints>{% /if %}
+                            </activityIndicatorView>
+{% /if %}
+{% if tempView.viewType equalsString "button" %}
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="{{ tempView.idStr }}">
+                                <rect key="frame" x="{{ tempView.x }}" y="{{ tempView.y }}" width="{{ tempView.width }}" height="{{ tempView.height }}"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+				{% if tempView.commands.bgColorRed != nil %}<color key="backgroundColor" red="{% if tempView.commands.bgColorRed != nil %}{{ tempView.commands.bgColorRed | colorfloat }}{% else %}1{% /if %}" green="{% if tempView.commands.bgColorGreen != nil %}{{ tempView.commands.bgColorGreen | colorfloat }}{% else %}1{% /if %}" blue="{% if tempView.commands.bgColorBlue != nil %}{{ tempView.commands.bgColorBlue | colorfloat }}{% else %}1{% /if %}" alpha="{% if tempView.commands.bgColorAlpha != nil %}{{ tempView.commands.bgColorAlpha | colorfloat }}{% else %}1{% /if %}" colorSpace="calibratedRGB"/>{% /if %}
+				<fontDescription key="fontDescription" type="system" pointSize="{% if tempView.commands.font != nil %}{{ tempView.commands.font }}{% else %}14{% /if %}"/>
+                                {% if tempView.commands.textColorRed != nil %}<state key="normal" title="{% if tempView.commands.text != nil %}{{ tempView.commands.text }}{% else %}Button{% /if %}">
+    				<color key="titleColor" red="{% if tempView.commands.textColorRed != nil %}{{ tempView.commands.textColorRed | colorfloat }}{% else %}1{% /if %}" green="{% if tempView.commands.textColorGreen != nil %}{{ tempView.commands.textColorGreen | colorfloat }}{% else %}1{% /if %}" blue="{% if tempView.commands.textColorBlue != nil %}{{ tempView.commands.textColorBlue | colorfloat }}{% else %}1{% /if %}" alpha="{% if tempView.commands.textColorAlpha != nil %}{{ tempView.commands.textColorAlpha | colorfloat }}{% else %}1{% /if %}" colorSpace="calibratedRGB"/>
+    				</state>{% else %}<state key="normal" title="{% if tempView.commands.text != nil %}{{ tempView.commands.text }}{% else %}Button{% /if %}"/>{% /if %}
+				{% if tempView.constraints != nil %}<constraints>
+					{{ tempView.constraints | component }}
+				</constraints>{% /if %}
+                            </button>
+{% /if %}
+{% if tempView.viewType equalsString "progressView" %}
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" fixedFrame="YES" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="{{ tempView.idStr }}">
+                                <rect key="frame" x="{{ tempView.x }}" y="{{ tempView.y }}" width="{{ tempView.width }}" height="2"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+				{% if tempView.commands.bgColorRed != nil %}<color key="backgroundColor" red="{% if tempView.commands.bgColorRed != nil %}{{ tempView.commands.bgColorRed | colorfloat }}{% else %}1{% /if %}" green="{% if tempView.commands.bgColorGreen != nil %}{{ tempView.commands.bgColorGreen | colorfloat }}{% else %}1{% /if %}" blue="{% if tempView.commands.bgColorBlue != nil %}{{ tempView.commands.bgColorBlue | colorfloat }}{% else %}1{% /if %}" alpha="{% if tempView.commands.bgColorAlpha != nil %}{{ tempView.commands.bgColorAlpha | colorfloat }}{% else %}1{% /if %}" colorSpace="calibratedRGB"/>{% /if %}
+				{% if tempView.constraints != nil %}<constraints>
+					{{ tempView.constraints | component }}
+				</constraints>{% /if %}
+                            </progressView>
+{% /if %}
+{% if tempView.viewType equalsString "tableView" %}
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="{{ tempView.idStr }}">
+                                <rect key="frame" x="{{ tempView.x }}" y="{{ tempView.y }}" width="{{ tempView.width }}" height="{{ tempView.height }}"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+				{% if tempView.commands.bgColorRed != nil %}<color key="backgroundColor" red="{% if tempView.commands.bgColorRed != nil %}{{ tempView.commands.bgColorRed | colorfloat }}{% else %}1{% /if %}" green="{% if tempView.commands.bgColorGreen != nil %}{{ tempView.commands.bgColorGreen | colorfloat }}{% else %}1{% /if %}" blue="{% if tempView.commands.bgColorBlue != nil %}{{ tempView.commands.bgColorBlue | colorfloat }}{% else %}1{% /if %}" alpha="{% if tempView.commands.bgColorAlpha != nil %}{{ tempView.commands.bgColorAlpha | colorfloat }}{% else %}1{% /if %}" colorSpace="calibratedRGB"/>{% else %}<color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>{% /if %}
+				{% if tempView.constraints != nil %}<constraints>
+					{{ tempView.constraints | component }}
+				</constraints>{% /if %}
+                            </tableView>
+{% /if %}
+{% if tempView.viewType equalsString "collectionView" %}
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="{{ tempView.idStr }}">
+                                <rect key="frame" x="{{ tempView.x }}" y="{{ tempView.y }}" width="{{ tempView.width }}" height="{{ tempView.height }}"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+				{% if tempView.commands.bgColorRed != nil %}<color key="backgroundColor" red="{% if tempView.commands.bgColorRed != nil %}{{ tempView.commands.bgColorRed | colorfloat }}{% else %}1{% /if %}" green="{% if tempView.commands.bgColorGreen != nil %}{{ tempView.commands.bgColorGreen | colorfloat }}{% else %}1{% /if %}" blue="{% if tempView.commands.bgColorBlue != nil %}{{ tempView.commands.bgColorBlue | colorfloat }}{% else %}1{% /if %}" alpha="{% if tempView.commands.bgColorAlpha != nil %}{{ tempView.commands.bgColorAlpha | colorfloat }}{% else %}1{% /if %}" colorSpace="calibratedRGB"/>{% else %}<color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>{% /if %}
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="iud-6I-mZG">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="kFT-tQ-qBs">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+				{% if tempView.constraints != nil %}<constraints>
+					{{ tempView.constraints | component }}
+				</constraints>{% /if %}
+                            </collectionView>
+{% /if %}
+{% if tempView.viewType equalsString "stepper" %}
+                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="{{ tempView.idStr }}">
+                                <rect key="frame" x="{{ tempView.x }}" y="{{ tempView.y }}" width="94" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+				{% if tempView.commands.bgColorRed != nil %}<color key="backgroundColor" red="{% if tempView.commands.bgColorRed != nil %}{{ tempView.commands.bgColorRed | colorfloat }}{% else %}1{% /if %}" green="{% if tempView.commands.bgColorGreen != nil %}{{ tempView.commands.bgColorGreen | colorfloat }}{% else %}1{% /if %}" blue="{% if tempView.commands.bgColorBlue != nil %}{{ tempView.commands.bgColorBlue | colorfloat }}{% else %}1{% /if %}" alpha="{% if tempView.commands.bgColorAlpha != nil %}{{ tempView.commands.bgColorAlpha | colorfloat }}{% else %}1{% /if %}" colorSpace="calibratedRGB"/>{% /if %}
+				{% if tempView.constraints != nil %}<constraints>
+					{{ tempView.constraints | component }}
+				</constraints>{% /if %}
+                            </stepper>
+{% /if %}
+{% if tempView.viewType equalsString "pageControl" %}
+                            <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="{{ tempView.idStr }}">
+                                <rect key="frame" x="{{ tempView.x }}" y="{{ tempView.y }}" width="{{ tempView.width }}" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+				{% if tempView.commands.bgColorRed != nil %}<color key="backgroundColor" red="{% if tempView.commands.bgColorRed != nil %}{{ tempView.commands.bgColorRed | colorfloat }}{% else %}1{% /if %}" green="{% if tempView.commands.bgColorGreen != nil %}{{ tempView.commands.bgColorGreen | colorfloat }}{% else %}1{% /if %}" blue="{% if tempView.commands.bgColorBlue != nil %}{{ tempView.commands.bgColorBlue | colorfloat }}{% else %}1{% /if %}" alpha="{% if tempView.commands.bgColorAlpha != nil %}{{ tempView.commands.bgColorAlpha | colorfloat }}{% else %}1{% /if %}" colorSpace="calibratedRGB"/>{% /if %}
+				{% if tempView.constraints != nil %}<constraints>
+					{{ tempView.constraints | component }}
+				</constraints>{% /if %}
+                            </pageControl>
+{% /if %}
+{% if tempView.viewType equalsString "pickerView" %}
+                            <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="{{ tempView.idStr }}">
+                                <rect key="frame" x="{{ tempView.x }}" y="{{ tempView.y }}" width="{{ tempView.width }}" height="{{ tempView.height }}"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+				{% if tempView.commands.bgColorRed != nil %}<color key="backgroundColor" red="{% if tempView.commands.bgColorRed != nil %}{{ tempView.commands.bgColorRed | colorfloat }}{% else %}1{% /if %}" green="{% if tempView.commands.bgColorGreen != nil %}{{ tempView.commands.bgColorGreen | colorfloat }}{% else %}1{% /if %}" blue="{% if tempView.commands.bgColorBlue != nil %}{{ tempView.commands.bgColorBlue | colorfloat }}{% else %}1{% /if %}" alpha="{% if tempView.commands.bgColorAlpha != nil %}{{ tempView.commands.bgColorAlpha | colorfloat }}{% else %}1{% /if %}" colorSpace="calibratedRGB"/>{% /if %}
+				{% if tempView.constraints != nil %}<constraints>
+					{{ tempView.constraints | component }}
+				</constraints>{% /if %}
+                            </pickerView>
+{% /if %}
+{% if tempView.viewType equalsString "datePicker" %}
+                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="{{ tempView.idStr }}">
+                                <rect key="frame" x="{{ tempView.x }}" y="{{ tempView.y }}" width="{{ tempView.width }}" height="{{ tempView.height }}"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+				{% if tempView.commands.bgColorRed != nil %}<color key="backgroundColor" red="{% if tempView.commands.bgColorRed != nil %}{{ tempView.commands.bgColorRed | colorfloat }}{% else %}1{% /if %}" green="{% if tempView.commands.bgColorGreen != nil %}{{ tempView.commands.bgColorGreen | colorfloat }}{% else %}1{% /if %}" blue="{% if tempView.commands.bgColorBlue != nil %}{{ tempView.commands.bgColorBlue | colorfloat }}{% else %}1{% /if %}" alpha="{% if tempView.commands.bgColorAlpha != nil %}{{ tempView.commands.bgColorAlpha | colorfloat }}{% else %}1{% /if %}" colorSpace="calibratedRGB"/>{% /if %}
+                                <date key="date" timeIntervalSinceReferenceDate="524554937.78742898">
+                                    <!--2017-08-16 05:42:17 +0000-->
+                                </date>
+				{% if tempView.constraints != nil %}<constraints>
+					{{ tempView.constraints | component }}
+				</constraints>{% /if %}
+                            </datePicker>
+{% /if %}
+{% if tempView.viewType equalsString "mapView" %}
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="{{ tempView.idStr }}">
+                                <rect key="frame" x="{{ tempView.x }}" y="{{ tempView.y }}" width="{{ tempView.width }}" height="{{ tempView.height }}"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+				{% if tempView.commands.bgColorRed != nil %}<color key="backgroundColor" red="{% if tempView.commands.bgColorRed != nil %}{{ tempView.commands.bgColorRed | colorfloat }}{% else %}1{% /if %}" green="{% if tempView.commands.bgColorGreen != nil %}{{ tempView.commands.bgColorGreen | colorfloat }}{% else %}1{% /if %}" blue="{% if tempView.commands.bgColorBlue != nil %}{{ tempView.commands.bgColorBlue | colorfloat }}{% else %}1{% /if %}" alpha="{% if tempView.commands.bgColorAlpha != nil %}{{ tempView.commands.bgColorAlpha | colorfloat }}{% else %}1{% /if %}" colorSpace="calibratedRGB"/>{% /if %}
+				{% if tempView.constraints != nil %}<constraints>
+					{{ tempView.constraints | component }}
+				</constraints>{% /if %}
+                            </mapView>
+{% /if %}
+{% if tempView.viewType equalsString "searchBar" %}
+                            <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="{{ tempView.idStr }}">
+                                <rect key="frame" x="{{ tempView.x }}" y="{{ tempView.y }}" width="{{ tempView.width }}" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+				{% if tempView.commands.bgColorRed != nil %}<color key="backgroundColor" red="{% if tempView.commands.bgColorRed != nil %}{{ tempView.commands.bgColorRed | colorfloat }}{% else %}1{% /if %}" green="{% if tempView.commands.bgColorGreen != nil %}{{ tempView.commands.bgColorGreen | colorfloat }}{% else %}1{% /if %}" blue="{% if tempView.commands.bgColorBlue != nil %}{{ tempView.commands.bgColorBlue | colorfloat }}{% else %}1{% /if %}" alpha="{% if tempView.commands.bgColorAlpha != nil %}{{ tempView.commands.bgColorAlpha | colorfloat }}{% else %}1{% /if %}" colorSpace="calibratedRGB"/>{% /if %}
+                                <textInputTraits key="textInputTraits"/>
+				{% if tempView.constraints != nil %}<constraints>
+					{{ tempView.constraints | component }}
+				</constraints>{% /if %}
+                            </searchBar>
+{% /if %}
+{% if tempView.viewType equalsString "webView" %}
+                            <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="{{ tempView.idStr }}">
+                                <rect key="frame" x="{{ tempView.x }}" y="{{ tempView.y }}" width="{{ tempView.width }}" height="{{ tempView.height }}"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+				{% if tempView.commands.bgColorRed != nil %}<color key="backgroundColor" red="{% if tempView.commands.bgColorRed != nil %}{{ tempView.commands.bgColorRed | colorfloat }}{% else %}1{% /if %}" green="{% if tempView.commands.bgColorGreen != nil %}{{ tempView.commands.bgColorGreen | colorfloat }}{% else %}1{% /if %}" blue="{% if tempView.commands.bgColorBlue != nil %}{{ tempView.commands.bgColorBlue | colorfloat }}{% else %}1{% /if %}" alpha="{% if tempView.commands.bgColorAlpha != nil %}{{ tempView.commands.bgColorAlpha | colorfloat }}{% else %}1{% /if %}" colorSpace="calibratedRGB"/>{% else %}<color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>{% /if %}
+				{% if tempView.constraints != nil %}<constraints>
+					{{ tempView.constraints | component }}
+				</constraints>{% /if %}
+                            </webView>
+{% /if %}
+{% if tempView.viewType equalsString "view" %}
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="{{ tempView.idStr }}">
+                                <rect key="frame" x="{{ tempView.x }}" y="{{ tempView.y }}" width="{{ tempView.width }}" height="{{ tempView.height }}"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+				{% if tempView.commands.bgColorRed != nil %}<color key="backgroundColor" red="{% if tempView.commands.bgColorRed != nil %}{{ tempView.commands.bgColorRed | colorfloat }}{% else %}1{% /if %}" green="{% if tempView.commands.bgColorGreen != nil %}{{ tempView.commands.bgColorGreen | colorfloat }}{% else %}1{% /if %}" blue="{% if tempView.commands.bgColorBlue != nil %}{{ tempView.commands.bgColorBlue | colorfloat }}{% else %}1{% /if %}" alpha="{% if tempView.commands.bgColorAlpha != nil %}{{ tempView.commands.bgColorAlpha | colorfloat }}{% else %}1{% /if %}" colorSpace="calibratedRGB"/>{% else %}<color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>{% /if %}
+                                {% if tempView.views != nil %}{{ tempView | recurrence: "Main" }}{% /if %}
+				{% if tempView.constraints != nil %}<constraints>
+					{{ tempView.constraints | component }}
+				</constraints>{% /if %}
+                            </view>
+{% /if %}
+{% if tempView.viewType equalsString "slider" %}
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="{{ tempView.idStr }}">
+                                <rect key="frame" x="{{ tempView.x }}" y="31" width="{{ tempView.width }}" height="{{ tempView.height }}"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+				{% if tempView.commands.bgColorRed != nil %}<color key="backgroundColor" red="{% if tempView.commands.bgColorRed != nil %}{{ tempView.commands.bgColorRed | colorfloat }}{% else %}1{% /if %}" green="{% if tempView.commands.bgColorGreen != nil %}{{ tempView.commands.bgColorGreen | colorfloat }}{% else %}1{% /if %}" blue="{% if tempView.commands.bgColorBlue != nil %}{{ tempView.commands.bgColorBlue | colorfloat }}{% else %}1{% /if %}" alpha="{% if tempView.commands.bgColorAlpha != nil %}{{ tempView.commands.bgColorAlpha | colorfloat }}{% else %}1{% /if %}" colorSpace="calibratedRGB"/>{% /if %}
+				{% if tempView.constraints != nil %}<constraints>
+					{{ tempView.constraints | component }}
+				</constraints>{% /if %}
+                            </slider>
+{% /if %}
+{% /for %}
+                        </subviews>

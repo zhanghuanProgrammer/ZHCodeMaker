@@ -1,0 +1,92 @@
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+#import "UIView+ZHView.h"
+#import "TabBarAndNavagation.h"
+#import "MBProgressHUD.h"
+#import "ZHNSString.h"
+#import "ZHAlertAction.h"
+#import "ZHFileManager.h"
+#import "AFNetworking.h"
+#import "DateTools.h"
+#import "CodeAssistantFileManager.h"
+#import "ZHStoryboardXMLManager.h"
+#import "ZHStoryboardTextManager.h"
+#import "ZHStroyBoardFileManager.h"
+#import "ZHStroyBoardFileManagerToMVC.h"
+#import "ZHStoryboardTextManagerToMVC.h"
+#import "ViewProperty.h"
+#import "NSArray+ZH.h"
+#import "NSDictionary+ZH.h"
+#import "ZHJson.h"
+#import "ZHJsonToXML.h"
+#import "ZHJsonToXMLOrder.h"
+#import "ZHJsonPath.h"
+#import "ZHStoryboardPropertyManager.h"
+#import "StroyBoardCreateProperty.h"
+#import "ZHSaveDataToFMDB.h"
+#import "ZHWordWrap.h"
+#import "ZHXMLWordWrap.h"
+#import "ZHChangeCodeFileName.h"
+#import "ZHBlockSingleCategroy.h"
+#import "ZHHelp.h"
+#import "ZHPhotosViewController.h"
+#import "ZHRepeatNSArray.h"
+#import "ZHRepearDictionary.h"
+#import "ZHBackUp.h"
+#import "ZHRuntime.h"
+#import "NSString+ZH.h"
+#import "JohnAlertManager.h"
+
+// 获取RGB颜色
+#define RGBA(r,g,b,a) [UIColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:a]
+#define RGB(r,g,b) RGBA(r,g,b,1.0f)
+#define RGBOnly(color) RGB(color,color,color)
+
+//字符串是否为空
+#define StringIsEmpty(str) ([str isKindOfClass:[NSNull class]] || str == nil || [str length] < 1 ? YES : NO )
+//数组是否为空
+#define ArrayIsEmpty(array) (array == nil || [array isKindOfClass:[NSNull class]] || array.count == 0)
+//字典是否为空
+#define DictIsEmpty(dic) (dic == nil || [dic isKindOfClass:[NSNull class]] || dic.allKeys == 0)
+//是否是空对象
+#define ObjectIsEmpty(_object) (_object == nil \
+|| [_object isKindOfClass:[NSNull class]] \
+|| ([_object respondsToSelector:@selector(length)] && [(NSData *)_object length] == 0) \
+|| ([_object respondsToSelector:@selector(count)] && [(NSArray *)_object count] == 0))
+
+#define ZHMIN(X,Y) ((X)>(Y)?(Y):(X))
+
+#define StringNumber(num) [NSString stringWithFormat:@"%@",num]
+
+typedef enum : NSUInteger {
+    GetSBViewControllerTypePureHand,
+    GetSBViewControllerTypeFrame,
+    GetSBViewControllerTypeMVC
+} GetSBViewControllerType;
+
+// @interface
+#define singleton_interface(className)\
++ (className *)shared##className;
+
+// @implementation
+#define singleton_implementation(className)\
+static className *_instance;\
++ (id)allocWithZone:(NSZone *)zone\
+{\
+static dispatch_once_t onceToken;\
+dispatch_once(&onceToken, ^{\
+_instance = [super allocWithZone:zone];\
+});\
+return _instance;\
+} \
++ (className *)shared##className\
+{\
+static dispatch_once_t onceToken;\
+dispatch_once(&onceToken, ^{\
+_instance = [[self alloc] init];\
+});\
+return _instance; \
+}
+
+#endif /* PrefixHeader_pch */

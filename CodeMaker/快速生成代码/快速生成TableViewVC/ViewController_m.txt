@@ -1,0 +1,41 @@
+#import "{{ ViewController的名字 }}ViewController.h"
+{% for p in 自定义Cell,以逗号隔开 %}
+#import "{{ p }}TableViewCell.h"{% /for %}
+
+@implementation {{ ViewController的名字 }}ViewController
+
+- (void)viewDidLoad{
+	[super viewDidLoad];
+    {% for p in 自定义Cell,以逗号隔开 %}
+    {{ p }}CellModel *{{ p | lowercase }}Model=[{{ p }}CellModel new];
+    [self.dataArr addObject:{{ p | lowercase }}Model];
+    {% /for %}
+    {% for p in 自定义Cell,以逗号隔开 %}
+    self.registModelAndCellAndHeight({{ p }}CellModel.class,{{ p }}TableViewCell.class,44.0f);{% /for %}
+}
+{% if tempView.viewType equalsString "1" %}
+/**是否可以编辑*/
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(nonnull NSIndexPath *)indexPath{
+	if (indexPath.row==self.dataArr.count) {
+		return NO;
+	}
+	return YES;
+}
+
+/**编辑风格*/
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(nonnull NSIndexPath *)indexPath{
+	return UITableViewCellEditingStyleDelete;
+}
+
+/**设置编辑的控件  删除,置顶,收藏*/
+- (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath{
+	
+	//设置删除按钮
+	UITableViewRowAction *deleteRowAction=[UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"删除" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+		[self.dataArr removeObjectAtIndex:indexPath.row];
+		[self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:(UITableViewRowAnimationAutomatic)];
+	}];
+	return  @[deleteRowAction];
+}
+{% /if %}
+@end

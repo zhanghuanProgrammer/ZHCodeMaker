@@ -1,0 +1,31 @@
+Text:
+{% if tempView.commands.text != nil %}{{ tempView.commands.text }}{% else %}Label{% /if %}
+
+align:
+{% if tempView.commands.align != nil %}textAlignment="{% if tempView.commands.align equalsString "default" %}natural{% /if %}{% if tempView.commands.align equalsString "left" %} natural{% /if %}{% if tempView.commands.align equalsString "right" %}right{% /if %}{% if tempView.commands.align equalsString "center" %}center{% /if %}"{% else %}textAlignment="natural"{% /if %}
+
+line:
+{% if tempView.commands.line != nil %}numberOfLines="{{ tempView.commands.line }}"{% /if %}
+
+backgroundColor:
+{% if tempView.commands.bgColorRed != nil %}<color key="backgroundColor" red="{% if tempView.commands.bgColorRed != nil %}{{ tempView.commands.bgColorRed | colorfloat }}{% else %}1{% /if %}" green="{% if tempView.commands.bgColorGreen != nil %}{{ tempView.commands.bgColorGreen | colorfloat }}{% else %}1{% /if %}" blue="{% if tempView.commands.bgColorBlue != nil %}{{ tempView.commands.bgColorBlue | colorfloat }}{% else %}1{% /if %}" alpha="{% if tempView.commands.bgColorAlpha != nil %}{{ tempView.commands.bgColorAlpha | colorfloat }}{% else %}1{% /if %}" colorSpace="calibratedRGB"/>{% /if %}
+
+{% if tempView.commands.bgColorRed != nil %}<color key="backgroundColor" red="{% if tempView.commands.bgColorRed != nil %}{{ tempView.commands.bgColorRed | colorfloat }}{% else %}1{% /if %}" green="{% if tempView.commands.bgColorGreen != nil %}{{ tempView.commands.bgColorGreen | colorfloat }}{% else %}1{% /if %}" blue="{% if tempView.commands.bgColorBlue != nil %}{{ tempView.commands.bgColorBlue | colorfloat }}{% else %}1{% /if %}" alpha="{% if tempView.commands.bgColorAlpha != nil %}{{ tempView.commands.bgColorAlpha | colorfloat }}{% else %}1{% /if %}" colorSpace="calibratedRGB"/>{% else %}Label{% /if %}
+
+
+font:
+<fontDescription key="fontDescription" type="system" pointSize="{% if tempView.commands.font != nil %}{{ tempView.commands.font }}{% else %}14{% /if %}"/>
+
+textColor:
+{% if tempView.commands.textColorRed != nil %}<color key="textColor" red="{% if tempView.commands.textColorRed != nil %}{{ tempView.commands.textColorRed | colorfloat }}{% else %}1{% /if %}" green="{% if tempView.commands.textColorGreen != nil %}{{ tempView.commands.textColorGreen | colorfloat }}{% else %}1{% /if %}" blue="{% if tempView.commands.textColorBlue != nil %}{{ tempView.commands.textColorBlue | colorfloat }}{% else %}1{% /if %}" alpha="{% if tempView.commands.textColorAlpha != nil %}{{ tempView.commands.textColorAlpha | colorfloat }}{% else %}1{% /if %}" colorSpace="calibratedRGB"/>{% else %}<nil key="textColor"/>{% /if %}
+
+titleColor:
+{% if tempView.commands.textColorRed != nil %}<state key="normal" title="Button">
+<color key="titleColor" red="{% if tempView.commands.textColorRed != nil %}{{ tempView.commands.textColorRed | colorfloat }}{% else %}1{% /if %}" green="{% if tempView.commands.textColorGreen != nil %}{{ tempView.commands.textColorGreen | colorfloat }}{% else %}1{% /if %}" blue="{% if tempView.commands.textColorBlue != nil %}{{ tempView.commands.textColorBlue | colorfloat }}{% else %}1{% /if %}" alpha="{% if tempView.commands.textColorAlpha != nil %}{{ tempView.commands.textColorAlpha | colorfloat }}{% else %}1{% /if %}" colorSpace="calibratedRGB"/>
+</state>{% else %}<state key="normal" title="Button"/>{% /if %}
+
+
+constraint:
+{% if tempView.constraints != nil %}<constraints>
+{{ tempView.constraints | component }}
+</constraints>{% /if %}

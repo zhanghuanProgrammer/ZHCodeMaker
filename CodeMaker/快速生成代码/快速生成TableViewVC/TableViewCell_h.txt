@@ -1,0 +1,9 @@
+#import "BaseTableViewCell.h"
+
+#import "{{ CellModel }}.h"
+
+@interface {{ TableViewCell }} : BaseTableViewCell
+
+- (void)refreshUI:({{ CellModel }} *)dataModel;
+
+@end

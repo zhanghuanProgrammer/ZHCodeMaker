@@ -1,0 +1,16 @@
+#import "{{ TableViewCell }}.h"
+
+@interface {{ TableViewCell }} ()
+
+@property (nonatomic, weak){{ CellModel }} *dataModel;
+
+@end
+
+@implementation {{ TableViewCell }}
+
+- (void)refreshUI:({{ CellModel }} *)dataModel{
+	_dataModel = dataModel;
+    [super refreshUI:dataModel];
+}
+
+@end
