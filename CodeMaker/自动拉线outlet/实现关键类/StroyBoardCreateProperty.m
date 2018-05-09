@@ -168,12 +168,89 @@ static NSInteger customCount;
     
     return dicM;
 }
+
++ (void)repalceViewToViewController:(NSString *)stroyBoardPath{
+    NSString *fileName = [ZHFileManager getFileNameNoPathComponentFromFilePath:stroyBoardPath];
+    NSString *textOrginal=[NSString stringWithContentsOfFile:stroyBoardPath encoding:NSUTF8StringEncoding error:nil];
+    BOOL isXib = [textOrginal rangeOfString:@"CocoaTouch.XIB"].location != NSNotFound;
+    if(isXib){
+        NSInteger count = -1;
+        NSArray *arr = [textOrginal componentsSeparatedByString:@"\n"];
+        NSMutableArray *arrM = [NSMutableArray array];
+        for (NSString *str in arr) {
+            NSString *replaceStr = str;
+            NSString *tempStr=[ZHNSString removeSpaceBeforeAndAfterWithString:str];
+            tempStr = [ZHNSString removeSpacePrefix:tempStr];
+            tempStr = [ZHNSString removeSpaceSuffix:tempStr];
+            if ([tempStr hasPrefix:@"<view "]) {
+                if ([tempStr rangeOfString:@"customClass=\""].location!=NSNotFound) {
+                    NSString *customClass = [tempStr substringFromIndex:[tempStr rangeOfString:@"customClass=\""].location+@"customClass=\"".length];
+                    customClass = [customClass substringToIndex:[customClass rangeOfString:@"\""].location];
+                    if ([fileName isEqualToString:customClass]) {
+                        count = 0;
+                        replaceStr = [replaceStr stringByReplacingOccurrencesOfString:@"<view " withString:@"<viewController "];
+                    }
+                }
+                if(count>=0)count++;
+            }
+            if ([tempStr hasPrefix:@"</view>"]) {
+                if (count==1) {
+                    replaceStr = [replaceStr stringByReplacingOccurrencesOfString:@"</view>" withString:@"</viewController>"];
+                    count=-1;
+                }
+                count--;if(count<0)count=-1;
+            }
+            [arrM addObject:replaceStr];
+        }
+        [[arrM componentsJoinedByString:@"\n"] writeToFile:stroyBoardPath atomically:YES encoding:NSUTF8StringEncoding error:nil];
+    }
+}
+
++ (void)repalceViewControllerToView:(NSString *)stroyBoardPath{
+    NSString *fileName = [ZHFileManager getFileNameNoPathComponentFromFilePath:stroyBoardPath];
+    NSString *textOrginal=[NSString stringWithContentsOfFile:stroyBoardPath encoding:NSUTF8StringEncoding error:nil];
+    BOOL isXib = [textOrginal rangeOfString:@"CocoaTouch.XIB"].location != NSNotFound;
+    if(isXib){
+        NSInteger count = -1;
+        NSArray *arr = [textOrginal componentsSeparatedByString:@"\n"];
+        NSMutableArray *arrM = [NSMutableArray array];
+        for (NSString *str in arr) {
+            NSString *replaceStr = str;
+            NSString *tempStr=[ZHNSString removeSpaceBeforeAndAfterWithString:str];
+            tempStr = [ZHNSString removeSpacePrefix:tempStr];
+            tempStr = [ZHNSString removeSpaceSuffix:tempStr];
+            if ([tempStr hasPrefix:@"<viewController "]) {
+                if ([tempStr rangeOfString:@"customClass=\""].location!=NSNotFound) {
+                    NSString *customClass = [tempStr substringFromIndex:[tempStr rangeOfString:@"customClass=\""].location+@"customClass=\"".length];
+                    customClass = [customClass substringToIndex:[customClass rangeOfString:@"\""].location];
+                    if ([fileName isEqualToString:customClass]) {
+                        count = 0;
+                        replaceStr = [replaceStr stringByReplacingOccurrencesOfString:@"<viewController " withString:@"<view "];
+                    }
+                }
+                if(count>=0)count++;
+            }
+            if ([tempStr hasPrefix:@"</viewController>"]) {
+                if (count==1) {
+                    replaceStr = [replaceStr stringByReplacingOccurrencesOfString:@"</viewController>" withString:@"</view>"];
+                    count=-1;
+                }
+                count--;if(count<0)count=-1;
+            }
+            [arrM addObject:replaceStr];
+        }
+        [[arrM componentsJoinedByString:@"\n"] writeToFile:stroyBoardPath atomically:YES encoding:NSUTF8StringEncoding error:nil];
+    }
+}
+
 + (NSInteger)createPropertyWithStroyBoardPath:(NSString *)stroyBoardPath withProjectPath:(NSString *)projectPath{
     
     if ([ZHFileManager fileExistsAtPath:stroyBoardPath]==NO||[ZHFileManager fileExistsAtPath:projectPath]==NO) {
         return -1;
     }
     ZHProjectPath=projectPath;
+    
+    [self repalceViewToViewController:stroyBoardPath];
     
     //开始备份一份StroyBoard
 //    [self backupNewStroyBoard:stroyBoardPath];//还是不备份了
@@ -195,6 +272,7 @@ static NSInteger customCount;
     NSInteger count=[self defalutCreateCategory].count;
     
     if (count==0&&customCount==0) {
+        [self repalceViewControllerToView:stroyBoardPath];
         return 0;
     }
     
@@ -219,6 +297,7 @@ static NSInteger customCount;
     
     //这个要放在最后面在运行,因为如果这个StroyBoard是XCode正在打开的文件,那么一旦改变,Xcode会重新加载一遍,StroyBoard文件比较大,加载时间会有点长,导致有点卡,担心影响执行再下面的代码
     [text writeToFile:stroyBoardPath atomically:YES encoding:NSUTF8StringEncoding error:nil];
+    [self repalceViewControllerToView:stroyBoardPath];
     
     [self done];
     customCount=0;
@@ -498,6 +577,7 @@ static NSInteger customCount;
 
 /**为StroyBoard添加真的outlet property*/
 + (NSString *)addOutletProperty:(NSString *)text withUseConstantIdDic:(NSDictionary *)useConstantIdDic withResultDicM:(NSDictionary *)resultDicM{
+    BOOL isXib = [text rangeOfString:@"CocoaTouch.XIB"].location != NSNotFound;
     NSArray *arr=[text componentsSeparatedByString:@"\n"];
     NSMutableArray *arrM=[NSMutableArray array];
     NSString *rowStr,*viewIdenity;
@@ -756,8 +836,12 @@ static NSInteger customCount;
                 }
             }
             if ([tempStr hasPrefix:@"</viewController>"]) {
+                BOOL isContain = NO;
+                if (isXib && i>=2) {
+                    isContain = [arr[i-2] rangeOfString:@"</connections>"].location!=NSNotFound;
+                }
                 //说明这个viewController之前没有拉过约束
-                if (i>0&&[arr[i-1] rangeOfString:@"</connections>"].location==NSNotFound) {
+                if (i>0&&[arr[i-1] rangeOfString:@"</connections>"].location==NSNotFound&&!isContain) {
                     NSMutableString *connections=[NSMutableString string];
                     [connections appendString:@"<connections>\n"];
                     
@@ -801,7 +885,7 @@ static NSInteger customCount;
                     }
                 }
                 //说明这个viewController之前有拉过约束
-                else if(i>0&&[arr[i-1] rangeOfString:@"</connections>"].location!=NSNotFound){
+                else if((i>0&&[arr[i-1] rangeOfString:@"</connections>"].location!=NSNotFound)||isContain){
                     for (NSString *property in viewControllerPropertys) {
                         NSString *newProperty=property;
                         newProperty=[self getRealKey:newProperty];
@@ -828,7 +912,12 @@ static NSInteger customCount;
                         }
                         NSString *outlet=[NSString stringWithFormat:@"<outlet property=\"%@\" destination=\"%@\" id=\"%@\"/>",newProperty,destinationStr,storyBoardIdString];
                         if ([ZHNSString getCountLeftString:@"<outlet property=\"" rightString:[NSString stringWithFormat:@"destination=\"%@\"",destinationStr]  priorityIsLeft:NO notContainStringArr:@[@"<",@">"] inText:text]==0) {
-                            [arrM insertObject:outlet atIndex:arrM.count-1];
+                            if (isXib&&isContain) {
+                                [arrM insertObject:outlet atIndex:arrM.count-2];
+                            }else{
+                                [arrM insertObject:outlet atIndex:arrM.count-1];
+                            }
+                            
                         }else{
                             [[self defalutCreateId]removeObjectForKey:property];
                             [[self defalutCreateCategory]removeObjectForKey:property];

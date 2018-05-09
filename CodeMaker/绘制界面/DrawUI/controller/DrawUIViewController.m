@@ -141,6 +141,8 @@ void errorString(NSString *error){
             [TabBarAndNavagation setLeftBarButtonItemTitle:@"<保存返回" TintColor:[UIColor blackColor] target:self action:@selector(backAction)];
             [self exportTemplate];
         }else{
+            [self exit];
+            return;
             __weak typeof(self)weakSelf=self;
             [ZHAlertAction alertWithTitle:@"是否保存到历史记录" withMsg:@"可到历史记录中找到并且打开" addToViewController:self ActionSheet:NO otherButtonBlocks:@[^{
                 [weakSelf exit];

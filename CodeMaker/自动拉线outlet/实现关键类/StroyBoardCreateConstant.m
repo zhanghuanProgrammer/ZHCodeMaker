@@ -175,7 +175,6 @@
         //在这里插入所有view的创建和约束
         [self.ConstantArrM addObject:viewConstraintDicM_Self_NEW];
         
-        
         NSArray *tableViewCellDic=[ZHStoryboardXMLManager getTableViewCellNamesWithViewControllerDic:subDic andXMLHandel:xml];
         NSArray *collectionViewCellDic=[ZHStoryboardXMLManager getCollectionViewCellNamesWithViewControllerDic:subDic andXMLHandel:xml];
         

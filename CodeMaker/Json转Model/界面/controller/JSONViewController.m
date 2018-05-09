@@ -87,7 +87,7 @@
         JSONFineTuningCellModel *JSONFineTuningModel=[JSONFineTuningCellModel new];
         JSONFineTuningModel.title=fineTunings[i];
         JSONFineTuningModel.row=i+1;
-        JSONFineTuningModel.isSelect=YES;
+        JSONFineTuningModel.isSelect=NO;
         [JSONFineTuningModels addObject:JSONFineTuningModel];
     }
     [self.dataArr addObject:JSONFineTuningModels];
@@ -118,6 +118,7 @@
     [self.cancleButton cornerRadiusWithFloat:5];
     
     [self.importDataButton addTarget:self action:@selector(importDataAction) forControlEvents:1<<6];
+    self.fold=NO;
 }
 
 - (void)setFold:(BOOL)fold{
@@ -690,7 +691,6 @@
             }
             else if([oldObj[objtemp] isKindOfClass:[NSDate class]]){//如果字典里面是NSDate
                 [oldObj setValue:[NSString stringWithFormat:@"NSDate:%@",oldObj[objtemp]] forKey:objtemp];
-                
             }
         }
     }
