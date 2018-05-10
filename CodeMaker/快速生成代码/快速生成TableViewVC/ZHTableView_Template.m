@@ -70,25 +70,16 @@
         }
     }
     
-    //如果需要StroyBoard
-    if([dic[@"是否需要对应的StroyBoard 1:0 (不填写么默认为否)"] isEqualToString:@"1"]){
-        //这里有较多需要判断的情况
-        //1.假如  ViewController的名字 不存在
-        if (![self judge:dic[@"ViewController的名字"]]) {
-            [self saveStoryBoard:@"" TableViewCells:nil toFileName:@[dic[@"最大文件夹名字"],[NSString stringWithFormat:@"MainStroyBoard.storyboard"]]];
-        }else{
-            //没有cells
-            if (![self judge:dic[@"自定义Cell,以逗号隔开"]]) {
-                [self saveStoryBoard:dic[@"ViewController的名字"] TableViewCells:nil toFileName:@[dic[@"最大文件夹名字"],[NSString stringWithFormat:@"MainStroyBoard.storyboard"]]];
-            }else{//有cells
-                NSArray *arr=[dic[@"自定义Cell,以逗号隔开"] componentsSeparatedByString:@","];
-                NSMutableArray *arrM=[NSMutableArray array];
-                for (NSString *str in arr) {
-                    [arrM addObject:[str stringByAppendingString:@"TableViewCell"]];
-                }
-                [self saveStoryBoard:dic[@"ViewController的名字"] TableViewCells:arrM toFileName:@[dic[@"最大文件夹名字"],[NSString stringWithFormat:@"MainStroyBoard.storyboard"]]];
-            }
+    //StroyBoard
+    if (![self judge:dic[@"自定义Cell,以逗号隔开"]]) {
+        [self saveStoryBoard:dic[@"ViewController的名字"] TableViewCells:nil toFileName:@[dic[@"最大文件夹名字"],[NSString stringWithFormat:@"MainStroyBoard.storyboard"]]];
+    }else{//有cells
+        NSArray *arr=[dic[@"自定义Cell,以逗号隔开"] componentsSeparatedByString:@","];
+        NSMutableArray *arrM=[NSMutableArray array];
+        for (NSString *str in arr) {
+            [arrM addObject:[str stringByAppendingString:@"TableViewCell"]];
         }
+        [self saveStoryBoard:dic[@"ViewController的名字"] TableViewCells:arrM toFileName:@[dic[@"最大文件夹名字"],[NSString stringWithFormat:@"MainStroyBoard.storyboard"]]];
     }
     
     [[ZHWordWrap new]wordWrap:[self getDirectoryPath:dic[@"最大文件夹名字"]]];

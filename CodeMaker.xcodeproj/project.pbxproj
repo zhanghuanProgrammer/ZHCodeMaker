@@ -24,6 +24,7 @@
 		041906A61E892A8900867529 /* UIScrollView+ZH.m in Sources */ = {isa = PBXBuildFile; fileRef = 041906A51E892A8900867529 /* UIScrollView+ZH.m */; };
 		04193F121E7BB4660080C036 /* ZHRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = 04193F111E7BB4660080C036 /* ZHRuntime.m */; };
 		04193F151E7BE3E30080C036 /* NSObject+ZH.m in Sources */ = {isa = PBXBuildFile; fileRef = 04193F141E7BE3E30080C036 /* NSObject+ZH.m */; };
+		041AD53320A4226E00513B3A /* CMOutlet.m in Sources */ = {isa = PBXBuildFile; fileRef = 041AD53220A4226E00513B3A /* CMOutlet.m */; };
 		043A0D1F1EA5A18200945694 /* CodeCounter.m in Sources */ = {isa = PBXBuildFile; fileRef = 043A0D1E1EA5A18200945694 /* CodeCounter.m */; };
 		043A0D251EA5A78900945694 /* ZHConditionsToRegex.m in Sources */ = {isa = PBXBuildFile; fileRef = 043A0D221EA5A78900945694 /* ZHConditionsToRegex.m */; };
 		043A0D261EA5A78900945694 /* ZHCreatRegex.m in Sources */ = {isa = PBXBuildFile; fileRef = 043A0D241EA5A78900945694 /* ZHCreatRegex.m */; };
@@ -456,6 +457,11 @@
 		04193F111E7BB4660080C036 /* ZHRuntime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHRuntime.m; sourceTree = "<group>"; };
 		04193F131E7BE3E30080C036 /* NSObject+ZH.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+ZH.h"; sourceTree = "<group>"; };
 		04193F141E7BE3E30080C036 /* NSObject+ZH.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ZH.m"; sourceTree = "<group>"; };
+		041ACB9420A3E97F00513B3A /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
+		041ACB9620A3E98600513B3A /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		041ACB9820A3E98900513B3A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		041AD53120A4226E00513B3A /* CMOutlet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CMOutlet.h; sourceTree = "<group>"; };
+		041AD53220A4226E00513B3A /* CMOutlet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CMOutlet.m; sourceTree = "<group>"; };
 		043A0D1D1EA5A18200945694 /* CodeCounter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodeCounter.h; sourceTree = "<group>"; };
 		043A0D1E1EA5A18200945694 /* CodeCounter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CodeCounter.m; sourceTree = "<group>"; };
 		043A0D211EA5A78900945694 /* ZHConditionsToRegex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHConditionsToRegex.h; sourceTree = "<group>"; };
@@ -1234,6 +1240,15 @@
 				0409BF5C1EA9FF990004630E /* ZHCreatXib.m */,
 			);
 			path = "快速创建Xib";
+			sourceTree = "<group>";
+		};
+		041AD53020A4222200513B3A /* 新功能 */ = {
+			isa = PBXGroup;
+			children = (
+				041AD53120A4226E00513B3A /* CMOutlet.h */,
+				041AD53220A4226E00513B3A /* CMOutlet.m */,
+			);
+			path = "新功能";
 			sourceTree = "<group>";
 		};
 		043A0D201EA5A77F00945694 /* 简单封装正则表达 */ = {
@@ -2922,6 +2937,7 @@
 		04C7C0861E73F66000E5A2F6 /* 自动拉线outlet */ = {
 			isa = PBXGroup;
 			children = (
+				041AD53020A4222200513B3A /* 新功能 */,
 				04C7C0871E73F66000E5A2F6 /* 实现关键类 */,
 				04C7C0901E73F66000E5A2F6 /* 界面 */,
 			);
@@ -3238,6 +3254,9 @@
 		04C7C1C71E73F6C300E5A2F6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				041ACB9820A3E98900513B3A /* SystemConfiguration.framework */,
+				041ACB9620A3E98600513B3A /* CoreTelephony.framework */,
+				041ACB9420A3E97F00513B3A /* libresolv.tbd */,
 				04FF449E1E8208A2000FFF23 /* libz.tbd */,
 				04C7C1C81E73F6C300E5A2F6 /* libsqlite3.tbd */,
 			);
@@ -3916,6 +3935,7 @@
 				04C7C14B1E73F66100E5A2F6 /* CreatFatherFile.m in Sources */,
 				04C7C1BF1E73F66100E5A2F6 /* ZHStoryboardPropertyManager.m in Sources */,
 				04C7C1291E73F66100E5A2F6 /* UIImage+MultiFormat.m in Sources */,
+				041AD53320A4226E00513B3A /* CMOutlet.m in Sources */,
 				04C7C11E1E73F66100E5A2F6 /* MKAnnotationView+WebCache.m in Sources */,
 				04CB5D652044131E00DDB375 /* SAReader.m in Sources */,
 				04C7C1101E73F66000E5A2F6 /* MJRefreshAutoNormalFooter.m in Sources */,

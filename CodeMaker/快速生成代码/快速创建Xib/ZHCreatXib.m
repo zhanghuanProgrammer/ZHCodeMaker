@@ -51,6 +51,7 @@
                                     @interface %@ : UIView\n\
                                     \n\
                                     + (instancetype)loadXibWithFrame:(CGRect)frame;\n\
+                                    + (instancetype)loadXibWithFrame:(CGRect)frame index:(NSInteger)index;\n\
                                     \n\
                                     @end\n\
                                     ",xibName]] ToStrM:textStrM];
@@ -73,10 +74,19 @@
                                     %@ *xibView=[[[NSBundle mainBundle]loadNibNamed:@\"%@\" owner:nil options:nil] firstObject];\n\
                                     xibView.frame=frame;\n\
                                     return xibView;\n\
+                                    }\n\n\
+                                    + (instancetype)loadXibWithFrame:(CGRect)frame index:(NSInteger)index{\n\
+                                    NSArray *views = [[NSBundle mainBundle]loadNibNamed:@\"%@\" owner:nil options:nil];\n\
+                                    if (views.count>index) {\n\
+                                    %@ *xibView=views[index];\n\
+                                    xibView.frame=frame;\n\
+                                    return xibView;\n\
                                     }\n\
+                                    return nil;\n\
+                                    }\
                                     \n\
                                     @end\n\
-                                    ",xibName,xibName,xibName,xibName,xibName]] ToStrM:textStrM];
+                                    ",xibName,xibName,xibName,xibName,xibName,xibName,xibName]] ToStrM:textStrM];
     
     
     return textStrM;

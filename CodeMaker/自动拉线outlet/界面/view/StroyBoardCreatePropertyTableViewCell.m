@@ -1,4 +1,6 @@
 #import "StroyBoardCreatePropertyTableViewCell.h"
+#import "CMOutlet.h"
+#import "StroyBoardCreateProperty.h"
 
 @interface StroyBoardCreatePropertyTableViewCell ()
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -30,10 +32,15 @@
     MBProgressHUD *hud =[MBProgressHUD showHUDAddedToView:[self getViewController].view animated:YES];
     
     hud.label.text = @"正在生成代码!";
+    
+    //开始备份一份StroyBoard
+    [self backupNewStroyBoard:self.dataModel.title];//还是不备份了
+    
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
         // 处理耗时操作的代码块...
-        NSInteger count=[StroyBoardCreateProperty createPropertyWithStroyBoardPath:self.dataModel.title withProjectPath:self.dataModel.subTitle];
+        NSInteger count = [CMOutlet createOutletWithStroyBoardPath:self.dataModel.title withProjectPath:self.dataModel.subTitle];
+        count+=[StroyBoardCreateProperty createPropertyWithStroyBoardPath:self.dataModel.title withProjectPath:self.dataModel.subTitle];
         
         //通知主线程刷新
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -49,6 +56,24 @@
             });
         });
     });
+}
+
+- (void)backupNewStroyBoard:(NSString *)filePath{
+    //有后缀的文件名
+    NSString *tempFileName=[ZHFileManager getFileNameFromFilePath:filePath];
+    
+    //无后缀的文件名
+    NSString *fileName=[ZHFileManager getFileNameNoPathComponentFromFilePath:filePath];
+    
+    //获取无文件名的路径
+    NSString *newFilePath=[filePath stringByReplacingOccurrencesOfString:tempFileName withString:@""];
+    
+    //拿到新的有后缀的文件名
+    tempFileName=[tempFileName stringByReplacingOccurrencesOfString:fileName withString:[NSString stringWithFormat:@"%@备份",fileName]];
+    
+    newFilePath = [newFilePath stringByAppendingPathComponent:tempFileName];
+    
+    [ZHFileManager copyItemAtPath:filePath toPath:newFilePath];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

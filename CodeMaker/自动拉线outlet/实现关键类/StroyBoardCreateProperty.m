@@ -252,9 +252,6 @@ static NSInteger customCount;
     
     [self repalceViewToViewController:stroyBoardPath];
     
-    //开始备份一份StroyBoard
-//    [self backupNewStroyBoard:stroyBoardPath];//还是不备份了
-    
     NSMutableDictionary *resultDicM=[NSMutableDictionary dictionary];
     [[StroyBoardCreateConstant new]getConstant:stroyBoardPath toConstantDicM:resultDicM];
     
@@ -1134,24 +1131,6 @@ static NSInteger customCount;
         [propertyArrM addObject:customClass];
         [[self defalutCreateProperty]setValue:propertyArrM forKey:cellFileName];
     }
-}
-
-+ (void)backupNewStroyBoard:(NSString *)filePath{
-    //有后缀的文件名
-    NSString *tempFileName=[ZHFileManager getFileNameFromFilePath:filePath];
-    
-    //无后缀的文件名
-    NSString *fileName=[ZHFileManager getFileNameNoPathComponentFromFilePath:filePath];
-    
-    //获取无文件名的路径
-    NSString *newFilePath=[filePath stringByReplacingOccurrencesOfString:tempFileName withString:@""];
-    
-    //拿到新的有后缀的文件名
-    tempFileName=[tempFileName stringByReplacingOccurrencesOfString:fileName withString:[NSString stringWithFormat:@"%@备份",fileName]];
-    
-    newFilePath = [newFilePath stringByAppendingPathComponent:tempFileName];
-    
-    [ZHFileManager copyItemAtPath:filePath toPath:newFilePath];
 }
 
 + (void)done{

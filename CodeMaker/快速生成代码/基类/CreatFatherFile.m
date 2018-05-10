@@ -405,19 +405,20 @@
             
             [text appendFormat:@"<subviews>\n\
              <imageView userInteractionEnabled=\"NO\" contentMode=\"scaleToFill\" horizontalHuggingPriority=\"251\" verticalHuggingPriority=\"251\" fixedFrame=\"YES\" translatesAutoresizingMaskIntoConstraints=\"NO\" id=\"%@\">\n\
-             <rect key=\"frame\" x=\"17\" y=\"8\" width=\"102\" height=\"107\"/>\n\
+             <rect key=\"frame\" x=\"17\" y=\"8\" width=\"50\" height=\"50\"/>\n\
              </imageView>\n\
              <label opaque=\"NO\" userInteractionEnabled=\"NO\" contentMode=\"left\" horizontalHuggingPriority=\"251\" verticalHuggingPriority=\"251\" fixedFrame=\"YES\" text=\"Label\" textAlignment=\"natural\" lineBreakMode=\"tailTruncation\" baselineAdjustment=\"alignBaselines\" adjustsFontSizeToFit=\"NO\" translatesAutoresizingMaskIntoConstraints=\"NO\" id=\"%@\">\n\
-             <rect key=\"frame\" x=\"164\" y=\"51\" width=\"42\" height=\"21\"/>\n\
-             <fontDescription key=\"fontDescription\" type=\"system\" pointSize=\"17\"/>\n\
+             <rect key=\"frame\" x=\"75\" y=\"8\" width=\"42\" height=\"21\"/>\n\
+             <fontDescription key=\"fontDescription\" type=\"system\" pointSize=\"14\"/>\n\
              <color key=\"textColor\" red=\"0.0\" green=\"0.0\" blue=\"0.0\" alpha=\"1\" colorSpace=\"calibratedRGB\"/>\n\
              <nil key=\"highlightedColor\"/>\n\
              </label>\n\
-             <textField opaque=\"NO\" clipsSubviews=\"YES\" contentMode=\"scaleToFill\" fixedFrame=\"YES\" contentHorizontalAlignment=\"left\" contentVerticalAlignment=\"center\" borderStyle=\"roundedRect\" textAlignment=\"natural\" minimumFontSize=\"17\" translatesAutoresizingMaskIntoConstraints=\"NO\" id=\"%@\">\n\
-             <rect key=\"frame\" x=\"252\" y=\"13\" width=\"97\" height=\"30\"/>\n\
+             <label opaque=\"NO\" userInteractionEnabled=\"NO\" contentMode=\"left\" horizontalHuggingPriority=\"251\" verticalHuggingPriority=\"251\" fixedFrame=\"YES\" text=\"Label\" textAlignment=\"natural\" lineBreakMode=\"tailTruncation\" baselineAdjustment=\"alignBaselines\" adjustsFontSizeToFit=\"NO\" translatesAutoresizingMaskIntoConstraints=\"NO\" id=\"%@\">\n\
+             <rect key=\"frame\" x=\"75\" y=\"37\" width=\"42\" height=\"21\"/>\n\
              <fontDescription key=\"fontDescription\" type=\"system\" pointSize=\"14\"/>\n\
-             <textInputTraits key=\"textInputTraits\"/>\n\
-             </textField>\n\
+             <color key=\"textColor\" red=\"0.0\" green=\"0.0\" blue=\"0.0\" alpha=\"1\" colorSpace=\"calibratedRGB\"/>\n\
+             <nil key=\"highlightedColor\"/>\n\
+             </label>\n\
              </subviews>",imageViewID,LabelID,TextFiledID];
             
             [text appendString:@"</tableViewCellContentView>\n\
