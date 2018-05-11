@@ -593,35 +593,11 @@ void errorString(NSString *error){
         self.commandTextField.text = @"";
         return YES;
     }
-    if ([commandTemp isEqualToString:@"-"]) {
+    if ([commandTemp isEqualToString:@"d"]) {
         if (self.selectView) {
             [self removeView:self.selectView];
             self.selectView = nil;
             self.commandTextField.text = @"";
-        }
-        return YES;
-    }
-    if ([commandTemp isEqualToString:@"a"]) {
-        if (self.selectView) {
-            
-        }
-        return YES;
-    }
-    if ([commandTemp isEqualToString:@"d"]) {
-        if (self.selectView) {
-            
-        }
-        return YES;
-    }
-    if ([commandTemp isEqualToString:@"w"]) {
-        if (self.selectView) {
-            
-        }
-        return YES;
-    }
-    if ([commandTemp isEqualToString:@"s"]) {
-        if (self.selectView) {
-            
         }
         return YES;
     }
@@ -630,6 +606,25 @@ void errorString(NSString *error){
 
 - (void)runScripHuiZhi{
     NSString *commandTemp = [[self.commandTextField.text stringByTrim] lowercaseString];
+    if ([commandTemp rangeOfString:@" "].location!=NSNotFound) {
+        commandTemp = [ZHNSString removeSpacePrefix:commandTemp];
+        commandTemp = [ZHNSString removeSpaceSuffix:commandTemp];
+        NSArray *arr = [commandTemp componentsSeparatedByString:@" "];
+        if (arr.count>=2) {
+            NSString *w_string = arr[0];
+            NSString *h_string = arr[1];
+            if (w_string.length > 0 && h_string.length >0) {
+                if (([ZHNSString isPureInt:w_string]||[ZHNSString isPureFloat:w_string])&&
+                    ([ZHNSString isPureInt:h_string]||[ZHNSString isPureFloat:h_string])) {
+                    CGFloat w = [w_string floatValue];
+                    CGFloat h = [h_string floatValue];
+                    if (w>0) self.selectView.width = w;
+                    if (h>0) self.selectView.width = h;
+                }
+            }
+        }
+        return;
+    }
     if ([commandTemp hasPrefix:@"x "]||[commandTemp hasPrefix:@"y "]||[commandTemp hasPrefix:@"w "]||[commandTemp hasPrefix:@"h "]) {
         NSInteger type = 0;
         if([commandTemp hasPrefix:@"x "])type = 1;
