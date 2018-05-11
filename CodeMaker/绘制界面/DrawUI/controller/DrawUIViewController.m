@@ -32,7 +32,6 @@ void errorString(NSString *error){
     _isEdit=isEdit;
     if (isEdit) {
         self.drawBoard.hidden=YES;
-        self.commandTextField.hidden=NO;
         self.drawBoard.customBtn.hidden=YES;
         [TabBarAndNavagation setRightBarButtonItemTitle:@"绘制" TintColor:[UIColor blackColor] target:self action:@selector(editAction)];
         if([self.view isKindOfClass:[SCLazyView class]]){
@@ -41,12 +40,13 @@ void errorString(NSString *error){
         [self.commandTextField becomeFirstResponder];
     }else{
         self.drawBoard.hidden=NO;
-        self.commandTextField.hidden=YES;
         self.drawBoard.customBtn.hidden=NO;
         [TabBarAndNavagation setRightBarButtonItemTitle:@"编辑" TintColor:[UIColor blackColor] target:self action:@selector(editAction)];
+        self.textView.hidden = YES;
         if([self.view isKindOfClass:[SCLazyView class]]){
             [(SCLazyView *)self.view unActived];
         }
+        [self.commandTextField becomeFirstResponder];
     }
 }
 
@@ -85,7 +85,8 @@ void errorString(NSString *error){
     textFiled.textColor=[UIColor whiteColor];
     self.commandTextField=textFiled;
     self.commandTextField.tag = 999;
-    self.commandTextField.hidden= YES;
+    self.commandTextField.hidden= NO;
+    [self.commandTextField becomeFirstResponder];
     self.commandTextField.autocorrectionType = UITextAutocorrectionTypeNo;
     self.commandTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
     [self.view addSubview:self.commandTextField];
@@ -108,6 +109,10 @@ void errorString(NSString *error){
         [weakSelf.commandTextField becomeFirstResponder];
     } WithIdentity:@"ShouldInputCommand"];
     [ZHBlockSingleCategroy addBlockWithNULL:^{
+        if (!weakSelf.isEdit) {
+            
+            return;
+        }
         if (weakSelf.selectView) {
             DrawViewModel *model = [weakSelf getDrawViewModel:[NSString stringWithFormat:@"%p",weakSelf.selectView]];
             NSString *commandText = [model conmandText];
@@ -115,7 +120,7 @@ void errorString(NSString *error){
             weakSelf.textView.text = commandText;
             weakSelf.textView.hidden = !(weakSelf.textView.text.length>0);
             [weakSelf.view bringSubviewToFront:weakSelf.textView];
-            weakSelf.textView.y = weakSelf.selectView.centerY>weakSelf.view.height/2.0?(weakSelf.selectView.y-weakSelf.textView.height):(weakSelf.selectView.maxY);
+            weakSelf.textView.y = weakSelf.selectView.centerY>weakSelf.view.height/2.0?(weakSelf.selectView.y-weakSelf.textView.height-10):(weakSelf.selectView.maxY+10);
         }else{
             weakSelf.textView.text = @"";
             weakSelf.textView.hidden = YES;
@@ -174,7 +179,93 @@ void errorString(NSString *error){
     self.isEdit=!self.isEdit;
     [self shouldSave];
 }
+
+- (DrawViewModel *)getDrawViewModel:(NSString *)viewIp{
+    for (DrawViewModel *model in self.drawViews) if ([[NSString stringWithFormat:@"%p",model.relateView]isEqualToString:viewIp]) return model;
+    return nil;
+}
+- (void)addView:(CGRect)frame type:(NSString *)viewType{
+    DrawViewModel *model=[DrawViewModel new];
+    model.categoryView=viewType;
+    UIView *view=[ZHDrawSubViewHelp getViewWithFrame:frame withViewCategory:model.categoryView];
+    view.tag=++self.tagIndex;
+    model.relateView=view;
+    model.frame = frame;
+    [view addShadowWithShadowOffset:CGSizeZero];
+    [view addBlurEffectWithAlpha:0.1];
+    [self.view addSubview:view];
+    [self.view bringSubviewToFront:self.drawBoard];
+    [self.drawViews addObject:model];
+    [self shouldSave];
+}
+
+/**打开历史记录*/
+- (void)openDrawViewModels:(NSArray *)models{
+    for (DrawViewModel *model in self.drawViews) [model.relateView removeAllSubviews];
+    [self.drawViews removeAllObjects];
+    self.tagIndex = 0;
+    for (DrawViewModel *model in models) {
+        UIView *view=[ZHDrawSubViewHelp getViewWithFrame:model.frame withViewCategory:model.categoryView];
+        view.tag=++self.tagIndex;
+        model.relateView=view;
+        [view addShadowWithShadowOffset:CGSizeZero];
+        [view addBlurEffectWithAlpha:0.1];
+        [self.view addSubview:view];
+        [self.view bringSubviewToFront:self.drawBoard];
+        [self.drawViews addObject:model];
+        [self shouldSave];
+    }
+    for (DrawViewModel *model in models) {
+        [model reOpenViewIpAjust:models];
+    }
+}
+
+- (void)removeView:(UIView *)view{
+    for (NSInteger i=0; i<self.drawViews.count; i++) {
+        DrawViewModel *model=self.drawViews[i];
+        if ([model.relateView isEqual:view]) {
+            [self.drawViews removeObject:model];
+            break;
+        }
+    }
+    for (DrawViewModel *model in self.drawViews) {
+        [model deleteOverDataViewIp:self.drawViews relateViewIP:[NSString stringWithFormat:@"%p",view]];
+    }
+    [view removeFromSuperview];
+    [self shouldSave];
+}
+
+- (void)shouldSave{
+    if (self.drawViews.count>0) {
+        self.isSave=NO;
+        [TabBarAndNavagation setLeftBarButtonItemTitle:@"导出" TintColor:[UIColor blackColor] target:self action:@selector(backAction)];
+    }else{
+        [TabBarAndNavagation setLeftBarButtonItemTitle:@"<保存返回" TintColor:[UIColor blackColor] target:self action:@selector(backAction)];
+    }
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [self runScrip];
+    UITextPosition *begin = textField.beginningOfDocument;
+    UITextPosition *end = [textField positionFromPosition:begin offset:textField.text.length];
+    UITextRange *range = [textField textRangeFromPosition:begin toPosition:end];
+    self.commandTextField.selectedTextRange=range;
+    return YES;
+}
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    textField.textColor=[UIColor whiteColor];
+    return YES;
+}
+
 - (void)runScrip{
+    if ([self runScripPublic]) {
+        return;
+    }
+    if (!self.isEdit) {
+        [self runScripHuiZhi];
+        return;
+    }
+    
     BOOL isSuccess = YES;
     static BOOL isInSuper = NO;
     if (self.constarintOperation.count>0) {
@@ -262,7 +353,7 @@ void errorString(NSString *error){
                     if (model.secondItem.length>0) [((SCLazyView *)self.view) reSelectControll:model];
                 }
                 return;
-            }else{isSuccess = NO; errorString(@"删除的下标越界了");}
+            }else{isSuccess = NO; errorString(@"选择的下标越界了");}
         }else if([command hasPrefix:@"cl "]||[command hasPrefix:@"textcl "]){//颜色属性
             BOOL isTextColor = [command hasPrefix:@"textcl "];
             NSString *subCommand = [command substringFromIndex:isTextColor?7:3];
@@ -316,7 +407,7 @@ void errorString(NSString *error){
             if (align.length>0) {
                 [model addOrUpdateCommand:@{@"align":align}];
             }else{
-                 isSuccess = NO;errorString(@"align 对齐方式不明 建议为 d,l,r,c");
+                isSuccess = NO;errorString(@"align 对齐方式不明 建议为 d,l,r,c");
             }
         }else if([command hasPrefix:@"inview "]){//在某个view里面
             NSString *subCommand = [command substringFromIndex:@"inview ".length];
@@ -327,7 +418,7 @@ void errorString(NSString *error){
                     DrawViewModel *target = self.drawViews[index];
                     [model addOrUpdateCommand:@{@"inview":[NSString stringWithFormat:@"%p",target.relateView]}];
                 }
-                else{isSuccess = NO; errorString(@"删除的下标越界了");}
+                else{isSuccess = NO; errorString(@"addSubView的下标越界了");}
             }else{
                 isSuccess = NO;
                 errorString(@"如果想让这个view嵌套在某个父View中,请输入正确父View下标");
@@ -384,7 +475,7 @@ void errorString(NSString *error){
                         }else{ isSuccess = NO; errorString(@"与其它view宽和高相等,垂直对齐,水平对齐 后面必须为两个数,第一个为整数,代表view标志,第二个代表constant");}
                     }else{ isSuccess = NO; errorString(@"不能与view自己宽和高相等,垂直对齐,水平对齐");}
                 }else{ isSuccess = NO; errorString(@"对齐的view的下标越界");}
-                }else{ isSuccess = NO; errorString(@"与其它view宽和高相等,垂直对齐,水平对齐 后面必须为两个数,第一个为整数,代表view标志,第二个代表constant");}
+            }else{ isSuccess = NO; errorString(@"与其它view宽和高相等,垂直对齐,水平对齐 后面必须为两个数,第一个为整数,代表view标志,第二个代表constant");}
         }else if([command hasPrefix:@"wh "]){//自身宽高等比
             NSString *subCommand = [command substringFromIndex:@"wh ".length];
             if ([ZHNSString contain:@":" inText:subCommand]) {
@@ -451,81 +542,112 @@ void errorString(NSString *error){
     }
     isInSuper = NO;
 }
-- (DrawViewModel *)getDrawViewModel:(NSString *)viewIp{
-    for (DrawViewModel *model in self.drawViews) if ([[NSString stringWithFormat:@"%p",model.relateView]isEqualToString:viewIp]) return model;
-    return nil;
-}
-- (void)addView:(CGRect)frame type:(NSString *)viewType{
-    DrawViewModel *model=[DrawViewModel new];
-    model.categoryView=viewType;
-    UIView *view=[ZHDrawSubViewHelp getViewWithFrame:frame withViewCategory:model.categoryView];
-    view.tag=++self.tagIndex;
-    model.relateView=view;
-    model.frame = frame;
-    [view addShadowWithShadowOffset:CGSizeZero];
-    [view addBlurEffectWithAlpha:0.1];
-    [self.view addSubview:view];
-    [self.view bringSubviewToFront:self.drawBoard];
-    [self.drawViews addObject:model];
-    [self shouldSave];
-}
 
-/**打开历史记录*/
-- (void)openDrawViewModels:(NSArray *)models{
-    for (DrawViewModel *model in self.drawViews) [model.relateView removeAllSubviews];
-    [self.drawViews removeAllObjects];
-    self.tagIndex = 0;
-    for (DrawViewModel *model in models) {
-        UIView *view=[ZHDrawSubViewHelp getViewWithFrame:model.frame withViewCategory:model.categoryView];
-        view.tag=++self.tagIndex;
-        model.relateView=view;
-        [view addShadowWithShadowOffset:CGSizeZero];
-        [view addBlurEffectWithAlpha:0.1];
-        [self.view addSubview:view];
-        [self.view bringSubviewToFront:self.drawBoard];
-        [self.drawViews addObject:model];
-        [self shouldSave];
-    }
-    for (DrawViewModel *model in models) {
-        [model reOpenViewIpAjust:models];
-    }
-}
-
-- (void)removeView:(UIView *)view{
-    for (NSInteger i=0; i<self.drawViews.count; i++) {
-        DrawViewModel *model=self.drawViews[i];
-        if ([model.relateView isEqual:view]) {
-            [self.drawViews removeObject:model];
-            break;
+- (BOOL)runScripPublic{
+    NSString *commandTemp = [[self.commandTextField.text stringByTrim] lowercaseString];
+    if ([commandTemp isEqualToString:@"e"]) {
+        if (self.selectView) {
+            [(SCLazyView *)self.view tapSelectSubView:self.selectView];
         }
+        self.commandTextField.text = @"";
+        return YES;
     }
-    for (DrawViewModel *model in self.drawViews) {
-        [model deleteOverDataViewIp:self.drawViews relateViewIP:[NSString stringWithFormat:@"%p",view]];
+    if (!self.isEdit&&[commandTemp isEqualToString:@"c"]) {
+        [self.drawBoard cancelClick];
+        self.commandTextField.text = @"";
+        return YES;
     }
-    [view removeFromSuperview];
-    [self shouldSave];
+    if (self.drawBoard.onDraw&&!self.isEdit) {
+        [self.drawBoard CustombuttonTap];
+        return YES;
+    }
+    if(commandTemp.length<=0){
+        if (!self.selectView && self.drawViews.count>0) {
+            DrawViewModel *model = [self.drawViews firstObject];
+            [(SCLazyView *)self.view tapSelectSubView:model.relateView];
+            return YES;
+        }
+        if (!self.selectView)return YES;
+        DrawViewModel *model = [self getDrawViewModel:[NSString stringWithFormat:@"%p",self.selectView]];
+        NSInteger index = [self.drawViews indexOfObject:model];
+        index++;
+        if(self.drawViews.count<=index)index=0;
+        model = self.drawViews[index];
+        [(SCLazyView *)self.view tapSelectSubView:model.relateView];
+        return YES;
+    }
+    if ([commandTemp isEqualToString:@"1"]) {
+        self.isEdit=!self.isEdit;
+        self.commandTextField.text = @"";
+        return YES;
+    }
+    if ([commandTemp isEqualToString:@"z"]) {
+        if (self.drawViews.count>0) {
+            DrawViewModel *model = [self.drawViews lastObject];
+            [(SCLazyView *)self.view tapSelectSubView:model.relateView];
+        }
+        if (self.selectView) {
+            [self removeView:self.selectView];
+            self.selectView = nil;
+        }
+        self.commandTextField.text = @"";
+        return YES;
+    }
+    if ([commandTemp isEqualToString:@"-"]) {
+        if (self.selectView) {
+            [self removeView:self.selectView];
+            self.selectView = nil;
+            self.commandTextField.text = @"";
+        }
+        return YES;
+    }
+    if ([commandTemp isEqualToString:@"a"]) {
+        if (self.selectView) {
+            
+        }
+        return YES;
+    }
+    if ([commandTemp isEqualToString:@"d"]) {
+        if (self.selectView) {
+            
+        }
+        return YES;
+    }
+    if ([commandTemp isEqualToString:@"w"]) {
+        if (self.selectView) {
+            
+        }
+        return YES;
+    }
+    if ([commandTemp isEqualToString:@"s"]) {
+        if (self.selectView) {
+            
+        }
+        return YES;
+    }
+    return NO;
 }
 
-- (void)shouldSave{
-    if (self.drawViews.count>0) {
-        self.isSave=NO;
-        [TabBarAndNavagation setLeftBarButtonItemTitle:@"导出" TintColor:[UIColor blackColor] target:self action:@selector(backAction)];
-    }else{
-        [TabBarAndNavagation setLeftBarButtonItemTitle:@"<保存返回" TintColor:[UIColor blackColor] target:self action:@selector(backAction)];
+- (void)runScripHuiZhi{
+    NSString *commandTemp = [[self.commandTextField.text stringByTrim] lowercaseString];
+    if ([commandTemp hasPrefix:@"x "]||[commandTemp hasPrefix:@"y "]||[commandTemp hasPrefix:@"w "]||[commandTemp hasPrefix:@"h "]) {
+        NSInteger type = 0;
+        if([commandTemp hasPrefix:@"x "])type = 1;
+        if([commandTemp hasPrefix:@"y "])type = 2;
+        if([commandTemp hasPrefix:@"w "])type = 3;
+        if([commandTemp hasPrefix:@"h "])type = 4;
+        commandTemp = [commandTemp substringFromIndex:2];
+        if (commandTemp.length>0 && [ZHNSString isPureInt:commandTemp]) {
+            NSInteger commandInt = [commandTemp integerValue];
+            if (self.selectView) {
+                if (type==1) self.selectView.x = commandInt;
+                if (type==2) self.selectView.y = commandInt;
+                if (type==3) self.selectView.width = commandInt;
+                if (type==4) self.selectView.height = commandInt;
+            }
+        }
+        return;
     }
-}
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField{
-    [self runScrip];
-    UITextPosition *begin = textField.beginningOfDocument;
-    UITextPosition *end = [textField positionFromPosition:begin offset:textField.text.length];
-    UITextRange *range = [textField textRangeFromPosition:begin toPosition:end];
-    self.commandTextField.selectedTextRange=range;
-    return YES;
-}
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
-    textField.textColor=[UIColor whiteColor];
-    return YES;
 }
 
 @end

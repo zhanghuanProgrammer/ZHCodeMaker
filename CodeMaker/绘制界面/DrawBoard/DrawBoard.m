@@ -17,7 +17,6 @@
 //判断
 @property (nonatomic, assign) BOOL onOne;
 @property (nonatomic, assign) BOOL onTwo;
-@property (nonatomic, assign) BOOL onDraw;
 
 @property (nonatomic, strong) UIColor *lastColor;
 
@@ -106,31 +105,36 @@
     [avatar setBackgroundImage:@"loadAvatar"];
     
     [avatar setTapBlock:^(Custombutton *avatar) {
-        if (self.vc&&_onDraw==1){
-            __weak typeof(self)weakSelf=self;
-            
-            CGFloat minX,minY,maxX,maxY;
-            minX=_one.x<_two.x?_one.x:_two.x;
-            maxX=_one.x>_two.x?_one.x:_two.x;
-            minY=_one.y<_two.y?_one.y:_two.y;
-            maxY=_one.y>_two.y?_one.y:_two.y;
-            CGRect rect = CGRectMake(minX, minY, maxX - minX, maxY - minY);
-            
-            [ZHBlockSingleCategroy addBlockWithNSString:^(NSString *str1) {
-                [weakSelf.vc addView:rect type:str1];
-                [weakSelf cancelClick];
-            } WithIdentity:@"DrawUIViewControllerViewCategory"];
-            SearchLayoutLibriaryViewController *vc=(SearchLayoutLibriaryViewController *)[TabBarAndNavagation getViewControllerFromStoryBoardWithIdentity:@"SearchLayoutLibriaryViewController"];
-            vc.isUseForOtherUIViewController=YES;
-            [self.vc.navigationController pushViewController:vc animated:NO];
-        }
+        [self CustombuttonTap];
     }];
+    
     [avatar setLongPressBlock:^(Custombutton *button) {
         [self cancelClick];
     }];
     [avatar setDoubleTapBlock:^(Custombutton *button) {
         [ZHBlockSingleCategroy runBlockNULLIdentity:@"DrawUIViewControllerOpenHistory"];
     }];
+}
+
+- (void)CustombuttonTap{
+    if (self.vc&&_onDraw==1){
+        __weak typeof(self)weakSelf=self;
+        
+        CGFloat minX,minY,maxX,maxY;
+        minX=_one.x<_two.x?_one.x:_two.x;
+        maxX=_one.x>_two.x?_one.x:_two.x;
+        minY=_one.y<_two.y?_one.y:_two.y;
+        maxY=_one.y>_two.y?_one.y:_two.y;
+        CGRect rect = CGRectMake(minX, minY, maxX - minX, maxY - minY);
+        
+        [ZHBlockSingleCategroy addBlockWithNSString:^(NSString *str1) {
+            [weakSelf.vc addView:rect type:str1];
+            [weakSelf cancelClick];
+        } WithIdentity:@"DrawUIViewControllerViewCategory"];
+        SearchLayoutLibriaryViewController *vc=(SearchLayoutLibriaryViewController *)[TabBarAndNavagation getViewControllerFromStoryBoardWithIdentity:@"SearchLayoutLibriaryViewController"];
+        vc.isUseForOtherUIViewController=YES;
+        [self.vc.navigationController pushViewController:vc animated:NO];
+    }
 }
 
 #pragma mark-------------------按钮点击--------------

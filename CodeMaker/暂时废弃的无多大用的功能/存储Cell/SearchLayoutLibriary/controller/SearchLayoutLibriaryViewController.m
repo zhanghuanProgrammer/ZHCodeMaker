@@ -3,13 +3,16 @@
 #import "SearchLayoutLibriaryCollectionViewCell.h"
 #import "ZHSearchCondition.h"
 
-@interface SearchLayoutLibriaryViewController ()<UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
+@interface SearchLayoutLibriaryViewController ()<UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-
+@property (nonatomic,strong)UITextField *commandTextField;
 @property (nonatomic,strong)NSMutableArray *dataArr;
-
+@property (nonatomic,weak)UICollectionViewCell *selectCell;
 @end
+
+static int isRepeat = NO;
+
 @implementation SearchLayoutLibriaryViewController
 - (NSMutableArray *)dataArr{
 	if (!_dataArr) {
@@ -32,6 +35,14 @@
 
 - (void)viewDidLoad{
 	[super viewDidLoad];
+    self.commandTextField=[[UITextField alloc]initWithFrame:CGRectMake(0, 0, self.view.width, 30)];
+    [self.view addSubview:self.commandTextField];
+    self.commandTextField.autocorrectionType = UITextAutocorrectionTypeNo;
+    self.commandTextField.delegate=self;
+    self.commandTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    [self.view sendSubviewToBack:self.commandTextField];
+    [self.commandTextField becomeFirstResponder];
+    
 	[self addFlowLayoutToCollectionView:self.collectionView];
 	self.edgesForExtendedLayout=UIRectEdgeNone;
     self.title=@"条件搜索";
@@ -40,7 +51,6 @@
     }else{
         [TabBarAndNavagation setRightBarButtonItemTitle:@"打开历史记录" TintColor:[UIColor redColor] target:self action:@selector(clear)];
     }
-    
     
     __weak typeof(self)weakSelf=self;
     [ZHBlockSingleCategroy addBlockWithNULL:^{
@@ -52,6 +62,61 @@
         }
         [[ZHSearchCondition sharedZHSearchCondition]updateCondition:tempCondition];
     } WithIdentity:@"UpdateSearchLayoutLibriary"];
+    
+    [self repeatAction];
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    isRepeat = YES;
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    isRepeat = NO;
+}
+
+- (void)repeatAction{
+    NSString *commandTemp = [[self.commandTextField.text stringByTrim] lowercaseString];
+    if(commandTemp.length>0){
+        if ([ZHNSString isPureInt:commandTemp]) {
+            if (self.selectCell) {
+                [self.selectCell cornerRadiusWithFloat:10 borderColor:[[UIColor grayColor] colorWithAlphaComponent:0.6] borderWidth:1];
+                self.selectCell = nil;
+            }
+            UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:[commandTemp integerValue]-1 inSection:0]];
+            if (cell) {
+                [cell cornerRadiusWithFloat:10 borderColor:[UIColor redColor] borderWidth:1];
+                self.selectCell = cell;
+            }else{
+                self.commandTextField.text = @"";
+            }
+        }else{
+            self.commandTextField.text = @"";
+        }
+    }else{
+        if (self.selectCell) {
+            [self.selectCell cornerRadiusWithFloat:10 borderColor:[[UIColor grayColor] colorWithAlphaComponent:0.6] borderWidth:1];
+            self.selectCell = nil;
+        }
+    }
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if (isRepeat) {
+            [self repeatAction];
+        }
+    });
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [self runScrip];
+    return YES;
+}
+
+- (void)runScrip{
+    if (self.selectCell) {
+        [self collectionView:self.collectionView didSelectItemAtIndexPath:[self.collectionView indexPathForCell:self.selectCell]];
+    }
 }
 
 - (void)clear{
@@ -128,7 +193,6 @@
             [self.navigationController popViewControllerAnimated:NO];
         }
     }
-    
 }
 
 @end

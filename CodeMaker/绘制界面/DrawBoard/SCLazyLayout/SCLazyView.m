@@ -98,17 +98,21 @@ static const NSString *tapKey = @"tap";
 }
 
 - (void)tapSubView:(UITapGestureRecognizer *)tap{
+    [self tapSelectSubView:tap.view];
+}
+
+- (void)tapSelectSubView:(UIView *)view{
     [ZHBlockSingleCategroy runBlockNULLIdentity:@"ShouldInputCommand"];
     //推荐约束
     if (self.viewController.selectView) {
         [self.viewController.selectView cornerRadiusWithFloat:0 borderColor:[UIColor clearColor] borderWidth:0];
     }
-    if (tap.view == self.viewController.selectView) {
+    if (view == self.viewController.selectView) {
         self.viewController.selectView = nil;
         [ZHBlockSingleCategroy runBlockNULLIdentity:@"DrawViewSelectView"];
         return;
     }
-    self.viewController.selectView = tap.view;
+    self.viewController.selectView = view;
     [self.viewController.selectView cornerRadiusWithFloat:0.1 borderColor:[UIColor redColor] borderWidth:1];
     [ZHBlockSingleCategroy runBlockNULLIdentity:@"DrawViewSelectView"];
 }

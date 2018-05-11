@@ -3473,9 +3473,6 @@
 		198FAB3E1F42D3ED0063BE6B /* DrawBoard */ = {
 			isa = PBXGroup;
 			children = (
-				198FAB441F42D3ED0063BE6B /* Custombutton.h */,
-				198FAB451F42D3ED0063BE6B /* Custombutton.m */,
-				198FAB461F42D3ED0063BE6B /* loadAvatar@2x.png */,
 				198FAB591F42F8630063BE6B /* SCLazyLayout */,
 				198FAB3F1F42D3ED0063BE6B /* DrawBoard.h */,
 				198FAB401F42D3ED0063BE6B /* DrawBoard.m */,
@@ -3487,6 +3484,9 @@
 		198FAB411F42D3ED0063BE6B /* views */ = {
 			isa = PBXGroup;
 			children = (
+				198FAB441F42D3ED0063BE6B /* Custombutton.h */,
+				198FAB451F42D3ED0063BE6B /* Custombutton.m */,
+				198FAB461F42D3ED0063BE6B /* loadAvatar@2x.png */,
 				198FAB491F42D3ED0063BE6B /* PathStyle.h */,
 				198FAB4A1F42D3ED0063BE6B /* PathStyle.m */,
 				19DA74141F43ED2F00CF081C /* DrawViewModel.h */,

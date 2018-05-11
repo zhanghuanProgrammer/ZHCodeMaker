@@ -444,7 +444,7 @@ static NSInteger customCount;
                                     NSString *tempCustomStr=[self setProperty:idStr forKey:customStr];
                                     
                                     [self addCustomClassProperty:tempCustomStr withCellFileName:CellFileName withViewControllerFileName:ViewControllerFileName];
-                                    [[self defalutCreateCategory]setValue:[viewIdenity substringFromIndex:1] forKey:tempCustomStr];//<view <label <button <imageView
+                                    [[self defalutCreateCategory]setValue:[viewIdenity substringFromIndex:1] forKey:tempCustomStr];///<view <label <button <imageView
                                     
                                 }
                             }
@@ -494,7 +494,7 @@ static NSInteger customCount;
                         
                         NSString *tempCustomStr=[self setProperty:idStr forKey:customClass];
                         [self addCustomClassProperty:tempCustomStr withCellFileName:CellFileName withViewControllerFileName:ViewControllerFileName];
-                        [[self defalutCreateCategory]setValue:[viewIdenity substringFromIndex:1] forKey:tempCustomStr];//<view <label <button <imageView
+                        [[self defalutCreateCategory]setValue:[viewIdenity substringFromIndex:1] forKey:tempCustomStr];///<view <label <button <imageView
                         
                         NSString *removeCustom=[NSString stringWithFormat:@" customClass=\"%@\"",customClass];
                         [arrM addObject:[rowStr stringByReplacingOccurrencesOfString:removeCustom withString:@""]];
@@ -513,7 +513,7 @@ static NSInteger customCount;
                                 if ([arr containsObject:constainType]) {
                                     NSString *tempCustomStr=[self setProperty:idStr forKey:customClass];
                                     [self addCustomClassProperty:tempCustomStr withCellFileName:CellFileName withViewControllerFileName:ViewControllerFileName];
-                                    [[self defalutCreateCategory]setValue:[viewIdenity substringFromIndex:1] forKey:tempCustomStr];//<view <label <button <imageView
+                                    [[self defalutCreateCategory]setValue:[viewIdenity substringFromIndex:1] forKey:tempCustomStr];///<view <label <button <imageView
                                 }
                             }
                             customCount ++;

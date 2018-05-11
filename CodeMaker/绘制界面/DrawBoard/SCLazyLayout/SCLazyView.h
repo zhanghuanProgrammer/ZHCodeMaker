@@ -30,7 +30,8 @@ typedef enum {
 - (void)runCommandSuccess;
 
 - (void)actived;
-
 - (void)unActived;
+
+- (void)tapSelectSubView:(UIView *)view;
 
 @end
