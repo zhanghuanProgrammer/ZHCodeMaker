@@ -25,6 +25,7 @@
     copy.idStr=self.idStr;
     copy.categoryView=self.categoryView;
     copy.relateView=self.relateView;
+    copy.relateVC = self.relateVC;
     copy.superViewIdStr=self.superViewIdStr;
     copy.x=self.x;
     copy.y=self.y;
@@ -122,6 +123,7 @@
     for (id tempCommad in self.commands) {
         if ([tempCommad isKindOfClass:[DrawViewConstarint class]]) {
             DrawViewConstarint *model = tempCommad;
+            model.relateVC = self.relateVC;
             [textM appendFormat:@"%zd : %@\n",index++,model.logDescription];
         }
         if ([tempCommad isKindOfClass:[NSDictionary class]]) {

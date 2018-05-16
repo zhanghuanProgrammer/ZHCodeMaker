@@ -55,11 +55,22 @@
     if ([self.secondAttribute isEqualToString:@"bottom"]) return @"8";
     return @"";
 }
+
+- (NSString *)conversionAddressToTag:(NSString *)address{
+    if (self.relateVC) {
+        for (DrawViewModel *model in self.relateVC.drawViews) {
+            if ([[NSString stringWithFormat:@"%p",model.relateView] isEqualToString:address]) {
+                return [NSString stringWithFormat:@"view%zd",[self.relateVC.drawViews indexOfObject:model]+1];
+            }
+        }
+    }
+    return address;
+}
 - (NSString *)logDescription{
     NSMutableString *textM = [NSMutableString string];
-    if (self.firstItem.length > 0) [textM appendFormat:@"%@ ",self.firstItem];
+    if (self.firstItem.length > 0) [textM appendFormat:@"%@ ",[self conversionAddressToTag:self.firstItem]];
     if (self.firstAttribute.length > 0) [textM appendFormat:@"%@ ",self.firstAttribute];
-    if (self.secondItem.length > 0) [textM appendFormat:@"%@ ",self.secondItem];
+    if (self.secondItem.length > 0) [textM appendFormat:@"%@ ",[self conversionAddressToTag:self.secondItem]];
     if (self.secondAttribute.length > 0) [textM appendFormat:@"%@ ",self.secondAttribute];
     if (self.constant.length > 0) [textM appendFormat:@"%@ ",self.constant];
     if (![self.multiplier isEqualToString:@"1"]) [textM appendFormat:@"%@ ",self.multiplier];

@@ -25,6 +25,8 @@
 		04193F121E7BB4660080C036 /* ZHRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = 04193F111E7BB4660080C036 /* ZHRuntime.m */; };
 		04193F151E7BE3E30080C036 /* NSObject+ZH.m in Sources */ = {isa = PBXBuildFile; fileRef = 04193F141E7BE3E30080C036 /* NSObject+ZH.m */; };
 		041AD53320A4226E00513B3A /* CMOutlet.m in Sources */ = {isa = PBXBuildFile; fileRef = 041AD53220A4226E00513B3A /* CMOutlet.m */; };
+		042514BC20AA73B00066E79B /* DrawConstraintLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 042514BB20AA73B00066E79B /* DrawConstraintLine.m */; };
+		042514BF20AA83940066E79B /* DrawViewLineTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 042514BE20AA83940066E79B /* DrawViewLineTool.m */; };
 		043A0D1F1EA5A18200945694 /* CodeCounter.m in Sources */ = {isa = PBXBuildFile; fileRef = 043A0D1E1EA5A18200945694 /* CodeCounter.m */; };
 		043A0D251EA5A78900945694 /* ZHConditionsToRegex.m in Sources */ = {isa = PBXBuildFile; fileRef = 043A0D221EA5A78900945694 /* ZHConditionsToRegex.m */; };
 		043A0D261EA5A78900945694 /* ZHCreatRegex.m in Sources */ = {isa = PBXBuildFile; fileRef = 043A0D241EA5A78900945694 /* ZHCreatRegex.m */; };
@@ -462,6 +464,10 @@
 		041ACB9820A3E98900513B3A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		041AD53120A4226E00513B3A /* CMOutlet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CMOutlet.h; sourceTree = "<group>"; };
 		041AD53220A4226E00513B3A /* CMOutlet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CMOutlet.m; sourceTree = "<group>"; };
+		042514BA20AA73B00066E79B /* DrawConstraintLine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DrawConstraintLine.h; sourceTree = "<group>"; };
+		042514BB20AA73B00066E79B /* DrawConstraintLine.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DrawConstraintLine.m; sourceTree = "<group>"; };
+		042514BD20AA83940066E79B /* DrawViewLineTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DrawViewLineTool.h; sourceTree = "<group>"; };
+		042514BE20AA83940066E79B /* DrawViewLineTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DrawViewLineTool.m; sourceTree = "<group>"; };
 		043A0D1D1EA5A18200945694 /* CodeCounter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodeCounter.h; sourceTree = "<group>"; };
 		043A0D1E1EA5A18200945694 /* CodeCounter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CodeCounter.m; sourceTree = "<group>"; };
 		043A0D211EA5A78900945694 /* ZHConditionsToRegex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHConditionsToRegex.h; sourceTree = "<group>"; };
@@ -3474,8 +3480,6 @@
 			isa = PBXGroup;
 			children = (
 				198FAB591F42F8630063BE6B /* SCLazyLayout */,
-				198FAB3F1F42D3ED0063BE6B /* DrawBoard.h */,
-				198FAB401F42D3ED0063BE6B /* DrawBoard.m */,
 				198FAB411F42D3ED0063BE6B /* views */,
 			);
 			path = DrawBoard;
@@ -3484,6 +3488,8 @@
 		198FAB411F42D3ED0063BE6B /* views */ = {
 			isa = PBXGroup;
 			children = (
+				198FAB3F1F42D3ED0063BE6B /* DrawBoard.h */,
+				198FAB401F42D3ED0063BE6B /* DrawBoard.m */,
 				198FAB441F42D3ED0063BE6B /* Custombutton.h */,
 				198FAB451F42D3ED0063BE6B /* Custombutton.m */,
 				198FAB461F42D3ED0063BE6B /* loadAvatar@2x.png */,
@@ -3493,6 +3499,8 @@
 				19DA74151F43ED2F00CF081C /* DrawViewModel.m */,
 				04B7359B2056A6BF00D054F2 /* DrawViewConstarint.h */,
 				04B7359C2056A6BF00D054F2 /* DrawViewConstarint.m */,
+				042514BA20AA73B00066E79B /* DrawConstraintLine.h */,
+				042514BB20AA73B00066E79B /* DrawConstraintLine.m */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -3513,6 +3521,8 @@
 				198FAB541F42D4800063BE6B /* DrawUIViewController.m */,
 				04B736082058BE6D00D054F2 /* DrawViewParameterTool.h */,
 				04B736092058BE6D00D054F2 /* DrawViewParameterTool.m */,
+				042514BD20AA83940066E79B /* DrawViewLineTool.h */,
+				042514BE20AA83940066E79B /* DrawViewLineTool.m */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -3897,6 +3907,7 @@
 				04F174961EA8EFAB00D15AFB /* ZHDrawSubViewHelp.m in Sources */,
 				043CAAFE1EADE4EB006AE7B9 /* ZHCodeSnippetLibraryBackUp.m in Sources */,
 				043A481A1EAF126F00A74C0E /* ZHFunToRedition.m in Sources */,
+				042514BC20AA73B00066E79B /* DrawConstraintLine.m in Sources */,
 				04C7C10C1E73F66000E5A2F6 /* MJRefreshComponent.m in Sources */,
 				0409BF611EAA224F0004630E /* ZHCreatXibHelp.m in Sources */,
 				045C1C981EE54BCE00B4609E /* ZHXMLWordWrap.m in Sources */,
@@ -3993,6 +4004,7 @@
 				04C7C1021E73F66000E5A2F6 /* UIRefreshControl+AFNetworking.m in Sources */,
 				198FAB8A1F42F9070063BE6B /* MASCompositeConstraint.m in Sources */,
 				04C7C16C1E73F66100E5A2F6 /* SearchChangeFileCellModel.m in Sources */,
+				042514BF20AA83940066E79B /* DrawViewLineTool.m in Sources */,
 				04F174341EA89E2100D15AFB /* ZHDisplayViewController.m in Sources */,
 				04C7C1661E73F66100E5A2F6 /* ZHJsonPath.m in Sources */,
 				19DA74421F4413CE00CF081C /* NSArray_DeepMutableCopy.m in Sources */,

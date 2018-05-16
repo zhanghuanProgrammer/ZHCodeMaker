@@ -3,10 +3,49 @@
 #import "DrawViewModel.h"
 #import "NSObject+YYModel.h"
 #import "DrawViewConstarint.h"
-
-#define KsuperViewIdStr @"n0Z-fF-wfF"
+#import "DrawConstraintLine.h"
 
 @implementation DrawViewParameterTool
+
+//direct 0:⬅️ 1:⬆️ 2:➡️ 3:⬇️
+- (DrawViewModel *)getDirectView:(DrawViewModel *)modelTarget models:(NSArray *)models direct:(NSInteger)direct{
+    NSMutableArray *copys = [NSMutableArray array];
+    for (DrawViewModel *model in models){
+        DrawViewModel *copyNew = [model copyNew];
+        [copys addObject:copyNew];
+        if([model isEqual:modelTarget])modelTarget = copyNew;
+    }
+    models = [NSArray arrayWithArray:copys];
+    
+    for (DrawViewModel *model in models) {
+        if(model.idStr.length<=0)model.idStr = [[CreatFatherFile new] getStoryBoardIdString];
+        model.x=model.relateView.x;model.y=model.relateView.y;
+        model.w=model.relateView.width;model.h=model.relateView.height;
+        for (id tempCommad in model.commands) {
+            if ([tempCommad isKindOfClass:[NSDictionary class]]) {
+                NSString *key = [tempCommad allKeys][0];
+                if ([key isEqualToString:@"inview"]) {
+                    NSString *value = [tempCommad allValues][0];
+                    for (DrawViewModel *subModel in models){
+                        if ([[NSString stringWithFormat:@"%p",subModel.relateView] isEqualToString:value]) {
+                            if(subModel.idStr.length<=0)subModel.idStr = [[CreatFatherFile new] getStoryBoardIdString];
+                            model.superViewIdStr = subModel.idStr;
+                            model.x-=subModel.relateView.x;
+                            model.y-=subModel.relateView.y;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        if(model.superViewIdStr.length<=0)model.superViewIdStr=KsuperViewIdStr;
+    }
+    if(direct == 0) return [self getLeft:modelTarget constraint:nil models:models];
+    if(direct == 1) return [self getTop:modelTarget constraint:nil models:models];
+    if(direct == 2) return [self getRight:modelTarget constraint:nil models:models];
+    if(direct == 3) return [self getBottom:modelTarget constraint:nil models:models];
+    return nil;
+}
 
 - (NSDictionary *)parameterFromDrawViewModels:(NSArray *)models{
     NSMutableArray *copys = [NSMutableArray array];
@@ -282,14 +321,18 @@
     for (DrawViewModel *model in models) if ([[NSString stringWithFormat:@"%p",model.relateView]isEqualToString:viewIp]) return model;
     return nil;
 }
-- (void)getTop:(DrawViewModel *)model constraint:(DrawViewConstarint *)constraint models:(NSArray *)models{
-    NSArray *filters = [self getFilters:model constraint:constraint models:models];
+- (DrawViewModel *)getTop:(DrawViewModel *)model constraint:(DrawViewConstarint *)constraint models:(NSArray *)models{
+    NSArray *filters = [self getFilters:model models:models];
     DrawViewModel *target = nil;
     for (NSInteger i=(NSInteger)model.y; i>=0; i--) {
         if(target)break;
-        CGPoint point = CGPointMake(model.x, i);
+        CGPoint point  = CGPointMake(model.x, i);
+        CGPoint point1 = CGPointMake(model.x+model.w/2.0, i);
+        CGPoint point2 = CGPointMake(model.x+model.w, i);
         for (DrawViewModel *subModel in filters) {
-            if (CGRectContainsPoint(CGRectMake(subModel.x, subModel.y, subModel.w, subModel.h), point)) {
+            if (CGRectContainsPoint(CGRectMake(subModel.x, subModel.y, subModel.w, subModel.h), point)||
+                CGRectContainsPoint(CGRectMake(subModel.x, subModel.y, subModel.w, subModel.h), point1)||
+                CGRectContainsPoint(CGRectMake(subModel.x, subModel.y, subModel.w, subModel.h), point2)) {
                 target = subModel;
                 break;
             }
@@ -302,57 +345,20 @@
         constraint.secondItem = model.superViewIdStr;
         constraint.secondAttribute = constraint.firstAttribute;
     }
+    return target;
 }
-- (void)getLeft:(DrawViewModel *)model constraint:(DrawViewConstarint *)constraint models:(NSArray *)models{
-    NSArray *filters = [self getFilters:model constraint:constraint models:models];
+- (DrawViewModel *)getBottom:(DrawViewModel *)model constraint:(DrawViewConstarint *)constraint models:(NSArray *)models{
+    NSArray *filters = [self getFilters:model models:models];
     DrawViewModel *target = nil;
-    for (NSInteger i=(NSInteger)model.x; i>=0; i--) {
+    for (NSInteger i=(NSInteger)model.y+(NSInteger)model.h; i<=[UIScreen mainScreen].bounds.size.height; i++) {
         if(target)break;
-        CGPoint point = CGPointMake(i, model.y);
+        CGPoint point  = CGPointMake(model.x, i);
+        CGPoint point1 = CGPointMake(model.x+model.w/2.0, i);
+        CGPoint point2 = CGPointMake(model.x+model.w, i);
         for (DrawViewModel *subModel in filters) {
-            if (CGRectContainsPoint(CGRectMake(subModel.x, subModel.y, subModel.w, subModel.h), point)) {
-                target = subModel;
-                break;
-            }
-        }
-    }
-    if (target) {
-        constraint.secondItem = target.idStr;
-        constraint.secondAttribute = @"right";
-    }else{
-        constraint.secondItem = model.superViewIdStr;
-        constraint.secondAttribute = constraint.firstAttribute;
-    }
-}
-- (void)getRight:(DrawViewModel *)model constraint:(DrawViewConstarint *)constraint models:(NSArray *)models{
-    NSArray *filters = [self getFilters:model constraint:constraint models:models];
-    DrawViewModel *target = nil;
-    for (NSInteger i=(NSInteger)model.x; i<=[UIScreen mainScreen].bounds.size.width; i++) {
-        if(target)break;
-        CGPoint point = CGPointMake(model.x, i);
-        for (DrawViewModel *subModel in filters) {
-            if (CGRectContainsPoint(CGRectMake(subModel.x, subModel.y, subModel.w, subModel.h), point)) {
-                target = subModel;
-                break;
-            }
-        }
-    }
-    if (target) {
-        constraint.secondItem = target.idStr;
-        constraint.secondAttribute = @"left";
-    }else{
-        constraint.secondItem = model.superViewIdStr;
-        constraint.secondAttribute = constraint.firstAttribute;
-    }
-}
-- (void)getBottom:(DrawViewModel *)model constraint:(DrawViewConstarint *)constraint models:(NSArray *)models{
-    NSArray *filters = [self getFilters:model constraint:constraint models:models];
-    DrawViewModel *target = nil;
-    for (NSInteger i=(NSInteger)model.y; i<=[UIScreen mainScreen].bounds.size.height; i++) {
-        if(target)break;
-        CGPoint point = CGPointMake(model.x, i);
-        for (DrawViewModel *subModel in filters) {
-            if (CGRectContainsPoint(CGRectMake(subModel.x, subModel.y, subModel.w, subModel.h), point)) {
+            if (CGRectContainsPoint(CGRectMake(subModel.x, subModel.y, subModel.w, subModel.h), point)||
+                CGRectContainsPoint(CGRectMake(subModel.x, subModel.y, subModel.w, subModel.h), point1)||
+                CGRectContainsPoint(CGRectMake(subModel.x, subModel.y, subModel.w, subModel.h), point2)) {
                 target = subModel;
                 break;
             }
@@ -365,8 +371,61 @@
         constraint.secondItem = model.superViewIdStr;
         constraint.secondAttribute = constraint.firstAttribute;
     }
+    return target;
 }
-- (NSArray *)getFilters:(DrawViewModel *)model constraint:(DrawViewConstarint *)constraint models:(NSArray *)models{
+- (DrawViewModel *)getLeft:(DrawViewModel *)model constraint:(DrawViewConstarint *)constraint models:(NSArray *)models{
+    NSArray *filters = [self getFilters:model models:models];
+    DrawViewModel *target = nil;
+    for (NSInteger i=(NSInteger)model.x; i>=0; i--) {
+        if(target)break;
+        CGPoint point = CGPointMake(i, model.y);
+        CGPoint point1 = CGPointMake(i, model.y+model.h/2.0);
+        CGPoint point2 = CGPointMake(i, model.y+model.h);
+        for (DrawViewModel *subModel in filters) {
+            if (CGRectContainsPoint(CGRectMake(subModel.x, subModel.y, subModel.w, subModel.h), point)||
+                CGRectContainsPoint(CGRectMake(subModel.x, subModel.y, subModel.w, subModel.h), point1)||
+                CGRectContainsPoint(CGRectMake(subModel.x, subModel.y, subModel.w, subModel.h), point2)) {
+                target = subModel;
+                break;
+            }
+        }
+    }
+    if (target) {
+        constraint.secondItem = target.idStr;
+        constraint.secondAttribute = @"right";
+    }else{
+        constraint.secondItem = model.superViewIdStr;
+        constraint.secondAttribute = constraint.firstAttribute;
+    }
+    return target;
+}
+- (DrawViewModel *)getRight:(DrawViewModel *)model constraint:(DrawViewConstarint *)constraint models:(NSArray *)models{
+    NSArray *filters = [self getFilters:model models:models];
+    DrawViewModel *target = nil;
+    for (NSInteger i=(NSInteger)model.x+(NSInteger)model.w; i<=[UIScreen mainScreen].bounds.size.width; i++) {
+        if(target)break;
+        CGPoint point = CGPointMake(i, model.y);
+        CGPoint point1 = CGPointMake(i, model.y+model.h/2.0);
+        CGPoint point2 = CGPointMake(i, model.y+model.h);
+        for (DrawViewModel *subModel in filters) {
+            if (CGRectContainsPoint(CGRectMake(subModel.x, subModel.y, subModel.w, subModel.h), point)||
+                CGRectContainsPoint(CGRectMake(subModel.x, subModel.y, subModel.w, subModel.h), point1)||
+                CGRectContainsPoint(CGRectMake(subModel.x, subModel.y, subModel.w, subModel.h), point2)) {
+                target = subModel;
+                break;
+            }
+        }
+    }
+    if (target) {
+        constraint.secondItem = target.idStr;
+        constraint.secondAttribute = @"left";
+    }else{
+        constraint.secondItem = model.superViewIdStr;
+        constraint.secondAttribute = constraint.firstAttribute;
+    }
+    return target;
+}
+- (NSArray *)getFilters:(DrawViewModel *)model models:(NSArray *)models{
     NSMutableArray *filters = [NSMutableArray array];
     for (DrawViewModel *subModel in models) {
         if(subModel == model)continue;

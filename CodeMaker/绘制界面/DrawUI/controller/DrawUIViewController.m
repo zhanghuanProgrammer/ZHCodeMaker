@@ -11,6 +11,7 @@
 #import "NSObject+YYModel.h"
 #import "DrawViewParameterTool.h"
 #import "DrawViewSaveModel.h"
+#import "Masonry.h"
 
 @interface DrawUIViewController ()<UITextFieldDelegate>
 @property (nonatomic,assign)BOOL isEdit;
@@ -19,6 +20,7 @@
 @property (nonatomic,assign)NSInteger tagIndex;
 @property (nonatomic,strong)UITextField *commandTextField;
 @property (nonatomic,strong)UITextView *textView;
+@property (nonatomic,strong)UITextView *recommendTextView;
 @property (nonatomic,strong)NSMutableDictionary *constarintOperation;
 @end
 
@@ -43,6 +45,7 @@ void errorString(NSString *error){
         self.drawBoard.customBtn.hidden=NO;
         [TabBarAndNavagation setRightBarButtonItemTitle:@"编辑" TintColor:[UIColor blackColor] target:self action:@selector(editAction)];
         self.textView.hidden = YES;
+        self.recommendTextView.hidden = YES;
         if([self.view isKindOfClass:[SCLazyView class]]){
             [(SCLazyView *)self.view unActived];
         }
@@ -53,8 +56,22 @@ void errorString(NSString *error){
 - (NSMutableArray *)drawViews{
     return _drawViews ?: (_drawViews = [[NSMutableArray alloc] init]);
 }
+- (NSMutableArray *)selectViews{
+    return _selectViews ?: (_selectViews = [[NSMutableArray alloc] init]);
+}
+
 - (NSMutableDictionary *)constarintOperation{
     return _constarintOperation ?: (_constarintOperation = [[NSMutableDictionary alloc] init]);
+}
+- (DrawViewModel *)selectModel{
+    if (self.selectView) {
+        for (DrawViewModel *model in self.drawViews) {
+            if ([model.relateView isEqual:self.selectView]) {
+                return model;
+            }
+        }
+    }
+    return nil;
 }
 
 - (void)viewDidLoad {
@@ -91,16 +108,32 @@ void errorString(NSString *error){
     self.commandTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
     [self.view addSubview:self.commandTextField];
     
-    self.textView = [[UITextView alloc]initWithFrame:CGRectMake(0, 120, self.view.width, 120)];
+    self.textView = [[UITextView alloc]initWithFrame:CGRectMake(0, 120, self.view.width/2.0, 120)];
     self.textView.textColor = [UIColor redColor];
     self.textView.backgroundColor=[[UIColor blackColor] colorWithAlphaComponent:2];
     [self.view addSubview:self.textView];
     self.textView.hidden=YES;
     self.textView.tag=999;
+    self.recommendTextView = [[UITextView alloc]initWithFrame:CGRectMake(self.view.width/2.0, 120, self.view.width/2.0, 120)];
+    self.recommendTextView.textColor = [UIColor greenColor];
+    self.recommendTextView.backgroundColor=[[UIColor blackColor] colorWithAlphaComponent:2];
+    [self.view addSubview:self.recommendTextView];
+    self.recommendTextView.hidden=YES;
+    self.recommendTextView.tag=999;
 }
 
 - (void)openHistroy{
     [TabBarAndNavagation pushViewController:@"DrawViewOpenHistroyViewController" toTarget:self pushHideTabBar:YES backShowTabBar:NO];
+}
+
+- (NSString *)recommendText{
+    NSString *recommendText = @"";
+    if (self.selectViews.count>1) {
+        recommendText = @"推荐:\n1.上 2.下 3.左 4.右\n5.等宽 6.等高\n7.均分在父控件";
+    }else{
+        recommendText = @"推荐:\n1.上 2.下 3.左 4.右\n5.上下左右 6.上下左右(父控件)";
+    }
+    return recommendText;
 }
 
 - (void)addBlocks{
@@ -110,20 +143,33 @@ void errorString(NSString *error){
     } WithIdentity:@"ShouldInputCommand"];
     [ZHBlockSingleCategroy addBlockWithNULL:^{
         if (!weakSelf.isEdit) {
-            
             return;
         }
         if (weakSelf.selectView) {
             DrawViewModel *model = [weakSelf getDrawViewModel:[NSString stringWithFormat:@"%p",weakSelf.selectView]];
             NSString *commandText = [model conmandText];
-            commandText = [[NSString stringWithFormat:@"view标识符:%zd %p\n",[self.drawViews indexOfObject:model]+1,model.relateView] stringByAppendingString:commandText];
+            commandText = [[NSString stringWithFormat:@"view%zd %p\n",[weakSelf.drawViews indexOfObject:model]+1,model.relateView] stringByAppendingString:commandText];
             weakSelf.textView.text = commandText;
             weakSelf.textView.hidden = !(weakSelf.textView.text.length>0);
             [weakSelf.view bringSubviewToFront:weakSelf.textView];
+            weakSelf.recommendTextView.text = [self recommendText];
+            weakSelf.recommendTextView.hidden = !(weakSelf.recommendTextView.text.length>0);
+            [weakSelf.view bringSubviewToFront:weakSelf.recommendTextView];
             weakSelf.textView.y = weakSelf.selectView.centerY>weakSelf.view.height/2.0?(weakSelf.selectView.y-weakSelf.textView.height-10):(weakSelf.selectView.maxY+10);
+            if (((SCLazyView *)weakSelf.view).shouldSetVaule) {
+                CGFloat maxY = 0;
+                for (DrawViewModel *model in weakSelf.drawViews) {
+                    if(model.relateView.maxY>maxY)maxY = model.relateView.maxY;
+                }
+                if(maxY>weakSelf.view.height - weakSelf.textView.height - 10)maxY=weakSelf.view.height - weakSelf.textView.height - 10;
+                weakSelf.textView.y = maxY + 10;
+            }
+            weakSelf.recommendTextView.y = weakSelf.textView.y;
         }else{
             weakSelf.textView.text = @"";
             weakSelf.textView.hidden = YES;
+            weakSelf.recommendTextView.text = @"";
+            weakSelf.recommendTextView.hidden = YES;
         }
     } WithIdentity:@"DrawViewSelectView"];
     [ZHBlockSingleCategroy addBlockWithNULL:^{
@@ -146,8 +192,7 @@ void errorString(NSString *error){
             [TabBarAndNavagation setLeftBarButtonItemTitle:@"<保存返回" TintColor:[UIColor blackColor] target:self action:@selector(backAction)];
             [self exportTemplate];
         }else{
-            [self exit];
-            return;
+//            [self exit];return;
             __weak typeof(self)weakSelf=self;
             [ZHAlertAction alertWithTitle:@"是否保存到历史记录" withMsg:@"可到历史记录中找到并且打开" addToViewController:self ActionSheet:NO otherButtonBlocks:@[^{
                 [weakSelf exit];
@@ -191,6 +236,7 @@ void errorString(NSString *error){
     view.tag=++self.tagIndex;
     model.relateView=view;
     model.frame = frame;
+    model.relateVC = self;
     [view addShadowWithShadowOffset:CGSizeZero];
     [view addBlurEffectWithAlpha:0.1];
     [self.view addSubview:view];
@@ -208,6 +254,7 @@ void errorString(NSString *error){
         UIView *view=[ZHDrawSubViewHelp getViewWithFrame:model.frame withViewCategory:model.categoryView];
         view.tag=++self.tagIndex;
         model.relateView=view;
+        model.relateVC = self;
         [view addShadowWithShadowOffset:CGSizeZero];
         [view addBlurEffectWithAlpha:0.1];
         [self.view addSubview:view];
@@ -593,12 +640,63 @@ void errorString(NSString *error){
         self.commandTextField.text = @"";
         return YES;
     }
+    if ([commandTemp isEqualToString:@"w"]) {
+        if (self.selectView) {
+            DrawViewModel *w = [[DrawViewParameterTool new] getDirectView:[self selectModel] models:self.drawViews direct:1];
+            if (w)[((SCLazyView *)self.view) tapSelectSubView:w.relateView];
+        }
+        self.commandTextField.text = @"";
+        return YES;
+    }
+    if ([commandTemp isEqualToString:@"s"]) {
+        if (self.selectView) {
+            DrawViewModel *w = [[DrawViewParameterTool new] getDirectView:[self selectModel] models:self.drawViews direct:3];
+            if (w)[((SCLazyView *)self.view) tapSelectSubView:w.relateView];
+        }
+        self.commandTextField.text = @"";
+        return YES;
+    }
+    if ([commandTemp isEqualToString:@"a"]) {
+        if (self.selectView) {
+            DrawViewModel *w = [[DrawViewParameterTool new] getDirectView:[self selectModel] models:self.drawViews direct:0];
+            if (w)[((SCLazyView *)self.view) tapSelectSubView:w.relateView];
+        }
+        self.commandTextField.text = @"";
+        return YES;
+    }
+    if ([commandTemp isEqualToString:@"d"]) {
+        if (self.selectView) {
+            DrawViewModel *w = [[DrawViewParameterTool new] getDirectView:[self selectModel] models:self.drawViews direct:2];
+            if (w)[((SCLazyView *)self.view) tapSelectSubView:w.relateView];
+        }
+        self.commandTextField.text = @"";
+        return YES;
+    }
+    
     if ([commandTemp isEqualToString:@"d"]) {
         if (self.selectView) {
             [self removeView:self.selectView];
             self.selectView = nil;
             self.commandTextField.text = @"";
         }
+        return YES;
+    }
+    if ([commandTemp isEqualToString:@"h"]) {
+        if (self.isEdit) {
+            ((SCLazyView *)self.view).shouldSetVaule = !((SCLazyView *)self.view).shouldSetVaule;
+        }
+        self.commandTextField.text = @"";
+        return YES;
+    }
+    if ([commandTemp isEqualToString:@"m"]) {
+        if (self.isEdit) {
+            for (UIView *controller in ((SCLazyView *)self.view).controllers){
+                if ([controller.mas_key isEqualToString:@"controller4"]) {
+                    controller.hidden = !controller.hidden;
+                }
+            }
+        }
+        self.commandTextField.text = @"";
         return YES;
     }
     return NO;

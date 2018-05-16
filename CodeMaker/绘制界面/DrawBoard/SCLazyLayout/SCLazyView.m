@@ -5,6 +5,7 @@
 #import "SCLayoutControl.h"
 #import "DrawBoard.h"
 #import "DrawViewConstarint.h"
+#import "DrawViewLineTool.h"
 
 #define SCScreenWidth [UIScreen mainScreen].bounds.size.width
 #define SCScreenHeight [UIScreen mainScreen].bounds.size.height
@@ -12,8 +13,6 @@
 #define SCValuePoint(point) [NSValue valueWithCGPoint:point]
 
 @interface SCLazyView ()<UIGestureRecognizerDelegate>
-
-@property(nonatomic,strong)NSMutableArray *controllers;
 
 @end
 
@@ -27,6 +26,25 @@
     CGPoint originCenter;
     NSArray *activeXs;
     NSArray *activeYs;
+}
+
+- (void)setShouldSetVaule:(BOOL)shouldSetVaule{
+    _shouldSetVaule = shouldSetVaule;
+    if (shouldSetVaule) {
+        for (UIView *controller in self.controllers){
+            controller.hidden = YES;
+        }
+    }else{
+        for (UIView *controller in self.controllers){
+            controller.hidden = NO;
+        }
+        for (UIView *view in self.viewController.selectViews){
+            if (view != self.viewController.selectView){
+                [self.viewController.selectView cornerRadiusWithFloat:0 borderColor:[UIColor clearColor] borderWidth:0];
+            }
+        }
+        [self.viewController.selectViews removeAllObjects];
+    }
 }
 
 - (void)actived{
@@ -103,20 +121,36 @@ static const NSString *tapKey = @"tap";
 
 - (void)tapSelectSubView:(UIView *)view{
     [ZHBlockSingleCategroy runBlockNULLIdentity:@"ShouldInputCommand"];
-    //推荐约束
+    [self removeConstraintLines];
+    
     if (self.viewController.selectView) {
-        [self.viewController.selectView cornerRadiusWithFloat:0 borderColor:[UIColor clearColor] borderWidth:0];
+        if (view == self.viewController.selectView || !self.shouldSetVaule){
+            [self.viewController.selectView cornerRadiusWithFloat:0 borderColor:[UIColor clearColor] borderWidth:0];
+        }else if (self.shouldSetVaule) {
+            [self.viewController.selectView cornerRadiusWithFloat:0.1 borderColor:[[UIColor redColor] colorWithAlphaComponent:0.3] borderWidth:1];
+        }
     }
     if (view == self.viewController.selectView) {
+        if (self.shouldSetVaule) [self.viewController.selectViews removeObject:self.viewController.selectView];
         self.viewController.selectView = nil;
         [ZHBlockSingleCategroy runBlockNULLIdentity:@"DrawViewSelectView"];
         return;
     }
+    if (self.shouldSetVaule && self.viewController.selectView) {
+        if (![self.viewController.selectViews containsObject:self.viewController.selectView]) {
+            [self.viewController.selectViews addObject:self.viewController.selectView];
+        }
+    }
     self.viewController.selectView = view;
+    if (self.shouldSetVaule && self.viewController.selectView) {
+        if (![self.viewController.selectViews containsObject:self.viewController.selectView]) {
+            [self.viewController.selectViews addObject:self.viewController.selectView];
+        }
+    }
+    [self addConstraintLines];
     [self.viewController.selectView cornerRadiusWithFloat:0.1 borderColor:[UIColor redColor] borderWidth:1];
     [ZHBlockSingleCategroy runBlockNULLIdentity:@"DrawViewSelectView"];
 }
-
 
 
 
@@ -179,6 +213,7 @@ static const NSString *indexKey = @"index";
         //为控制点添加对应的控制对象
         objc_setAssociatedObject(controller, &subviewKey, subview, OBJC_ASSOCIATION_ASSIGN);
         objc_setAssociatedObject(controller, &indexKey, @(i), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        controller.hidden = self.shouldSetVaule;
         [self.controllers addObject:controller];
     }
 }
@@ -353,10 +388,38 @@ static const NSString *indexKey = @"index";
     [self setNeedsLayout];
 }
 
+- (void)addConstraintLines{
+    if (self.viewController.selectView) {
+        NSArray *models = [[DrawViewLineTool new] getDrawConstraintLine:self.viewController.selectModel models:self.viewController.drawViews];
+        for (DrawConstraintLine *model in models) {
+            [self addConstraintLine:model];
+        }
+    }
+}
+- (void)addConstraintLine:(DrawConstraintLine *)model{
+    DrawConstraintLineView *view = [DrawConstraintLineView new];
+    view.frame = CGRectMake(MIN(model.point1.x, model.point2.x), MIN(model.point1.y, model.point2.y),
+                            ABS(model.point2.x - model.point1.x), ABS(model.point2.y - model.point1.y));
+    if (view.width<=0) view.width = 1; if (view.height<=0) view.height = 1;
+    [view cornerRadiusWithFloat:0.5];
+    view.backgroundColor = model.color;
+    view.userInteractionEnabled = NO;
+    [self addSubview:view];
+    [self.constraintLines addObject:view];
+}
+- (void)removeConstraintLines{
+    for (UIView *view in self.constraintLines) [view removeFromSuperview];
+    [self.constraintLines removeAllObjects];
+}
+
 #pragma mark - set get 懒加载
 
 - (NSMutableArray*)controllers {
     return _controllers ?: (_controllers = [[NSMutableArray alloc] init]);
+}
+
+- (NSMutableArray*)constraintLines {
+    return _constraintLines ?: (_constraintLines = [[NSMutableArray alloc] init]);
 }
 
 @end

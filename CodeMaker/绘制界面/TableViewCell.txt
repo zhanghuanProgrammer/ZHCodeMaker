@@ -25,15 +25,27 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="157" id="Wv1-Xa-hea">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="530"/>
+                                        <rect key="frame" x="0.0" y="28" width="375" height="157"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Wv1-Xa-hea" id="n0Z-fF-wfF">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="529.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="156.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            {% if root.views != nil %}{{ root | recurrence: "Main" }}{% /if %}
-                                            {% if root.constraints != nil %}<constraints>
-                                            {{ root.constraints | component }}
-                                            </constraints>{% /if %}
+					                        <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9ju-6x-dsY">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="156.5"/>
+						    {% if root.views != nil %}{{ root | recurrence: "Main" }}{% /if %}
+                                            	    {% if root.constraints != nil %}<constraints>
+                                           	    {{ root.constraints | component }}
+                                            	    </constraints>{% /if %}
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="9ju-6x-dsY" firstAttribute="leading" secondItem="n0Z-fF-wfF" secondAttribute="leading" id="Gcg-sU-wFo"/>
+                                                <constraint firstItem="9ju-6x-dsY" firstAttribute="top" secondItem="n0Z-fF-wfF" secondAttribute="top" id="KHN-Hl-F3i"/>
+                                                <constraint firstAttribute="trailing" secondItem="9ju-6x-dsY" secondAttribute="trailing" id="M4I-sn-hqf"/>
+                                                <constraint firstAttribute="bottom" secondItem="9ju-6x-dsY" secondAttribute="bottom" id="XFM-3i-EQT"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>

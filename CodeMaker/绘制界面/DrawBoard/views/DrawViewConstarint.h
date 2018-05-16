@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "DrawViewModel.h"
+#import "DrawUIViewController.h"
 
 @interface DrawViewConstarint : NSObject<NSCoding>
 
@@ -16,6 +18,8 @@
 @property (nonatomic,copy)NSString *secondItem;
 @property (nonatomic,copy)NSString *multiplier;
 @property (nonatomic,copy)NSString *constant;
+
+@property (nonatomic,weak)DrawUIViewController *relateVC;
 
 - (instancetype)copyNew;
 - (instancetype)reSetValue:(DrawViewConstarint*)object;

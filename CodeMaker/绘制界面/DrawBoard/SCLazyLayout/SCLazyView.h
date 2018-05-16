@@ -1,6 +1,7 @@
 
 #import <UIKit/UIKit.h>
 #import "DrawUIViewController.h"
+#import "DrawConstraintLine.h"
 @class SCLayoutModel;
 @class DrawViewConstarint;
 
@@ -16,6 +17,10 @@ typedef enum {
 
 @interface SCLazyView : UIView
 
+@property(nonatomic,strong)NSMutableArray *controllers;
+@property(nonatomic,strong)NSMutableArray *constraintLines;
+
+@property(nonatomic,assign)BOOL shouldSetVaule;
 @property(nonatomic,assign)BOOL isActived;
 
 @property(nonatomic,strong)NSString *uuid;
@@ -33,5 +38,6 @@ typedef enum {
 - (void)unActived;
 
 - (void)tapSelectSubView:(UIView *)view;
+- (void)addConstraintLine:(DrawConstraintLine *)model;
 
 @end

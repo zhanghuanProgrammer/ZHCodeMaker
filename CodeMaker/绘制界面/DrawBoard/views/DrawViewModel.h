@@ -1,4 +1,5 @@
 #import <UIKit/UIKit.h>
+#import "DrawUIViewController.h"
 
 @interface DrawViewModel : NSObject <NSCoding>
 @property (nonatomic,copy)NSString *relateViewIp;
@@ -6,6 +7,7 @@
 @property (nonatomic,copy)NSString *idStr;
 @property (nonatomic,copy)NSString *categoryView;
 @property (nonatomic,strong)UIView *relateView;
+@property (nonatomic,weak)DrawUIViewController *relateVC;
 @property (nonatomic,copy)NSString *superViewIdStr;
 @property (nonatomic,strong)NSMutableArray *commands;
 @property (nonatomic,assign)CGFloat x;
