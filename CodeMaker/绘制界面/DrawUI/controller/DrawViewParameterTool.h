@@ -9,6 +9,9 @@
 
 //direct 0:⬅️ 1:⬆️ 2:➡️ 3:⬇️
 - (DrawViewModel *)getDirectView:(DrawViewModel *)modelTarget models:(NSArray *)models direct:(NSInteger)direct;
+- (NSInteger)getDirectViewDistance:(DrawViewModel *)modelTarget models:(NSArray *)models direct:(NSInteger)direct;
+- (NSArray *)getFatherView:(DrawViewModel *)modelTarget models:(NSArray *)models;
+- (NSArray *)getChildView:(DrawViewModel *)modelTarget models:(NSArray *)models;
 
 - (NSDictionary *)parameterFromDrawViewModels:(NSArray *)models;
 

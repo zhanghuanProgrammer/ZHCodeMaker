@@ -13,6 +13,15 @@
 #import "DrawViewSaveModel.h"
 #import "Masonry.h"
 
+typedef NS_ENUM(NSUInteger, DrawViewType) {
+    DrawViewTypeNone = 0,
+    DrawViewTypeFont,
+    DrawViewTypeText,
+    DrawViewTypeBackcolor,
+    DrawViewTypeTextColor,
+    DrawViewTypeRecommend,
+};
+
 @interface DrawUIViewController ()<UITextFieldDelegate>
 @property (nonatomic,assign)BOOL isEdit;
 @property (nonatomic,assign)BOOL isSave;
@@ -22,6 +31,7 @@
 @property (nonatomic,strong)UITextView *textView;
 @property (nonatomic,strong)UITextView *recommendTextView;
 @property (nonatomic,strong)NSMutableDictionary *constarintOperation;
+@property (nonatomic,assign)DrawViewType editType;
 @end
 
 @implementation DrawUIViewController
@@ -73,10 +83,46 @@ void errorString(NSString *error){
     }
     return nil;
 }
+- (void)cancleAllSelect{
+    for (UIView *view in self.selectViews){
+        if (view != self.selectView){
+            [view cornerRadiusWithFloat:0 borderColor:[UIColor clearColor] borderWidth:0];
+        }
+    }
+    if (self.selectView) {
+        [((SCLazyView *)self.view) tapSelectSubView:self.selectView];
+        self.selectView = nil;
+    }
+    [self.selectViews removeAllObjects];
+}
+
+- (void)setEditType:(DrawViewType)editType{
+    _editType = editType;
+    switch (editType) {
+        case DrawViewTypeNone:
+            self.title = @"绘制";
+            break;
+        case DrawViewTypeFont:
+            self.title = @"set - Font";
+            break;
+        case DrawViewTypeText:
+            self.title = @"set - Text";
+            break;
+        case DrawViewTypeBackcolor:
+            self.title = @"set - Backcolor";
+            break;
+        case DrawViewTypeTextColor:
+            self.title = @"set - TextColor";
+            break;
+        case DrawViewTypeRecommend:
+            self.title = @"set - Recommend";
+            break;
+    }
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title=@"绘制界面";
+    self.title = @"绘制";
     [self addBlocks];
     self.edgesForExtendedLayout=UIRectEdgeNone;
     self.view=[[SCLazyView alloc]initWithFrame:self.view.bounds];
@@ -127,13 +173,135 @@ void errorString(NSString *error){
 }
 
 - (NSString *)recommendText{
-    NSString *recommendText = @"";
+    NSMutableString *recommendText = [NSMutableString string];
+    NSInteger cur = 0;
     if (self.selectViews.count>1) {
-        recommendText = @"推荐:\n1.上 2.下 3.左 4.右\n5.等宽 6.等高\n7.均分在父控件";
+        [recommendText appendString:@"推荐:\n1.上 2.下 3.左 4.右 5.宽 6.高\n7.对齐上 .8对齐下 9.对齐左 .10对齐右\n11.横对齐 12.竖对齐\n13.等宽 14.等高"];
+        cur = 15;
     }else{
-        recommendText = @"推荐:\n1.上 2.下 3.左 4.右\n5.上下左右 6.上下左右(父控件)";
+        [recommendText appendString:@"推荐:\n1.上 2.下 3.左 4.右 5.宽 6.高\n7.上下左右 8.上下左右(父控件)"];
+        if (self.selectView) {
+            NSArray *fatherViews = [[DrawViewParameterTool new] getFatherView:self.selectModel models:self.drawViews];
+            cur = 9;
+            for (DrawViewModel *model in fatherViews) {
+                [recommendText appendFormat:@"\n%@.添加到view%@",@(cur++),@([self.drawViews indexOfObject:model]+1)];
+            }
+            NSArray *childViews = [[DrawViewParameterTool new] getChildView:self.selectModel models:self.drawViews];
+            if (childViews.count>0) {
+                NSMutableString *tempM = [NSMutableString string];
+                for (DrawViewModel *model in childViews) {
+                    [tempM appendFormat:@" %@",@([self.drawViews indexOfObject:model]+1)];
+                }
+                [recommendText appendFormat:@"\n%@.添加子view%@",@(cur++),tempM];
+                [recommendText appendFormat:@"\n%@.均分子控件view%@",@(cur++),tempM];
+            }
+        }
     }
     return recommendText;
+}
+
+- (BOOL)selectRecommend:(NSInteger)index{
+    //    TODO:相对于父控件 就算不准
+    if (self.selectViews.count>1) {
+        switch (index) {
+            case 1:{
+                self.commandTextField.text = [NSString stringWithFormat:@"t %@",@([[DrawViewParameterTool new] getDirectViewDistance:self.selectModel models:self.drawViews direct:1])];
+            }break;
+            case 2:{
+                self.commandTextField.text = [NSString stringWithFormat:@"b %@",@([[DrawViewParameterTool new] getDirectViewDistance:self.selectModel models:self.drawViews direct:3])];
+            }break;
+            case 3:{
+                self.commandTextField.text = [NSString stringWithFormat:@"l %@",@([[DrawViewParameterTool new] getDirectViewDistance:self.selectModel models:self.drawViews direct:0])];
+            }break;
+            case 4:{
+                self.commandTextField.text = [NSString stringWithFormat:@"r %@",@([[DrawViewParameterTool new] getDirectViewDistance:self.selectModel models:self.drawViews direct:2])];
+            }break;
+            case 5:{
+                self.commandTextField.text = @"";
+            }break;
+            case 6:{
+                self.commandTextField.text = @"";
+            }break;
+            case 7:{
+                self.commandTextField.text = @"";
+            }break;
+            case 8:{
+                
+            }break;
+            case 9:{
+                
+            }break;
+            case 10:{
+                
+            }break;
+            case 11:{
+                
+            }break;
+            case 12:{
+                
+            }break;
+            case 13:{
+                
+            }break;
+            case 14:{
+                
+            }break;
+            case 15:{
+                
+            }break;
+            default:return NO;
+        }
+    }else{
+        switch (index) {
+            case 1:{
+                self.commandTextField.text = [NSString stringWithFormat:@"t %@",@([[DrawViewParameterTool new] getDirectViewDistance:self.selectModel models:self.drawViews direct:1])];
+            }break;
+            case 2:{
+                self.commandTextField.text = [NSString stringWithFormat:@"b %@",@([[DrawViewParameterTool new] getDirectViewDistance:self.selectModel models:self.drawViews direct:3])];
+            }break;
+            case 3:{
+                self.commandTextField.text = [NSString stringWithFormat:@"l %@",@([[DrawViewParameterTool new] getDirectViewDistance:self.selectModel models:self.drawViews direct:0])];
+            }break;
+            case 4:{
+                self.commandTextField.text = [NSString stringWithFormat:@"r %@",@([[DrawViewParameterTool new] getDirectViewDistance:self.selectModel models:self.drawViews direct:2])];
+            }break;
+            case 5:{
+                self.commandTextField.text = @"";
+            }break;
+            case 6:{
+                self.commandTextField.text = @"";
+            }break;
+            case 7:{
+                self.commandTextField.text = @"";
+            }break;
+            case 8:{
+                
+            }break;
+            case 9:{
+                
+            }break;
+            case 10:{
+                
+            }break;
+            case 11:{
+                
+            }break;
+            case 12:{
+                
+            }break;
+            case 13:{
+                
+            }break;
+            case 14:{
+                
+            }break;
+            case 15:{
+                
+            }break;
+                default:return NO;
+        }
+    }
+    return YES;
 }
 
 - (void)addBlocks{
@@ -305,6 +473,9 @@ void errorString(NSString *error){
 }
 
 - (void)runScrip{
+    if ([self runScripEditType]) {
+        return;
+    }
     if ([self runScripPublic]) {
         return;
     }
@@ -592,15 +763,43 @@ void errorString(NSString *error){
 
 - (BOOL)runScripPublic{
     NSString *commandTemp = [[self.commandTextField.text stringByTrim] lowercaseString];
-    if ([commandTemp isEqualToString:@"e"]) {
-        if (self.selectView) {
-            [(SCLazyView *)self.view tapSelectSubView:self.selectView];
+    if (self.isEdit) {
+        BOOL isChangeType = NO;
+        if ([commandTemp isEqualToString:@"e"]) {
+            self.editType = DrawViewTypeNone;
+            isChangeType = YES;
         }
-        self.commandTextField.text = @"";
-        return YES;
+        if ([commandTemp isEqualToString:@"ef"]) {
+            self.editType = DrawViewTypeFont;
+            isChangeType = YES;
+        }
+        if ([commandTemp isEqualToString:@"et"]) {
+            self.editType = DrawViewTypeText;
+            isChangeType = YES;
+        }
+        if ([commandTemp isEqualToString:@"eb"]) {
+            self.editType = DrawViewTypeBackcolor;
+            isChangeType = YES;
+        }
+        if ([commandTemp isEqualToString:@"ec"]) {
+            self.editType = DrawViewTypeTextColor;
+            isChangeType = YES;
+        }
+        if ([commandTemp isEqualToString:@"er"]) {
+            self.editType = DrawViewTypeRecommend;
+            isChangeType = YES;
+        }
+        if (isChangeType) {
+            self.commandTextField.text = @"";
+            return YES;
+        }
     }
-    if (!self.isEdit&&[commandTemp isEqualToString:@"c"]) {
-        [self.drawBoard cancelClick];
+    if ([commandTemp isEqualToString:@"c"]) {
+        if (!self.isEdit) {
+            [self.drawBoard cancelClick];
+        }else{
+            [self cancleAllSelect];
+        }
         self.commandTextField.text = @"";
         return YES;
     }
@@ -623,7 +822,7 @@ void errorString(NSString *error){
         [(SCLazyView *)self.view tapSelectSubView:model.relateView];
         return YES;
     }
-    if ([commandTemp isEqualToString:@"1"]) {
+    if ([commandTemp isEqualToString:@"q"]) {
         self.isEdit=!self.isEdit;
         self.commandTextField.text = @"";
         return YES;
@@ -643,7 +842,7 @@ void errorString(NSString *error){
     if ([commandTemp isEqualToString:@"w"]) {
         if (self.selectView) {
             DrawViewModel *w = [[DrawViewParameterTool new] getDirectView:[self selectModel] models:self.drawViews direct:1];
-            if (w)[((SCLazyView *)self.view) tapSelectSubView:w.relateView];
+            if (w){[self cancleAllSelect];[((SCLazyView *)self.view) tapSelectSubView:w.relateView];}
         }
         self.commandTextField.text = @"";
         return YES;
@@ -651,7 +850,7 @@ void errorString(NSString *error){
     if ([commandTemp isEqualToString:@"s"]) {
         if (self.selectView) {
             DrawViewModel *w = [[DrawViewParameterTool new] getDirectView:[self selectModel] models:self.drawViews direct:3];
-            if (w)[((SCLazyView *)self.view) tapSelectSubView:w.relateView];
+            if (w){[self cancleAllSelect];[((SCLazyView *)self.view) tapSelectSubView:w.relateView];}
         }
         self.commandTextField.text = @"";
         return YES;
@@ -659,7 +858,7 @@ void errorString(NSString *error){
     if ([commandTemp isEqualToString:@"a"]) {
         if (self.selectView) {
             DrawViewModel *w = [[DrawViewParameterTool new] getDirectView:[self selectModel] models:self.drawViews direct:0];
-            if (w)[((SCLazyView *)self.view) tapSelectSubView:w.relateView];
+            if (w){[self cancleAllSelect];[((SCLazyView *)self.view) tapSelectSubView:w.relateView];}
         }
         self.commandTextField.text = @"";
         return YES;
@@ -667,13 +866,13 @@ void errorString(NSString *error){
     if ([commandTemp isEqualToString:@"d"]) {
         if (self.selectView) {
             DrawViewModel *w = [[DrawViewParameterTool new] getDirectView:[self selectModel] models:self.drawViews direct:2];
-            if (w)[((SCLazyView *)self.view) tapSelectSubView:w.relateView];
+            if (w){[self cancleAllSelect];[((SCLazyView *)self.view) tapSelectSubView:w.relateView];}
         }
         self.commandTextField.text = @"";
         return YES;
     }
     
-    if ([commandTemp isEqualToString:@"d"]) {
+    if ([commandTemp isEqualToString:@"r"]) {
         if (self.selectView) {
             [self removeView:self.selectView];
             self.selectView = nil;
@@ -741,6 +940,89 @@ void errorString(NSString *error){
         }
         return;
     }
+}
+
+- (BOOL)runScripEditType{
+    if (self.editType!=0 && self.selectView) {
+        DrawViewModel *model = [self getDrawViewModel:[NSString stringWithFormat:@"%p",self.selectView]];
+        NSString *command = [[self.commandTextField.text stringByTrim] lowercaseString];
+        switch (self.editType) {
+            case DrawViewTypeFont:
+                if([ZHNSString isPureInt:command]||[ZHNSString isPureFloat:command]){
+                    [model addOrUpdateCommand:@{@"font":command}];
+                    self.commandTextField.text = @"";
+                }else{errorString(@"font(字体) 必须为整数或者小数");}
+                return YES;
+                break;
+            case DrawViewTypeText:
+                [model addOrUpdateCommand:@{@"text":command}];
+                self.commandTextField.text = @"";
+                return YES;
+                break;
+            case DrawViewTypeBackcolor:{
+                UIColor *color = [self getColorFromCommand:command];
+                if (color) {
+                    [model addOrUpdateCommand:@{@"bgColorRed":[NSString stringWithFormat:@"%.01f",255*[color red]]}];
+                    [model addOrUpdateCommand:@{@"bgColorGreen":[NSString stringWithFormat:@"%.01f",255*[color green]]}];
+                    [model addOrUpdateCommand:@{@"bgColorBlue":[NSString stringWithFormat:@"%.01f",255*[color blue]]}];
+                    [model addOrUpdateCommand:@{@"bgColorAlpha":[NSString stringWithFormat:@"%.01f",255*[color alpha]]}];
+                }
+                return YES;
+            }break;
+            case DrawViewTypeTextColor:{
+                UIColor *color = [self getColorFromCommand:command];
+                if (color) {
+                    [model addOrUpdateCommand:@{@"textColorRed":[NSString stringWithFormat:@"%.01f",255*[color red]]}];
+                    [model addOrUpdateCommand:@{@"textColorRed":[NSString stringWithFormat:@"%.01f",255*[color green]]}];
+                    [model addOrUpdateCommand:@{@"textColorRed":[NSString stringWithFormat:@"%.01f",255*[color blue]]}];
+                    [model addOrUpdateCommand:@{@"textColorRed":[NSString stringWithFormat:@"%.01f",255*[color alpha]]}];
+                }
+                return YES;
+            }break;
+            case DrawViewTypeRecommend:{
+                if ([ZHNSString isPureInt:command]){//选择第几个
+                    NSInteger index = [command integerValue];
+                    if(index < 0) index = 0;
+                    if (![self selectRecommend:index]) {
+                        errorString(@"选择的下标越界了");
+                    }
+                }
+                return YES;
+            }break;
+            default:break;
+        }
+    }
+    return NO;
+}
+
+- (UIColor *)getColorFromCommand:(NSString *)command{
+    UIColor *color = nil;
+    if ([command hasPrefix:@"#"]) {
+        if (command.length==7) {
+            color = [UIColor colorWithHexString:command];
+        }else{
+            errorString(@"颜色如果是十六进制,请输入正确的格式");
+        }
+    }else{
+        NSArray *values = [command componentsSeparatedByString:@" "];
+        BOOL isColor = YES;
+        if (values.count >= 3) {
+            for (NSInteger i=0; i<values.count; i++) {
+                NSString *value = values[i];
+                if (![ZHNSString isPureInt:value]) {
+                    isColor = NO;
+                    break;
+                }
+            }
+        }else isColor = NO;
+        if (!isColor) {
+            errorString(@"颜色里面如果是数字就必须为三个数字或以上,并且数字要以空格隔开,否则就报红");
+        }else{
+            color =values.count==3? RGB([values[0] integerValue], [values[1] integerValue], [values[2] integerValue]):
+            RGBA([values[0] integerValue], [values[1] integerValue], [values[2] integerValue], [values[3] integerValue]);
+        }
+    }
+    return color;
 }
 
 @end

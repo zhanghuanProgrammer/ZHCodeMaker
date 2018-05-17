@@ -201,4 +201,16 @@
     }
 }
 
+- (BOOL)isInOtherView{
+    for (id tempCommad in self.commands) {
+        if ([tempCommad isKindOfClass:[NSDictionary class]]) {
+            NSString *key = [tempCommad allKeys][0];
+            if ([key isEqualToString:@"inview"]) {
+                return YES;
+            }
+        }
+    }
+    return NO;
+}
+
 @end

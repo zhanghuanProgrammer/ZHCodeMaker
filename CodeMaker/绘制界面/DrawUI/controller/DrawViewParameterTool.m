@@ -7,6 +7,25 @@
 
 @implementation DrawViewParameterTool
 
+- (NSArray *)getFatherView:(DrawViewModel *)modelTarget models:(NSArray *)models{
+    if ([modelTarget isInOtherView]) return nil;
+    NSMutableArray *fathers = [NSMutableArray array];
+    for (DrawViewModel *model in models){
+        if ([model isEqual:modelTarget]) continue;
+        if (CGRectContainsRect(model.relateView.frame, modelTarget.relateView.frame)) [fathers addObject:model];
+    }
+    return fathers;
+}
+
+- (NSArray *)getChildView:(DrawViewModel *)modelTarget models:(NSArray *)models{
+    NSMutableArray *fathers = [NSMutableArray array];
+    for (DrawViewModel *model in models){
+        if ([model isEqual:modelTarget]) continue;
+        if (CGRectContainsRect(modelTarget.relateView.frame,model.relateView.frame) && (![model isInOtherView])) [fathers addObject:model];
+    }
+    return fathers;
+}
+
 //direct 0:⬅️ 1:⬆️ 2:➡️ 3:⬇️
 - (DrawViewModel *)getDirectView:(DrawViewModel *)modelTarget models:(NSArray *)models direct:(NSInteger)direct{
     NSMutableArray *copys = [NSMutableArray array];
@@ -44,6 +63,28 @@
     if(direct == 1) return [self getTop:modelTarget constraint:nil models:models];
     if(direct == 2) return [self getRight:modelTarget constraint:nil models:models];
     if(direct == 3) return [self getBottom:modelTarget constraint:nil models:models];
+    return nil;
+}
+
+//direct 0:⬅️ 1:⬆️ 2:➡️ 3:⬇️
+- (NSInteger)getDirectViewDistance:(DrawViewModel *)modelTarget models:(NSArray *)models direct:(NSInteger)direct{
+    DrawViewModel *model = [self getDirectView:modelTarget models:models direct:direct];
+    UIView *targetView = nil;
+    UIView *curView = modelTarget.relateView;
+    if (model) targetView = model.relateView;
+    else targetView = [self getDrawViewWithViewId:model.superViewIdStr model:modelTarget models:models];
+    if (targetView) {
+        if(direct == 0 && (targetView.maxX < curView.x)) return (NSInteger)(curView.x - targetView.maxX);
+        if(direct == 1 && (targetView.maxY < curView.y)) return (NSInteger)(curView.y - targetView.maxY);
+        if(direct == 2 && (curView.maxX < targetView.x)) return (NSInteger)(targetView.x - curView.maxX);
+        if(direct == 3 && (curView.maxY < targetView.y)) return (NSInteger)(targetView.y - curView.maxY);
+    }
+    return 0;
+}
+
+- (UIView *)getDrawViewWithViewId:(NSString *)viewId model:(DrawViewModel *)model models:(NSArray *)models{
+    if ([viewId isEqualToString:KsuperViewIdStr]) return model.relateVC.view;
+    for (DrawViewModel *model in models) if ([model.idStr isEqualToString:viewId]) return model.relateView;
     return nil;
 }
 

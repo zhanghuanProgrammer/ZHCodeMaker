@@ -40,7 +40,7 @@
         }
         for (UIView *view in self.viewController.selectViews){
             if (view != self.viewController.selectView){
-                [self.viewController.selectView cornerRadiusWithFloat:0 borderColor:[UIColor clearColor] borderWidth:0];
+                [view cornerRadiusWithFloat:0 borderColor:[UIColor clearColor] borderWidth:0];
             }
         }
         [self.viewController.selectViews removeAllObjects];
@@ -88,7 +88,7 @@ static const NSString *tapKey = @"tap";
             objc_setAssociatedObject(subview, &tapKey, tap, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
             subview.userInteractionEnabled = YES;
             [self addController:subview];
-        }else {
+        } else {
             UIPanGestureRecognizer *pan = objc_getAssociatedObject(subview, &panKey);
             UITapGestureRecognizer *tap = objc_getAssociatedObject(subview, &tapKey);
             //还原之前的isUserInteractionEnabled

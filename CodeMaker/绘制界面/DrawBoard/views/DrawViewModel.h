@@ -21,4 +21,5 @@
 - (NSString *)changeKeyValueCommand:(NSDictionary *)command;
 - (void)reOpenViewIpAjust:(NSArray *)models;
 - (void)deleteOverDataViewIp:(NSArray *)models relateViewIP:(NSString *)relateViewIP;
+- (BOOL)isInOtherView;
 @end
