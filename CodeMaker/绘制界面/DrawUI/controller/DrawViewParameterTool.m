@@ -69,22 +69,61 @@
 //direct 0:⬅️ 1:⬆️ 2:➡️ 3:⬇️
 - (NSInteger)getDirectViewDistance:(DrawViewModel *)modelTarget models:(NSArray *)models direct:(NSInteger)direct{
     DrawViewModel *model = [self getDirectView:modelTarget models:models direct:direct];
-    UIView *targetView = nil;
+    __block UIView *targetView = nil;
     UIView *curView = modelTarget.relateView;
-    if (model) targetView = model.relateView;
-    else targetView = [self getDrawViewWithViewId:model.superViewIdStr model:modelTarget models:models];
-    if (targetView) {
+    if (model){
+        targetView = model.relateView;
         if(direct == 0 && (targetView.maxX < curView.x)) return (NSInteger)(curView.x - targetView.maxX);
         if(direct == 1 && (targetView.maxY < curView.y)) return (NSInteger)(curView.y - targetView.maxY);
         if(direct == 2 && (curView.maxX < targetView.x)) return (NSInteger)(targetView.x - curView.maxX);
         if(direct == 3 && (curView.maxY < targetView.y)) return (NSInteger)(targetView.y - curView.maxY);
+    }else{
+        NSMutableArray *copys = [NSMutableArray array];
+        for (DrawViewModel *model in models){
+            DrawViewModel *copyNew = [model copyNew];
+            [copys addObject:copyNew];
+            if([model isEqual:modelTarget])modelTarget = copyNew;
+        }
+        models = [NSArray arrayWithArray:copys];
+        
+        for (DrawViewModel *model in models) {
+            if(model.idStr.length<=0)model.idStr = [[CreatFatherFile new] getStoryBoardIdString];
+            model.x=model.relateView.x;model.y=model.relateView.y;
+            model.w=model.relateView.width;model.h=model.relateView.height;
+            for (id tempCommad in model.commands) {
+                if ([tempCommad isKindOfClass:[NSDictionary class]]) {
+                    NSString *key = [tempCommad allKeys][0];
+                    if ([key isEqualToString:@"inview"]) {
+                        NSString *value = [tempCommad allValues][0];
+                        for (DrawViewModel *subModel in models){
+                            if ([[NSString stringWithFormat:@"%p",subModel.relateView] isEqualToString:value]) {
+                                if(subModel.idStr.length<=0)subModel.idStr = [[CreatFatherFile new] getStoryBoardIdString];
+                                model.superViewIdStr = subModel.idStr;
+                                model.x-=subModel.relateView.x;
+                                model.y-=subModel.relateView.y;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            if(model.superViewIdStr.length<=0)model.superViewIdStr=KsuperViewIdStr;
+        }
+        targetView = [self getDrawFatherViewWithModel:modelTarget models:models];
+        if (targetView) {
+            CGFloat targetView_Y = [targetView isEqual:modelTarget.relateVC.view] ? 0 :targetView.y;
+            if(direct == 0 && (targetView.x < curView.x)) return (NSInteger)(curView.x - targetView.x);
+            if(direct == 1 && (targetView_Y < curView.y)) return (NSInteger)(curView.y - targetView_Y);
+            if(direct == 2 && (curView.x < targetView.x)) return (NSInteger)(targetView.x - curView.x);
+            if(direct == 3 && (curView.y < targetView_Y)) return (NSInteger)(targetView_Y - curView.y);
+        }
     }
     return 0;
 }
 
-- (UIView *)getDrawViewWithViewId:(NSString *)viewId model:(DrawViewModel *)model models:(NSArray *)models{
-    if ([viewId isEqualToString:KsuperViewIdStr]) return model.relateVC.view;
-    for (DrawViewModel *model in models) if ([model.idStr isEqualToString:viewId]) return model.relateView;
+- (UIView *)getDrawFatherViewWithModel:(DrawViewModel *)modelTarget models:(NSArray *)models{
+    if ([modelTarget.superViewIdStr isEqualToString:KsuperViewIdStr]) return modelTarget.relateVC.view;
+    for (DrawViewModel *model in models) if ([model.idStr isEqualToString:modelTarget.superViewIdStr]) return model.relateView;
     return nil;
 }
 

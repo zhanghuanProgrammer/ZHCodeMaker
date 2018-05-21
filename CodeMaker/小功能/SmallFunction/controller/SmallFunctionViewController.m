@@ -16,7 +16,7 @@
 	if (!_dataArr) {
 		_dataArr=[NSMutableArray array];
         
-        NSArray *arr=@[@"去除代码注释",@"修改类文件名",@"格式化代码风格",@"查看工程或文件总代码行数",@"图片压缩",@"Json数据格式化",@"Json数据去除无用字符",@"Json数据转XML",@"Json数据转plist",@"Json数据缩减体积",@"XML转Json"];
+        NSArray *arr=@[@"去除代码注释",@"修改类文件名",@"检测图片",@"格式化代码风格",@"查看工程或文件总代码行数",@"图片压缩",@"Json数据格式化",@"Json数据去除无用字符",@"Json数据转XML",@"Json数据转plist",@"Json数据缩减体积",@"XML转Json"];
         
         for (NSInteger i=0; i<arr.count; i++) {
             @autoreleasepool {
@@ -112,6 +112,8 @@
         Msg=@"请把要压缩图片路径和压缩比例 填写在桌面的\"代码助手.m\"中";
         [self compresionWithTitle:model.title withMsg:Msg];
         [[CreatFatherFile new] creatFatherFile:@"代码助手" andData:@[@"压缩比例--:--\"<#0-1#>\"",@"路径--:--[\n\"<#请填写#>\"\n]"]];
+    }else if ([model.title isEqualToString:@"检测图片"]) {
+        [TabBarAndNavagation pushViewController:@"LookImageViewController" toTarget:self pushHideTabBar:YES backShowTabBar:NO];
     }
 }
 

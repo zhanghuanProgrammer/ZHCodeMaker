@@ -646,6 +646,10 @@ static NSMutableString *staticText_m;
 //Description
 + (void)getDescriptionToNSMutableString:(NSMutableString *)StrM withArrInt:(NSArray *)arrInt withArrFloat:(NSArray *)arrFloat withArrString:(NSArray *)arrString withArrOrDic:(NSArray *)arrOrDic{
     [StrM appendString:@"- (NSString *)description{\n"];
+    [StrM appendString:@"\treturn [self.modelToJSONObject jsonPrettyStringEncoded];"];
+    [StrM appendString:@"}\n\n"];
+    
+    return;
     [StrM appendString:@"return [NSString stringWithFormat:@\""];
     NSMutableArray *arrPropert=[NSMutableArray new];
     NSInteger count=arrInt.count+arrFloat.count+arrString.count+arrOrDic.count;

@@ -200,107 +200,41 @@ void errorString(NSString *error){
     return recommendText;
 }
 
+/**这一块功能暂时搁浅,主要是有点难搞,加上没时间,不要在约束上花太多时间*/
 - (BOOL)selectRecommend:(NSInteger)index{
-    //    TODO:相对于父控件 就算不准
-    if (self.selectViews.count>1) {
-        switch (index) {
-            case 1:{
-                self.commandTextField.text = [NSString stringWithFormat:@"t %@",@([[DrawViewParameterTool new] getDirectViewDistance:self.selectModel models:self.drawViews direct:1])];
-            }break;
-            case 2:{
-                self.commandTextField.text = [NSString stringWithFormat:@"b %@",@([[DrawViewParameterTool new] getDirectViewDistance:self.selectModel models:self.drawViews direct:3])];
-            }break;
-            case 3:{
-                self.commandTextField.text = [NSString stringWithFormat:@"l %@",@([[DrawViewParameterTool new] getDirectViewDistance:self.selectModel models:self.drawViews direct:0])];
-            }break;
-            case 4:{
-                self.commandTextField.text = [NSString stringWithFormat:@"r %@",@([[DrawViewParameterTool new] getDirectViewDistance:self.selectModel models:self.drawViews direct:2])];
-            }break;
-            case 5:{
-                self.commandTextField.text = @"";
-            }break;
-            case 6:{
-                self.commandTextField.text = @"";
-            }break;
-            case 7:{
-                self.commandTextField.text = @"";
-            }break;
-            case 8:{
-                
-            }break;
-            case 9:{
-                
-            }break;
-            case 10:{
-                
-            }break;
-            case 11:{
-                
-            }break;
-            case 12:{
-                
-            }break;
-            case 13:{
-                
-            }break;
-            case 14:{
-                
-            }break;
-            case 15:{
-                
-            }break;
-            default:return NO;
-        }
-    }else{
-        switch (index) {
-            case 1:{
-                self.commandTextField.text = [NSString stringWithFormat:@"t %@",@([[DrawViewParameterTool new] getDirectViewDistance:self.selectModel models:self.drawViews direct:1])];
-            }break;
-            case 2:{
-                self.commandTextField.text = [NSString stringWithFormat:@"b %@",@([[DrawViewParameterTool new] getDirectViewDistance:self.selectModel models:self.drawViews direct:3])];
-            }break;
-            case 3:{
-                self.commandTextField.text = [NSString stringWithFormat:@"l %@",@([[DrawViewParameterTool new] getDirectViewDistance:self.selectModel models:self.drawViews direct:0])];
-            }break;
-            case 4:{
-                self.commandTextField.text = [NSString stringWithFormat:@"r %@",@([[DrawViewParameterTool new] getDirectViewDistance:self.selectModel models:self.drawViews direct:2])];
-            }break;
-            case 5:{
-                self.commandTextField.text = @"";
-            }break;
-            case 6:{
-                self.commandTextField.text = @"";
-            }break;
-            case 7:{
-                self.commandTextField.text = @"";
-            }break;
-            case 8:{
-                
-            }break;
-            case 9:{
-                
-            }break;
-            case 10:{
-                
-            }break;
-            case 11:{
-                
-            }break;
-            case 12:{
-                
-            }break;
-            case 13:{
-                
-            }break;
-            case 14:{
-                
-            }break;
-            case 15:{
-                
-            }break;
-                default:return NO;
-        }
+    switch (index) {
+        case 1:{
+            self.commandTextField.text = [NSString stringWithFormat:@"t %@",@([[DrawViewParameterTool new] getDirectViewDistance:self.selectModel models:self.drawViews direct:1])];
+        }break;
+        case 2:{
+            self.commandTextField.text = [NSString stringWithFormat:@"b %@",@([[DrawViewParameterTool new] getDirectViewDistance:self.selectModel models:self.drawViews direct:3])];
+        }break;
+        case 3:{
+            self.commandTextField.text = [NSString stringWithFormat:@"l %@",@([[DrawViewParameterTool new] getDirectViewDistance:self.selectModel models:self.drawViews direct:0])];
+        }break;
+        case 4:{
+            self.commandTextField.text = [NSString stringWithFormat:@"r %@",@([[DrawViewParameterTool new] getDirectViewDistance:self.selectModel models:self.drawViews direct:2])];
+        }break;
+        case 5:{
+            self.commandTextField.text = [NSString stringWithFormat:@"w %@",@((NSInteger)self.selectView.width)];
+        }break;
+        case 6:{
+            self.commandTextField.text = [NSString stringWithFormat:@"h %@",@((NSInteger)self.selectView.height)];
+        }break;
+        case 7:{
+            [self selectRecommend:1];[self runScrip];[self selectRecommend:2];[self runScrip];
+            [self selectRecommend:3];[self runScrip];[self selectRecommend:4];[self runScrip];
+            self.commandTextField.text = @"";
+        }break;
+        case 8:{
+            self.commandTextField.text = @"-t 0";[self runScrip];
+            self.commandTextField.text = @"-b 0";[self runScrip];
+            self.commandTextField.text = @"-l 0";[self runScrip];
+            self.commandTextField.text = @"-r 0";[self runScrip];
+        }break;
+        default:return NO;
     }
+    [self selectEditText];
     return YES;
 }
 
@@ -460,19 +394,35 @@ void errorString(NSString *error){
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
-    [self runScrip];
-    UITextPosition *begin = textField.beginningOfDocument;
-    UITextPosition *end = [textField positionFromPosition:begin offset:textField.text.length];
-    UITextRange *range = [textField textRangeFromPosition:begin toPosition:end];
-    self.commandTextField.selectedTextRange=range;
+    [self selectAllText];
+    [self runScripNormal];
     return YES;
 }
+
+- (void)selectAllText{
+    UITextPosition *begin = self.commandTextField.beginningOfDocument;
+    UITextPosition *end = [self.commandTextField positionFromPosition:begin offset:self.commandTextField.text.length];
+    UITextRange *range = [self.commandTextField textRangeFromPosition:begin toPosition:end];
+    self.commandTextField.selectedTextRange=range;
+}
+
+- (void)selectEditText{
+    if (self.editType == DrawViewTypeRecommend &&
+        [self.commandTextField.text rangeOfString:@" "].location!=NSNotFound) {
+        NSInteger index = [self.commandTextField.text rangeOfString:@" "].location+1;
+        UITextPosition *begin = [self.commandTextField positionFromPosition:self.commandTextField.beginningOfDocument offset:index];;
+        UITextPosition *end = [self.commandTextField positionFromPosition:begin offset:self.commandTextField.text.length - index];
+        UITextRange *range = [self.commandTextField textRangeFromPosition:begin toPosition:end];
+        self.commandTextField.selectedTextRange=range;
+    }
+}
+
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     textField.textColor=[UIColor whiteColor];
     return YES;
 }
 
-- (void)runScrip{
+- (void)runScripNormal{
     if ([self runScripEditType]) {
         return;
     }
@@ -483,7 +433,10 @@ void errorString(NSString *error){
         [self runScripHuiZhi];
         return;
     }
-    
+    [self runScrip];
+}
+
+- (void)runScrip{
     BOOL isSuccess = YES;
     static BOOL isInSuper = NO;
     if (self.constarintOperation.count>0) {
@@ -902,44 +855,47 @@ void errorString(NSString *error){
 }
 
 - (void)runScripHuiZhi{
-    NSString *commandTemp = [[self.commandTextField.text stringByTrim] lowercaseString];
-    if ([commandTemp rangeOfString:@" "].location!=NSNotFound) {
-        commandTemp = [ZHNSString removeSpacePrefix:commandTemp];
-        commandTemp = [ZHNSString removeSpaceSuffix:commandTemp];
-        NSArray *arr = [commandTemp componentsSeparatedByString:@" "];
-        if (arr.count>=2) {
-            NSString *w_string = arr[0];
-            NSString *h_string = arr[1];
-            if (w_string.length > 0 && h_string.length >0) {
-                if (([ZHNSString isPureInt:w_string]||[ZHNSString isPureFloat:w_string])&&
-                    ([ZHNSString isPureInt:h_string]||[ZHNSString isPureFloat:h_string])) {
-                    CGFloat w = [w_string floatValue];
-                    CGFloat h = [h_string floatValue];
-                    if (w>0) self.selectView.width = w;
-                    if (h>0) self.selectView.width = h;
+    if (self.selectView) {
+        NSString *commandTemp = [[self.commandTextField.text stringByTrim] lowercaseString];
+        if ([commandTemp rangeOfString:@" "].location!=NSNotFound) {
+            commandTemp = [ZHNSString removeSpacePrefix:commandTemp];
+            commandTemp = [ZHNSString removeSpaceSuffix:commandTemp];
+            NSArray *arr = [commandTemp componentsSeparatedByString:@" "];
+            if (arr.count>=2) {
+                NSString *w_string = arr[0];
+                NSString *h_string = arr[1];
+                if (w_string.length > 0 && h_string.length >0) {
+                    if (([ZHNSString isPureInt:w_string]||[ZHNSString isPureFloat:w_string])&&
+                        ([ZHNSString isPureInt:h_string]||[ZHNSString isPureFloat:h_string])) {
+                        CGFloat w = [w_string floatValue];
+                        CGFloat h = [h_string floatValue];
+                        if (w>0) self.selectView.width = w;
+                        if (h>0) self.selectView.width = h;
+                        return;
+                    }
                 }
             }
         }
-        return;
-    }
-    if ([commandTemp hasPrefix:@"x "]||[commandTemp hasPrefix:@"y "]||[commandTemp hasPrefix:@"w "]||[commandTemp hasPrefix:@"h "]) {
-        NSInteger type = 0;
-        if([commandTemp hasPrefix:@"x "])type = 1;
-        if([commandTemp hasPrefix:@"y "])type = 2;
-        if([commandTemp hasPrefix:@"w "])type = 3;
-        if([commandTemp hasPrefix:@"h "])type = 4;
-        commandTemp = [commandTemp substringFromIndex:2];
-        if (commandTemp.length>0 && [ZHNSString isPureInt:commandTemp]) {
-            NSInteger commandInt = [commandTemp integerValue];
-            if (self.selectView) {
-                if (type==1) self.selectView.x = commandInt;
-                if (type==2) self.selectView.y = commandInt;
-                if (type==3) self.selectView.width = commandInt;
-                if (type==4) self.selectView.height = commandInt;
+        if ([commandTemp hasPrefix:@"x "]||[commandTemp hasPrefix:@"y "]||[commandTemp hasPrefix:@"w "]||[commandTemp hasPrefix:@"h "]) {
+            NSInteger type = 0;
+            if([commandTemp hasPrefix:@"x "])type = 1;
+            if([commandTemp hasPrefix:@"y "])type = 2;
+            if([commandTemp hasPrefix:@"w "])type = 3;
+            if([commandTemp hasPrefix:@"h "])type = 4;
+            commandTemp = [commandTemp substringFromIndex:2];
+            if (commandTemp.length>0 && [ZHNSString isPureInt:commandTemp]) {
+                NSInteger commandInt = [commandTemp integerValue];
+                if (self.selectView) {
+                    if (type==1) self.selectView.x = commandInt;
+                    if (type==2) self.selectView.y = commandInt;
+                    if (type==3) self.selectView.width = commandInt;
+                    if (type==4) self.selectView.height = commandInt;
+                    return;
+                }
             }
         }
-        return;
     }
+    errorString(@"不识别指令");
 }
 
 - (BOOL)runScripEditType{
@@ -951,12 +907,14 @@ void errorString(NSString *error){
                 if([ZHNSString isPureInt:command]||[ZHNSString isPureFloat:command]){
                     [model addOrUpdateCommand:@{@"font":command}];
                     self.commandTextField.text = @"";
+                    [ZHBlockSingleCategroy runBlockNULLIdentity:@"DrawViewSelectView"];
                 }else{errorString(@"font(字体) 必须为整数或者小数");}
                 return YES;
                 break;
             case DrawViewTypeText:
                 [model addOrUpdateCommand:@{@"text":command}];
                 self.commandTextField.text = @"";
+                [ZHBlockSingleCategroy runBlockNULLIdentity:@"DrawViewSelectView"];
                 return YES;
                 break;
             case DrawViewTypeBackcolor:{
@@ -967,6 +925,7 @@ void errorString(NSString *error){
                     [model addOrUpdateCommand:@{@"bgColorBlue":[NSString stringWithFormat:@"%.01f",255*[color blue]]}];
                     [model addOrUpdateCommand:@{@"bgColorAlpha":[NSString stringWithFormat:@"%.01f",255*[color alpha]]}];
                 }
+                [ZHBlockSingleCategroy runBlockNULLIdentity:@"DrawViewSelectView"];
                 return YES;
             }break;
             case DrawViewTypeTextColor:{
@@ -977,6 +936,7 @@ void errorString(NSString *error){
                     [model addOrUpdateCommand:@{@"textColorRed":[NSString stringWithFormat:@"%.01f",255*[color blue]]}];
                     [model addOrUpdateCommand:@{@"textColorRed":[NSString stringWithFormat:@"%.01f",255*[color alpha]]}];
                 }
+                [ZHBlockSingleCategroy runBlockNULLIdentity:@"DrawViewSelectView"];
                 return YES;
             }break;
             case DrawViewTypeRecommend:{
@@ -986,8 +946,9 @@ void errorString(NSString *error){
                     if (![self selectRecommend:index]) {
                         errorString(@"选择的下标越界了");
                     }
+                    [ZHBlockSingleCategroy runBlockNULLIdentity:@"DrawViewSelectView"];
+                    return YES;
                 }
-                return YES;
             }break;
             default:break;
         }

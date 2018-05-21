@@ -98,6 +98,15 @@
 		045C1C9B1EE555E000B4609E /* ZHAndroidModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 045C1C9A1EE555E000B4609E /* ZHAndroidModel.m */; };
 		045C1C9E1EE55A0E00B4609E /* ZHAndroifAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 045C1C9D1EE55A0E00B4609E /* ZHAndroifAdapter.m */; };
 		0479D0F71F04C77F000CCD48 /* ZHImageCompression.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479D0F61F04C77F000CCD48 /* ZHImageCompression.m */; };
+		0485249820B25B68005C9D9E /* LookImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0485249120B25B67005C9D9E /* LookImageViewController.m */; };
+		0485249920B25B68005C9D9E /* LookImageCellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0485249420B25B67005C9D9E /* LookImageCellModel.m */; };
+		0485249A20B25B68005C9D9E /* LookImageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0485249620B25B68005C9D9E /* LookImageTableViewCell.m */; };
+		048524AB20B25E29005C9D9E /* CMStringUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 048524A620B25E29005C9D9E /* CMStringUtils.m */; };
+		048524B320B29F2A005C9D9E /* FileUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 048524B020B29F2A005C9D9E /* FileUtils.m */; };
+		048524B420B29F2A005C9D9E /* StringUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 048524B220B29F2A005C9D9E /* StringUtils.m */; };
+		048524BB20B29F39005C9D9E /* ResourceFileSearcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 048524B520B29F39005C9D9E /* ResourceFileSearcher.m */; };
+		048524BC20B29F39005C9D9E /* ResourceSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 048524B720B29F39005C9D9E /* ResourceSettings.m */; };
+		048524BD20B29F39005C9D9E /* ResourceStringSearcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 048524B920B29F39005C9D9E /* ResourceStringSearcher.m */; };
 		04AF9186205A69CB007EF796 /* 手册 in Resources */ = {isa = PBXBuildFile; fileRef = 04AF9185205A69CB007EF796 /* 手册 */; };
 		04AF9189205A6FE0007EF796 /* CollectionViewCell.txt in Resources */ = {isa = PBXBuildFile; fileRef = 04AF9187205A6FE0007EF796 /* CollectionViewCell.txt */; };
 		04AF918A205A6FE0007EF796 /* TableViewCell.txt in Resources */ = {isa = PBXBuildFile; fileRef = 04AF9188205A6FE0007EF796 /* TableViewCell.txt */; };
@@ -583,6 +592,24 @@
 		045C1C9D1EE55A0E00B4609E /* ZHAndroifAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHAndroifAdapter.m; sourceTree = "<group>"; };
 		0479D0F51F04C77F000CCD48 /* ZHImageCompression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHImageCompression.h; sourceTree = "<group>"; };
 		0479D0F61F04C77F000CCD48 /* ZHImageCompression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHImageCompression.m; sourceTree = "<group>"; };
+		0485249020B25B67005C9D9E /* LookImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LookImageViewController.h; sourceTree = "<group>"; };
+		0485249120B25B67005C9D9E /* LookImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LookImageViewController.m; sourceTree = "<group>"; };
+		0485249320B25B67005C9D9E /* LookImageCellModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LookImageCellModel.h; sourceTree = "<group>"; };
+		0485249420B25B67005C9D9E /* LookImageCellModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LookImageCellModel.m; sourceTree = "<group>"; };
+		0485249620B25B68005C9D9E /* LookImageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LookImageTableViewCell.m; sourceTree = "<group>"; };
+		0485249720B25B68005C9D9E /* LookImageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LookImageTableViewCell.h; sourceTree = "<group>"; };
+		048524A420B25E29005C9D9E /* CMStringUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMStringUtils.h; sourceTree = "<group>"; };
+		048524A620B25E29005C9D9E /* CMStringUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMStringUtils.m; sourceTree = "<group>"; };
+		048524AF20B29F29005C9D9E /* StringUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringUtils.h; sourceTree = "<group>"; };
+		048524B020B29F2A005C9D9E /* FileUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileUtils.m; sourceTree = "<group>"; };
+		048524B120B29F2A005C9D9E /* FileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileUtils.h; sourceTree = "<group>"; };
+		048524B220B29F2A005C9D9E /* StringUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StringUtils.m; sourceTree = "<group>"; };
+		048524B520B29F39005C9D9E /* ResourceFileSearcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceFileSearcher.m; sourceTree = "<group>"; };
+		048524B620B29F39005C9D9E /* ResourceStringSearcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceStringSearcher.h; sourceTree = "<group>"; };
+		048524B720B29F39005C9D9E /* ResourceSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceSettings.m; sourceTree = "<group>"; };
+		048524B820B29F39005C9D9E /* ResourceSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceSettings.h; sourceTree = "<group>"; };
+		048524B920B29F39005C9D9E /* ResourceStringSearcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceStringSearcher.m; sourceTree = "<group>"; };
+		048524BA20B29F39005C9D9E /* ResourceFileSearcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceFileSearcher.h; sourceTree = "<group>"; };
 		04AF9185205A69CB007EF796 /* 手册 */ = {isa = PBXFileReference; lastKnownFileType = text; path = "手册"; sourceTree = "<group>"; };
 		04AF9187205A6FE0007EF796 /* CollectionViewCell.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CollectionViewCell.txt; sourceTree = "<group>"; };
 		04AF9188205A6FE0007EF796 /* TableViewCell.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TableViewCell.txt; sourceTree = "<group>"; };
@@ -1618,6 +1645,63 @@
 			path = "图片压缩";
 			sourceTree = "<group>";
 		};
+		0485248E20B1B0AB005C9D9E /* 检测图片 */ = {
+			isa = PBXGroup;
+			children = (
+				0485249B20B25C00005C9D9E /* 关键类 */,
+				0485248F20B25B67005C9D9E /* controller */,
+				0485249220B25B67005C9D9E /* model */,
+				0485249520B25B68005C9D9E /* view */,
+			);
+			path = "检测图片";
+			sourceTree = "<group>";
+		};
+		0485248F20B25B67005C9D9E /* controller */ = {
+			isa = PBXGroup;
+			children = (
+				0485249020B25B67005C9D9E /* LookImageViewController.h */,
+				0485249120B25B67005C9D9E /* LookImageViewController.m */,
+			);
+			path = controller;
+			sourceTree = "<group>";
+		};
+		0485249220B25B67005C9D9E /* model */ = {
+			isa = PBXGroup;
+			children = (
+				0485249320B25B67005C9D9E /* LookImageCellModel.h */,
+				0485249420B25B67005C9D9E /* LookImageCellModel.m */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		0485249520B25B68005C9D9E /* view */ = {
+			isa = PBXGroup;
+			children = (
+				0485249720B25B68005C9D9E /* LookImageTableViewCell.h */,
+				0485249620B25B68005C9D9E /* LookImageTableViewCell.m */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		0485249B20B25C00005C9D9E /* 关键类 */ = {
+			isa = PBXGroup;
+			children = (
+				048524B120B29F2A005C9D9E /* FileUtils.h */,
+				048524B020B29F2A005C9D9E /* FileUtils.m */,
+				048524AF20B29F29005C9D9E /* StringUtils.h */,
+				048524B220B29F2A005C9D9E /* StringUtils.m */,
+				048524A420B25E29005C9D9E /* CMStringUtils.h */,
+				048524A620B25E29005C9D9E /* CMStringUtils.m */,
+				048524BA20B29F39005C9D9E /* ResourceFileSearcher.h */,
+				048524B520B29F39005C9D9E /* ResourceFileSearcher.m */,
+				048524B820B29F39005C9D9E /* ResourceSettings.h */,
+				048524B720B29F39005C9D9E /* ResourceSettings.m */,
+				048524B620B29F39005C9D9E /* ResourceStringSearcher.h */,
+				048524B920B29F39005C9D9E /* ResourceStringSearcher.m */,
+			);
+			path = "关键类";
+			sourceTree = "<group>";
+		};
 		04B26080205BC0C7005F4E84 /* DrawViewOpenHistroy */ = {
 			isa = PBXGroup;
 			children = (
@@ -2643,6 +2727,7 @@
 		04C7BFE61E73F66000E5A2F6 /* 小功能 */ = {
 			isa = PBXGroup;
 			children = (
+				0485248E20B1B0AB005C9D9E /* 检测图片 */,
 				0479D0F41F04C77F000CCD48 /* 图片压缩 */,
 				0443D2D91E96628100FEF1F2 /* 格式化代码风格 */,
 				04C7BFE71E73F66000E5A2F6 /* Json和XML操作类 */,
@@ -3841,6 +3926,7 @@
 				04C7C0F31E73F66000E5A2F6 /* AFHTTPRequestOperation.m in Sources */,
 				04C7C11A1E73F66100E5A2F6 /* NSBundle+MJRefresh.m in Sources */,
 				04F174331EA89E2100D15AFB /* ZHDisplayTitleLabel.m in Sources */,
+				048524BC20B29F39005C9D9E /* ResourceSettings.m in Sources */,
 				04C7C13F1E73F66100E5A2F6 /* MoreFunctionViewController.m in Sources */,
 				04B735E620575FF100D054F2 /* UIScrollView+YYAdd.m in Sources */,
 				04C7C12C1E73F66100E5A2F6 /* UIImageView+WebCache.m in Sources */,
@@ -3878,6 +3964,7 @@
 				0447B3FB1E7A426100AD1BD1 /* ZHImage.m in Sources */,
 				04C7C1C01E73F66100E5A2F6 /* ZHStoryboardTextManager.m in Sources */,
 				04FF44AC1E82998D000FFF23 /* NSNumber+ZH.m in Sources */,
+				0485249920B25B68005C9D9E /* LookImageCellModel.m in Sources */,
 				04F92AF81E89F47E00CEB425 /* UIImage+ZH.m in Sources */,
 				04454CC61EAC320200156475 /* ZHJsonToXMLOrder.m in Sources */,
 				04C7C1421E73F66100E5A2F6 /* MoreFunctionTableViewCell.m in Sources */,
@@ -3963,6 +4050,7 @@
 				04F92AF51E89F00600CEB425 /* UIFont+ZH.m in Sources */,
 				044024321EF389E40045621D /* ZHCreatAndroidModel.m in Sources */,
 				043A48131EAEF7DD00A74C0E /* ZHEnum.m in Sources */,
+				048524B320B29F2A005C9D9E /* FileUtils.m in Sources */,
 				04454CCA1EACB6BA00156475 /* ZHSearchCondition.m in Sources */,
 				198FAB931F42F9070063BE6B /* ViewController+MASAdditions.m in Sources */,
 				04B735EC20575FF100D054F2 /* UIControl+YYAdd.m in Sources */,
@@ -3977,6 +4065,7 @@
 				04C7C1C31E73F66100E5A2F6 /* ZHStroyBoardToPureHandProject.m in Sources */,
 				04B735F220575FF100D054F2 /* NSData+YYAdd.m in Sources */,
 				198FAB8B1F42F9070063BE6B /* MASConstraint.m in Sources */,
+				048524BD20B29F39005C9D9E /* ResourceStringSearcher.m in Sources */,
 				04441A011E7952450025108C /* MyFunctionCellModel.m in Sources */,
 				045C1C921EE51F7200B4609E /* ZHActivity.m in Sources */,
 				04C7C0FF1E73F66000E5A2F6 /* UIButton+AFNetworking.m in Sources */,
@@ -4004,6 +4093,7 @@
 				04C7C1021E73F66000E5A2F6 /* UIRefreshControl+AFNetworking.m in Sources */,
 				198FAB8A1F42F9070063BE6B /* MASCompositeConstraint.m in Sources */,
 				04C7C16C1E73F66100E5A2F6 /* SearchChangeFileCellModel.m in Sources */,
+				048524B420B29F2A005C9D9E /* StringUtils.m in Sources */,
 				042514BF20AA83940066E79B /* DrawViewLineTool.m in Sources */,
 				04F174341EA89E2100D15AFB /* ZHDisplayViewController.m in Sources */,
 				04C7C1661E73F66100E5A2F6 /* ZHJsonPath.m in Sources */,
@@ -4020,9 +4110,11 @@
 				04B735F720575FF100D054F2 /* NSNotificationCenter+YYAdd.m in Sources */,
 				04C7C1361E73F66100E5A2F6 /* DateTools.m in Sources */,
 				04F45EF81EA1F45C00C11ABD /* ZHCreatView.m in Sources */,
+				048524BB20B29F39005C9D9E /* ResourceFileSearcher.m in Sources */,
 				04C7C1BE1E73F66100E5A2F6 /* ZHStoryboardManager.m in Sources */,
 				198FAB551F42D4800063BE6B /* DrawUIViewController.m in Sources */,
 				04C7C1521E73F66100E5A2F6 /* BCSymbolMapsManager.m in Sources */,
+				048524AB20B25E29005C9D9E /* CMStringUtils.m in Sources */,
 				04F45EF41EA1F43400C11ABD /* UIColor+Wonderful.m in Sources */,
 				04C7C15E1E73F66100E5A2F6 /* ZHGetFunctionCall.m in Sources */,
 				04C7C1721E73F66100E5A2F6 /* ZHRemoveTheComments.m in Sources */,
@@ -4120,6 +4212,7 @@
 				043CAAF31EADD641006AE7B9 /* SetDeaultProjectTableViewCell.m in Sources */,
 				04C7C1961E73F66100E5A2F6 /* ZHStoryboardTextManagerToHandPureMVC.m in Sources */,
 				04C7C1AE1E73F66100E5A2F6 /* JSONSourceCellModel.m in Sources */,
+				0485249A20B25B68005C9D9E /* LookImageTableViewCell.m in Sources */,
 				04C7C1BC1E73F66100E5A2F6 /* TreeNode.m in Sources */,
 				043CAAFB1EADE4C0006AE7B9 /* ZHSelfHabit.m in Sources */,
 				04C7C1231E73F66100E5A2F6 /* SDWebImageDownloader.m in Sources */,
@@ -4144,6 +4237,7 @@
 				04F174931EA8EFAB00D15AFB /* ZHDrawModel.m in Sources */,
 				04B735E820575FF100D054F2 /* UIView+YYAdd.m in Sources */,
 				04B735E020575FF100D054F2 /* UITextField+YYAdd.m in Sources */,
+				0485249820B25B68005C9D9E /* LookImageViewController.m in Sources */,
 				04C7C1B11E73F66100E5A2F6 /* JSONSourceTableViewCell.m in Sources */,
 				04C7C10D1E73F66000E5A2F6 /* MJRefreshFooter.m in Sources */,
 				0409BEF91EA99A630004630E /* GBAnimationTool.m in Sources */,
