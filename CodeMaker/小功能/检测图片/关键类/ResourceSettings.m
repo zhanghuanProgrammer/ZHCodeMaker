@@ -1,10 +1,3 @@
-//
-//  ResourceSettings.m
-//  LSUnusedResources
-//
-//  Created by lslin on 2017/7/12.
-//  Copyright © 2017年 lessfun.com. All rights reserved.
-//
 
 #import "ResourceSettings.h"
 

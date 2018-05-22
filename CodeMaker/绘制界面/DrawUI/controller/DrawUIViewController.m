@@ -932,9 +932,9 @@ void errorString(NSString *error){
                 UIColor *color = [self getColorFromCommand:command];
                 if (color) {
                     [model addOrUpdateCommand:@{@"textColorRed":[NSString stringWithFormat:@"%.01f",255*[color red]]}];
-                    [model addOrUpdateCommand:@{@"textColorRed":[NSString stringWithFormat:@"%.01f",255*[color green]]}];
-                    [model addOrUpdateCommand:@{@"textColorRed":[NSString stringWithFormat:@"%.01f",255*[color blue]]}];
-                    [model addOrUpdateCommand:@{@"textColorRed":[NSString stringWithFormat:@"%.01f",255*[color alpha]]}];
+                    [model addOrUpdateCommand:@{@"bgColorGreen":[NSString stringWithFormat:@"%.01f",255*[color green]]}];
+                    [model addOrUpdateCommand:@{@"bgColorBlue":[NSString stringWithFormat:@"%.01f",255*[color blue]]}];
+                    [model addOrUpdateCommand:@{@"bgColorAlpha":[NSString stringWithFormat:@"%.01f",255*[color alpha]]}];
                 }
                 [ZHBlockSingleCategroy runBlockNULLIdentity:@"DrawViewSelectView"];
                 return YES;

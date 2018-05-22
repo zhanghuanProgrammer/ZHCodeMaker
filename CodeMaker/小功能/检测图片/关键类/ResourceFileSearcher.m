@@ -114,10 +114,6 @@ static NSString * const kSuffixPng         = @".png";
     NSMutableArray *resources = [NSMutableArray array];
     
     NSArray *pathList = [CMStringUtils images:directoryPath];
-    for (NSString *str in pathList) {
-        NSLog(@"%@",str);
-    }
-    //running1
     if (pathList.count) {
         for (NSString *path in pathList) {
             if (![self isInImageSetFolder:path]

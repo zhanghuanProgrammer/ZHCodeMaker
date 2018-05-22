@@ -8,10 +8,6 @@ static NSString * const kSuffix3x = @"@3x";
 
 + (NSString *)stringByRemoveResourceSuffix:(NSString *)str {
     NSString *suffix = [str pathExtension];
-    return [[self stringByRemoveResourceSuffix:str suffix:suffix] stringByAppendingFormat:@".%@",suffix];
-}
-+ (NSString *)stringByRemoveResourceSuffix1:(NSString *)str {
-    NSString *suffix = [str pathExtension];
     return [self stringByRemoveResourceSuffix:str suffix:suffix];
 }
 
@@ -31,10 +27,10 @@ static NSString * const kSuffix3x = @"@3x";
 
 + (BOOL)isContainImage:(NSString *)imagePath inArr:(NSArray *)arr{
     NSString *fileName = [ZHFileManager getFileNameFromFilePath:imagePath];
-    fileName = [self stringByRemoveResourceSuffix1:fileName];
+    fileName = [self stringByRemoveResourceSuffix:fileName];
     for (NSString *filePath in arr) {
         NSString *fileNameTemp = [ZHFileManager getFileNameFromFilePath:filePath];
-        fileNameTemp = [self stringByRemoveResourceSuffix1:fileName];
+        fileNameTemp = [self stringByRemoveResourceSuffix:fileNameTemp];
         if ([fileNameTemp isEqualToString:fileName]) {
             return YES;
         }
@@ -69,7 +65,7 @@ static NSString * const kSuffix3x = @"@3x";
 + (void)emportCategoryImageFile:(NSString *)project{
     NSArray *images=[self images:project];
     NSString *emportFilePath = [[ZHFileManager getMacDesktop] stringByAppendingPathComponent:@"未命名文件夹"];
-    NSArray *emportImages = [ZHFileManager subPathFileArrInDirector:emportFilePath hasPathExtension:@[@"png", @"jpg", @"jpeg", @"gif", @"bmp", @"pdf"]];
+    NSArray *emportImages = [ZHFileManager subPathFileArrInDirector:emportFilePath hasPathExtension:@[@".png", @".jpg", @".jpeg", @".gif", @".bmp", @".pdf"]];
     if (emportImages.count<=0) {
         return;
     }
@@ -87,10 +83,13 @@ static NSString * const kSuffix3x = @"@3x";
     [ZHFileManager creatDirectorIfNotExsit:emportFilePathNoUse];
     [ZHFileManager creatDirectorIfNotExsit:emportFilePathUse];
     for (NSString *filePath in noUse) {
-        [ZHFileManager copyItemAtPath:filePath toPath:[emportFilePath stringByAppendingPathComponent:[ZHFileManager getFileNameFromFilePath:filePath]]];
+        [ZHFileManager copyItemAtPath:filePath toPath:[emportFilePathNoUse stringByAppendingPathComponent:[ZHFileManager getFileNameFromFilePath:filePath]]];
     }
     for (NSString *filePath in use) {
-        [ZHFileManager copyItemAtPath:filePath toPath:[emportFilePath stringByAppendingPathComponent:[ZHFileManager getFileNameFromFilePath:filePath]]];
+        [ZHFileManager copyItemAtPath:filePath toPath:[emportFilePathUse stringByAppendingPathComponent:[ZHFileManager getFileNameFromFilePath:filePath]]];
+    }
+    for (NSString *filePath in emportImages) {
+        [ZHFileManager removeItemAtPath:filePath];
     }
 }
 

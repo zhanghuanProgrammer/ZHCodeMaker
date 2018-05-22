@@ -1,10 +1,3 @@
-//
-//  RecourseStringSearcher.m
-//  LSUnusedResources
-//
-//  Created by lslin on 15/8/31.
-//  Copyright (c) 2015年 lessfun.com. All rights reserved.
-//
 
 #import "ResourceStringSearcher.h"
 #import "ResourceFileSearcher.h"
